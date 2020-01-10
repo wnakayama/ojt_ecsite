@@ -568,7 +568,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div></div></td>
 </tr>
 <tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">機能名称</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ユースケース名称</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>商品を一覧表示する</p>
 </div></div></td>
@@ -598,6 +598,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>ECサイトのURLを指定・アクセス</p>
 </li>
+<li>
+<p><a href="#image_buy">購入明細画面</a>で「商品一覧へ戻る」ボタンを押下する</p>
+</li>
 </ul>
 </div></div></td>
 </tr>
@@ -616,9 +619,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p><a href="#image_viewall">商品一覧画面</a>が表示される。</p>
-</li>
-<li>
-<p>シナリオを終了する。</p>
 </li>
 </ol>
 </div></div></td>
@@ -674,7 +674,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">商品情報表示領域</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>商品の名前、価格、画像を表示する</p>
+<p>商品の名前、税込価格、税抜価格、画像を表示する</p>
 </div></div></td>
 </tr>
 <tr>
@@ -682,7 +682,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">選択ボックス</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">チェックボックス</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>対応する商品が「選択済み」状態になる</p>
+<p>クリックすると対応する商品が「選択済み」状態になる
+※再度クリックすると選択は解除される</p>
 </div></div></td>
 </tr>
 <tr>
@@ -698,23 +699,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(商品名)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>文字列,数字を入力して検索条件を指定する</p>
+<p>文字列,数字を入力して検索条件(商品名)を指定する</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(価格) 欄1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(価格) 下限値欄</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>整数を入力して検索条件を指定する</p>
+<p>整数を入力して検索条件(価格の下限値)を指定する</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(価格) 欄2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(価格) 上限値欄</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>整数を入力して検索条件を指定する</p>
+<p>整数を入力して検索条件(価格の上限値)を指定する</p>
 </div></div></td>
 </tr>
 <tr>
@@ -814,9 +815,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p><a href="#image_buy">購入明細画面</a>に遷移し、購入日時、購入商品一覧、合計金額を表示する</p>
-</li>
-<li>
-<p>シナリオを終了する</p>
 </li>
 </ol>
 </div></div></td>
@@ -921,12 +919,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">購入明細表示領域</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>購入日時、購入商品一覧、合計金額を表示する</p>
+<p>購入日時、購入商品一覧、合計金額(税込金額と税抜金額の両方)を表示する</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ショップに戻るボタン</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">全商品一覧に戻るボタン</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ボタン</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>クリックすると<a href="#image_viewall">商品一覧画面</a>に遷移する</p>
@@ -1016,7 +1014,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="red">検索フォーム(価格)に整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc03">代替フロー2に移行</a></p>
 </li>
 <li>
-<p><span class="red">検索フォーム(価格)欄1と欄2両方に入力があり、欄2の入力価格が欄1の入力価格より小さい場合
+<p><span class="red">検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
 </span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
 </li>
 </ul>
@@ -1033,9 +1031,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </li>
-<li>
-<p>シナリオを終了する</p>
-</li>
 </ol>
 </div></div></td>
 </tr>
@@ -1050,9 +1045,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>エラーメッセージ03をメッセージ領域に表示する</p>
 </li>
-<li>
-<p>基本フローのステップ4に移動する(シナリオを終了する)</p>
-</li>
 </ol>
 </div>
 </li>
@@ -1063,21 +1055,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>エラーメッセージ04をメッセージ領域に表示する</p>
 </li>
-<li>
-<p>基本フローのステップ4に移動する(シナリオを終了する)</p>
-</li>
 </ol>
 </div>
 </li>
 <li>
-<p>検索フォーム(価格)欄1と欄2両方に入力があるとき、欄2の入力価格が欄1の入力価格より小さい場合</p>
+<p>検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ03をメッセージ領域に表示する</p>
-</li>
-<li>
-<p>基本フローのステップ4に移動する(シナリオを終了する)</p>
+<p>エラーメッセージ05をメッセージ領域に表示する</p>
 </li>
 </ol>
 </div>
@@ -1127,6 +1113,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
+<p>商品名の検索フォームと価格の検索フォーム両方に正しい入力があった場合は、
+商品名での絞り込みと価格での絞り込みを同時に行う(AND検索を実行する)。</p>
+</div>
+<div class="paragraph">
 <p>※ 検索フォームのバリデーション条件を以下に定義する。</p>
 </div>
 <div class="ulist">
@@ -1152,13 +1142,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>入力は整数であること</p>
 </li>
 <li>
-<p>欄1のみの入力、欄2のみの入力を認める</p>
+<p>下限値欄のみの入力、上限値欄のみの入力を認める</p>
 </li>
 <li>
 <p>商品名の検索フォームに入力がある場合のみ、両方とも空欄を認める</p>
 </li>
 <li>
-<p>欄1と欄2両方に入力があるとき、欄2の入力価格が欄1の入力価格以上であること</p>
+<p>下限値欄と上限値欄の両方に入力があるとき、上限値欄の入力価格が下限値欄の入力価格以上であること</p>
 </li>
 </ul>
 </div>
@@ -1176,7 +1166,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-01-09 14:18:41 +0900
+Last updated 2020-01-10 16:50:27 +0900
 </div>
 </div>
 </body>

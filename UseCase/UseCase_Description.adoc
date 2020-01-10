@@ -70,7 +70,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 |ユースケースID
 |UC01
 
-|機能名称
+|ユースケース名称
 |商品を一覧表示する
 
 |概要
@@ -84,6 +84,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 
 |トリガー
 |* ECサイトのURLを指定・アクセス
+* <<image_buy,購入明細画面>>で「商品一覧へ戻る」ボタンを押下する
 
 |事前条件
 |Webブラウザを起動している
@@ -92,7 +93,6 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 |
 . 利用者はECサイトのURLを指定してアクセスする
 . <<image_viewall,商品一覧画面>>が表示される。
-. シナリオを終了する。
 
 |代替フロー
 |なし
@@ -124,12 +124,13 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |1
 |商品情報表示領域
 |表示領域
-|商品の名前、価格、画像を表示する
+|商品の名前、税込価格、税抜価格、画像を表示する
 
 |2
 |選択ボックス
 |チェックボックス
-|対応する商品が「選択済み」状態になる
+|クリックすると対応する商品が「選択済み」状態になる
+※再度クリックすると選択は解除される
 
 |3
 |購入ボタン
@@ -139,17 +140,17 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |4
 |検索フォーム(商品名)
 |入力欄
-|文字列,数字を入力して検索条件を指定する
+|文字列,数字を入力して検索条件(商品名)を指定する
 
 |5
-|検索フォーム(価格) 欄1
+|検索フォーム(価格) 下限値欄
 |入力欄
-|整数を入力して検索条件を指定する
+|整数を入力して検索条件(価格の下限値)を指定する
 
 |6
-|検索フォーム(価格) 欄2
+|検索フォーム(価格) 上限値欄
 |入力欄
-|整数を入力して検索条件を指定する
+|整数を入力して検索条件(価格の上限値)を指定する
 
 |7
 |検索ボタン
@@ -198,7 +199,6 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 ** [red]##「選択済み」状態の商品が無い場合## ⇒ <<exflow_uc02,例外フロー1に移行>>
 ** [red]##(want)選択した商品の在庫が無い場合## ⇒ <<exflow_uc02,例外フロー2に移行>>
 . <<image_buy,購入明細画面>>に遷移し、購入日時、購入商品一覧、合計金額を表示する
-. シナリオを終了する
 
 |代替フロー
 |なし
@@ -242,7 +242,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 
 購入明細画面のイメージと、実現する機能は以下の通りである。
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_buy.PNG[buy]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_buy.PNG[buy]
 
 [cols="3*,3a", options="header"]
 |===
@@ -254,11 +254,11 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |1
 |購入明細表示領域
 |表示領域
-|購入日時、購入商品一覧、合計金額を表示する
+|購入日時、購入商品一覧、合計金額(税込金額と税抜金額の両方)を表示する
 
 
 |2
-|ショップに戻るボタン
+|全商品一覧に戻るボタン
 |ボタン
 |クリックすると<<image_viewall,商品一覧画面>>に遷移する
 
@@ -299,31 +299,30 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 . 利用者はブラウザ上で検索ボタンを押下する
 ** [red]##すべての検索フォームに入力が無かった場合##　⇒ <<altflow_uc03,代替フロー1に移行>>
 ** [red]##検索フォーム(価格)に整数以外が入力されている場合##　⇒ <<altflow_uc03,代替フロー2に移行>>
-** [red]##検索フォーム(価格)欄1と欄2両方に入力があり、欄2の入力価格が欄1の入力価格より小さい場合
+** [red]##検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
 ##　⇒ <<altflow_uc03,代替フロー3に移行>>
 
 . 検索フォームの入力内容に対応する商品のみを<<image_viewall,商品一覧画面>>の「①商品情報表示領域」に新しく表示する
 +
 (参考画像：検索実行後の画面イメージ)
 +
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_search.PNG[search]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG[search]
 
-. シナリオを終了する
+
 
 |代替フロー
 |
 [[altflow_uc03]]
 . すべての検索フォームに入力が無かった場合
 .. エラーメッセージ03をメッセージ領域に表示する
-.. 基本フローのステップ4に移動する(シナリオを終了する)
 
 . 検索フォーム(価格)に整数以外が入力されている場合
 .. エラーメッセージ04をメッセージ領域に表示する
-.. 基本フローのステップ4に移動する(シナリオを終了する)
 
-. 検索フォーム(価格)欄1と欄2両方に入力があるとき、欄2の入力価格が欄1の入力価格より小さい場合
-.. エラーメッセージ03をメッセージ領域に表示する
-.. 基本フローのステップ4に移動する(シナリオを終了する)
+
+. 検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
+.. エラーメッセージ05をメッセージ領域に表示する
+
 
 |例外フロー
 |なし
@@ -351,6 +350,9 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 (価格フォームの左側に下限値、右側に上限値を入力してください)
 ....
 
+商品名の検索フォームと価格の検索フォーム両方に正しい入力があった場合は、
+商品名での絞り込みと価格での絞り込みを同時に行う(AND検索を実行する)。
+
 ※ 検索フォームのバリデーション条件を以下に定義する。
 
 * 検索フォーム(商品名)
@@ -359,9 +361,10 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 
 * 検索フォーム(価格)　
 ** 入力は整数であること
-** 欄1のみの入力、欄2のみの入力を認める
+** 下限値欄のみの入力、上限値欄のみの入力を認める
 ** 商品名の検索フォームに入力がある場合のみ、両方とも空欄を認める
-** 欄1と欄2両方に入力があるとき、欄2の入力価格が欄1の入力価格以上であること
+** 下限値欄と上限値欄の両方に入力があるとき、上限値欄の入力価格が下限値欄の入力価格以上であること
+
 
 |===
 ''''
