@@ -599,7 +599,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>ECサイトのURLを指定・アクセス</p>
 </li>
 <li>
-<p><a href="#image_buy">購入明細画面</a>で「商品一覧へ戻る」ボタンを押下する</p>
+<p><a href="#image_buy">購入明細画面</a>で「全商品一覧へ戻る」ボタンを押下する</p>
 </li>
 </ul>
 </div></div></td>
@@ -675,6 +675,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>商品の名前、税込価格、税抜価格、画像を表示する</p>
+</div>
+<div class="paragraph">
+<p>※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。
+※ 商品情報は、最大で1ページあたり12商品分表示する</p>
 </div></div></td>
 </tr>
 <tr>
@@ -724,6 +728,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">ボタン</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>クリックすると「<a href="#_商品を検索して表示する">商品を検索して表示する</a>」機能を実行する</p>
+</div>
+<div class="paragraph">
+<p>※検索条件の指定が無いとき(すべての検索フォームに入力が無いとき)、ボタンはクリックできない</p>
 </div></div></td>
 </tr>
 <tr>
@@ -895,7 +902,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_buy.PNG" alt="buy">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_buy.PNG" alt="buy">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1008,14 +1015,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red">すべての検索フォームに入力が無かった場合</span>　⇒ <a href="#altflow_uc03">代替フロー1に移行</a></p>
-</li>
-<li>
-<p><span class="red">検索フォーム(価格)に整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc03">代替フロー2に移行</a></p>
+<p><span class="red">検索フォーム(価格)に整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc03">代替フロー1に移行</a></p>
 </li>
 <li>
 <p><span class="red">検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
-</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
+</span>　⇒ <a href="#altflow_uc03">代替フロー2に移行</a></p>
 </li>
 </ul>
 </div>
@@ -1027,7 +1031,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_search.PNG" alt="search">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG" alt="search">
 </div>
 </div>
 </li>
@@ -1039,7 +1043,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><div class="content"><div id="altflow_uc03" class="olist arabic">
 <ol class="arabic">
 <li>
-<p>すべての検索フォームに入力が無かった場合</p>
+<p>検索フォーム(価格)に整数以外が入力されている場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1049,21 +1053,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>検索フォーム(価格)に整数以外が入力されている場合</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>エラーメッセージ04をメッセージ領域に表示する</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
 <p>検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ05をメッセージ領域に表示する</p>
+<p>エラーメッセージ04をメッセージ領域に表示する</p>
 </li>
 </ol>
 </div>
@@ -1090,21 +1084,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>検索フォームに入力がありません
-(商品の名前、価格を指定してください)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>エラーメッセージ04</p>
-</div>
-<div class="literalblock">
-<div class="content">
 <pre>検索フォーム(価格)の入力が正しくありません
 (整数で価格を指定してください)</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>エラーメッセージ05</p>
+<p>エラーメッセージ04</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1117,6 +1102,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 商品名での絞り込みと価格での絞り込みを同時に行う(AND検索を実行する)。</p>
 </div>
 <div class="paragraph">
+<p>商品名検索、価格検索、両方を用いたAND検索はそれぞれ部分一致検索を実行する。</p>
+</div>
+<div class="paragraph">
+<p>アルファベットを含む文字列で商品名検索をするとき、大文字と小文字は区別しない。</p>
+</div>
+<div class="paragraph">
 <p>※ 検索フォームのバリデーション条件を以下に定義する。</p>
 </div>
 <div class="ulist">
@@ -1126,10 +1117,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>文字列と数字両方の入力を受け付ける</p>
+<p>シングルクォーテーション(')、ダブルクォーテーション(")を除く文字列の入力を受け付ける</p>
 </li>
 <li>
 <p>価格の検索フォームに入力がある場合のみ、空欄を認める</p>
+</li>
+<li>
+<p>入力可能文字数制限：250文字まで</p>
 </li>
 </ul>
 </div>
@@ -1150,6 +1144,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>下限値欄と上限値欄の両方に入力があるとき、上限値欄の入力価格が下限値欄の入力価格以上であること</p>
 </li>
+<li>
+<p>入力可能文字数制限：下限値欄、上限値欄ともに9文字まで</p>
+</li>
 </ul>
 </div>
 </li>
@@ -1166,7 +1163,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-01-10 16:50:27 +0900
+Last updated 2020-01-14 16:52:52 +0900
 </div>
 </div>
 </body>
