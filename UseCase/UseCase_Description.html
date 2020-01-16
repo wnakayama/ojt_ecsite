@@ -677,8 +677,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>商品の名前、税込価格、税抜価格、画像を表示する</p>
 </div>
 <div class="paragraph">
-<p>※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。<br>
-※ 商品情報は、最大で1ページあたり12商品分表示する</p>
+<p>※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。<br></p>
+</div>
+<div class="paragraph">
+<p>※ 商品情報は、最大で1ページあたり12商品分表示する<br></p>
+</div>
+<div class="paragraph">
+<p>※ 商品データが0件のとき、以下のメッセージを表示する</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>商品データがありません</pre>
+</div>
 </div></div></td>
 </tr>
 <tr>
@@ -1036,6 +1046,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG" alt="search">
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="red">検索条件を満たす商品データが0件の場合</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div></div></td>
@@ -1070,7 +1087,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ol>
 </div>
 </li>
+<li>
+<p>検索条件を満たす商品データが0件の場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>以下のメッセージを<a href="#image_viewall">商品一覧画面</a>の「①商品情報表示領域」に新しく表示する</p>
+</li>
 </ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ご指定の検索条件に該当する商品は見つかりませんでした</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>　</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1171,7 +1206,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-01-15 15:24:28 +0900
+Last updated 2020-01-16 09:47:25 +0900
 </div>
 </div>
 </body>

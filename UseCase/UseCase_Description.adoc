@@ -127,7 +127,13 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |商品の名前、税込価格、税抜価格、画像を表示する
 
 ※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。 + 
-※ 商品情報は、最大で1ページあたり12商品分表示する
+
+※ 商品情報は、最大で1ページあたり12商品分表示する +
+
+※ 商品データが0件のとき、以下のメッセージを表示する
+....
+商品データがありません
+....
 
 |2
 |選択ボックス
@@ -314,6 +320,8 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 +
 image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG[search]
 
+** [red]##検索条件を満たす商品データが0件の場合##　⇒ <<altflow_uc03,代替フロー3に移行>>
+
 
 
 |代替フロー
@@ -329,6 +337,12 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 .. エラーメッセージ04をメッセージ領域に表示する
 .. <<mainflow_uc03,基本フロー>>のステップ1に戻る
 
+. 検索条件を満たす商品データが0件の場合
+.. 以下のメッセージを<<image_viewall,商品一覧画面>>の「①商品情報表示領域」に新しく表示する
+....
+ご指定の検索条件に該当する商品は見つかりませんでした
+....
+　
 
 |例外フロー
 |なし
