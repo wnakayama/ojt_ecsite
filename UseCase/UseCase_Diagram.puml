@@ -1,0 +1,32 @@
+@startuml
+
+title ECサイト_ユースケース図
+:利用者: as user
+
+rectangle ECサイト {
+
+    (商品を一覧表示する) as (showProduct)
+    (商品を購入する) as (buyProduct)
+    (商品を検索する) as (searchProduct)
+
+    left to right direction
+    user --> showProduct
+    user --> buyProduct
+    user --> searchProduct
+
+
+    note right of showProduct
+    UC01
+    end note
+
+    note right of buyProduct
+    UC02
+    end note
+
+    
+    note right of searchProduct
+    UC03
+    end note
+
+}
+@enduml
