@@ -17,7 +17,7 @@
 :docname: = asciidoc-ECサイト機能仕様書
 :author: Nakayama
 :revnumber: 1.0
-:revdate: 2020/01/09
+:revdate: 2020/01/17
 
 = ECサイト 機能仕様書
 
@@ -110,7 +110,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 
 ==== 画面仕様：商品一覧画面
 
-商品一覧画面のイメージと、実現する機能は以下の通りである。
+商品一覧画面の仕様と、実現する機能は以下の通りである。
 
 image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_viewall.PNG[image_viewall]
 
@@ -126,14 +126,32 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |表示領域
 |商品の名前、税込価格、税抜価格、画像を表示する
 
-※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。 + 
+仕様は以下の通りである
 
-※ 商品情報は、最大で1ページあたり12商品分表示する +
+* 商品名の最大文字数: 50文字
 
-※ 商品データが0件のとき、以下のメッセージを表示する
+* 価格の最大文字数: 9文字
+
+* 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする
+
+* 商品情報は、最大で1ページあたり12商品分表示する
+
+* 税込価格、税抜価格は一の位から3桁毎にカンマで区切る
+
+* 30文字以上の商品名は、31文字目以降を「…」で省略する
+
+* 商品名にマウスオーバーすることで、商品名全体が表示される
+
+* 商品データが0件のとき、以下のメッセージを表示する
 ....
 商品データがありません
 ....
+
+(参考画像：メッセージ表示後の画面イメージ)
+
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noProduct.PNG[noProduct]
+
+　
 
 |2
 |選択ボックス
@@ -150,7 +168,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |4
 |検索フォーム(商品名)
 |入力欄
-|文字列,数字を入力して検索条件(商品名)を指定する
+|文字列を入力して検索条件(商品名)を指定する
 
 |5
 |検索フォーム(価格) 下限値欄
@@ -173,6 +191,10 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |メッセージ領域
 |表示領域
 |ECサイトから利用者へのメッセージを表示する
+
+(参考画像：メッセージ表示後の画面イメージ)
+
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_alert.png[alert]
 
 
 |===
@@ -221,11 +243,11 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 [[exflow_uc02]]
 
 . 購入する商品を選択していない場合
-.. 購入の処理は実施せず、エラーメッセージ01をメッセージ領域に表示する
+.. 購入の処理は実施せず、エラーメッセージ01を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
 .. <<image_viewall,商品一覧画面>>から遷移せずにシナリオを終了する
 
 . (want)選択した商品の在庫が無い場合
-.. 購入の処理は実施せず、エラーメッセージ02をメッセージ領域に表示する
+.. 購入の処理は実施せず、エラーメッセージ02を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
 .. <<image_viewall,商品一覧画面>>から遷移せずにシナリオを終了する
 
 |事後条件
@@ -315,12 +337,12 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 ##　⇒ <<altflow_uc03,代替フロー2に移行>>
 
 . 検索フォームの入力内容に対応する商品のみを<<image_viewall,商品一覧画面>>の「①商品情報表示領域」に新しく表示する
+** [red]##検索条件を満たす商品データが0件の場合##　⇒ <<altflow_uc03,代替フロー3に移行>>
 +
 (参考画像：検索実行後の画面イメージ)
 +
 image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG[search]
 
-** [red]##検索条件を満たす商品データが0件の場合##　⇒ <<altflow_uc03,代替フロー3に移行>>
 
 
 
@@ -329,12 +351,12 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 [[altflow_uc03]]
 
 . 検索フォーム(価格)に整数以外が入力されている場合
-.. エラーメッセージ03をメッセージ領域に表示する
+.. エラーメッセージ03を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc03,基本フロー>>のステップ1に戻る
 
 
 . 検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
-.. エラーメッセージ04をメッセージ領域に表示する
+.. エラーメッセージ04を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc03,基本フロー>>のステップ1に戻る
 
 . 検索条件を満たす商品データが0件の場合
@@ -342,6 +364,11 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 ....
 ご指定の検索条件に該当する商品は見つかりませんでした
 ....
+
+(参考画像：メッセージ表示後の画面イメージ)
+
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noSearchResult.PNG[alert]
+
 　
 
 |例外フロー

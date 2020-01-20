@@ -444,7 +444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Nakayama</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2020/01/09</span>
+<span id="revdate">2020/01/17</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">目次</div>
@@ -646,7 +646,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect3">
 <h4 id="image_viewall"><a class="link" href="#image_viewall">5.1.1. 画面仕様：商品一覧画面</a></h4>
 <div class="paragraph">
-<p>商品一覧画面のイメージと、実現する機能は以下の通りである。</p>
+<p>商品一覧画面の仕様と、実現する機能は以下の通りである。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -677,18 +677,51 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>商品の名前、税込価格、税抜価格、画像を表示する</p>
 </div>
 <div class="paragraph">
-<p>※ 商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする。<br></p>
+<p>仕様は以下の通りである</p>
 </div>
-<div class="paragraph">
-<p>※ 商品情報は、最大で1ページあたり12商品分表示する<br></p>
-</div>
-<div class="paragraph">
-<p>※ 商品データが0件のとき、以下のメッセージを表示する</p>
+<div class="ulist">
+<ul>
+<li>
+<p>商品名の最大文字数: 50文字</p>
+</li>
+<li>
+<p>価格の最大文字数: 9文字</p>
+</li>
+<li>
+<p>商品情報表示の形式は「価格が安い順、横方向に4商品分ずつ並べて表示」とする</p>
+</li>
+<li>
+<p>商品情報は、最大で1ページあたり12商品分表示する</p>
+</li>
+<li>
+<p>税込価格、税抜価格は一の位から3桁毎にカンマで区切る</p>
+</li>
+<li>
+<p>30文字以上の商品名は、31文字目以降を「…」で省略する</p>
+</li>
+<li>
+<p>商品名にマウスオーバーすることで、商品名全体が表示される</p>
+</li>
+<li>
+<p>商品データが0件のとき、以下のメッセージを表示する</p>
+</li>
+</ul>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>商品データがありません</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>(参考画像：メッセージ表示後の画面イメージ)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noProduct.PNG" alt="noProduct">
+</div>
+</div>
+<div class="paragraph">
+<p>　</p>
 </div></div></td>
 </tr>
 <tr>
@@ -715,7 +748,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">検索フォーム(商品名)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>文字列,数字を入力して検索条件(商品名)を指定する</p>
+<p>文字列を入力して検索条件(商品名)を指定する</p>
 </div></div></td>
 </tr>
 <tr>
@@ -751,6 +784,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>ECサイトから利用者へのメッセージを表示する</p>
+</div>
+<div class="paragraph">
+<p>(参考画像：メッセージ表示後の画面イメージ)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_alert.png" alt="alert">
+</div>
 </div></div></td>
 </tr>
 </tbody>
@@ -853,7 +894,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>購入の処理は実施せず、エラーメッセージ01をメッセージ領域に表示する</p>
+<p>購入の処理は実施せず、エラーメッセージ01を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#image_viewall">商品一覧画面</a>から遷移せずにシナリオを終了する</p>
@@ -866,7 +907,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>購入の処理は実施せず、エラーメッセージ02をメッセージ領域に表示する</p>
+<p>購入の処理は実施せず、エラーメッセージ02を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#image_viewall">商品一覧画面</a>から遷移せずにシナリオを終了する</p>
@@ -1038,6 +1079,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>検索フォームの入力内容に対応する商品のみを<a href="#image_viewall">商品一覧画面</a>の「①商品情報表示領域」に新しく表示する</p>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="red">検索条件を満たす商品データが0件の場合</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
 <div class="paragraph">
 <p>(参考画像：検索実行後の画面イメージ)</p>
 </div>
@@ -1046,10 +1091,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG" alt="search">
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red">検索条件を満たす商品データが0件の場合</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
 </li>
 </ul>
 </div>
@@ -1066,7 +1107,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ03をメッセージ領域に表示する</p>
+<p>エラーメッセージ03を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc03">基本フロー</a>のステップ1に戻る</p>
@@ -1079,7 +1120,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ04をメッセージ領域に表示する</p>
+<p>エラーメッセージ04を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc03">基本フロー</a>のステップ1に戻る</p>
@@ -1102,6 +1143,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="literalblock">
 <div class="content">
 <pre>ご指定の検索条件に該当する商品は見つかりませんでした</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(参考画像：メッセージ表示後の画面イメージ)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noSearchResult.PNG" alt="alert">
 </div>
 </div>
 <div class="paragraph">
@@ -1206,7 +1255,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-01-16 09:47:25 +0900
+Last updated 2020-01-17 14:58:36 +0900
 </div>
 </div>
 </body>
