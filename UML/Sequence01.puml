@@ -7,14 +7,14 @@ actor 利用者
 activate Browser
 note right of Browser
 html表示
-onloadですぐにjQuery.get()をやらせる
+jQuery.getメソッドを実行する
 end note
 
-Browser -> ViewAllProductServlet : $.get()でリクエスト送信
+Browser -> ViewAllProductServlet : jQuery.getメソッドでリクエストを送信
 activate ViewAllProductServlet
 
 note left of ViewAllProductServlet
-$.get
+jQuery.getメソッド
 第一引数(url)：http://localhost:8080/ojt_ecsite/ViewAllProductServlet
 第二引数(data)：無し
 end note
@@ -39,10 +39,11 @@ end note
 Browser <- ViewAllProductServlet : レスポンス(JSON)
 
 note left of ViewAllProductServlet
+jQuery.getメソッド
 第三引数(callback)：通信成功時に実行するコールバック関数
 	.done(function (data) {
 		//jQueryのセレクタを使って商品名、税込み価格、税抜き価格の行を指定
-    		//返ってきたdata(json)を使って商品表示領域を動的に変える
+    		//返ってきたJSONデータを使って商品表示領域を動的に変える
 	}).fail(function (error) {
 		// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
 		console.log(error);
