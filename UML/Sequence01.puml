@@ -19,7 +19,7 @@ jQuery.getメソッド
 第二引数(data)：無し
 end note
 
-collections 商品データ.json
+
 ViewAllProductServlet -> 商品データ.json : ファイル読込
 ViewAllProductServlet -> Product : JSONデータの各値を渡す(商品ID, 商品名, 商品カテゴリ, 税抜き価格)
 activate Product
@@ -55,7 +55,7 @@ deactivate ViewAllProductServlet
 
 利用者 <- Browser
 note right of 利用者
-完全な商品一覧画面がWebブラウザに表示される
+jsonファイルから読み込んだ全ての商品情報を含んだ商品一覧画面がWebブラウザに表示される
 end note
 
 deactivate Browser
