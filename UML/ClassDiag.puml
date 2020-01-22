@@ -11,8 +11,8 @@ class ViewAllProductServlet {
 
 ViewAllProductServlet ..> Product
 class Product {
-    -{static}final double 軽減税率
-    -{static}final double 標準税率
+    ' -{static}final double 軽減税率
+    ' -{static}final double 標準税率
 
     -final int 商品ID
     -final String 商品名
@@ -21,7 +21,15 @@ class Product {
     -final double 税込み価格
 
     -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
-    -double 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+    ' -double 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+}
+
+Product ..> 税込み価格カリキュレータ
+class 税込み価格カリキュレータ {
+    -{static}final double 軽減税率
+    -{static}final double 標準税率
+
+    +double 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
 }
 
 @enduml

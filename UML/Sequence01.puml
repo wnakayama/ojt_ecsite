@@ -5,58 +5,61 @@ actor 利用者
 
 利用者 -> Browser : URL入力「http:// ~~~ / ecsite.html」
 activate Browser
-note right of Browser
-html表示
-jQuery.getメソッドを実行する
-end note
+	note right of Browser
+	html表示
+	jQuery.getメソッドを実行する
+	end note
 
 Browser -> ViewAllProductServlet : jQuery.getメソッドでリクエストを送信
 activate ViewAllProductServlet
 
-note left of ViewAllProductServlet
-jQuery.getメソッド
-第一引数(url)：http://localhost:8080/ojt_ecsite/ViewAllProductServlet
-第二引数(data)：無し
-end note
+	note left of ViewAllProductServlet
+	jQuery.getメソッド
+	第一引数(url)：http://localhost:8080/ojt_ecsite/ViewAllProductServlet
+	第二引数(data)：無し
+	end note
 
 
 ViewAllProductServlet -> 商品データ.json : ファイル読込
 ViewAllProductServlet -> Product : JSONデータの各値を渡す(商品ID, 商品名, 商品カテゴリ, 税抜き価格)
 activate Product
+Product -> 税込み価格カリキュレータ : 商品カテゴリ, 税抜き価格
+activate 税込み価格カリキュレータ
 
+	note right of Product
+	元のJSONデータに無い「税込み価格」を
+	新しく算出する
+	end note
 
-note left of Product
-元のJSONデータに「税込み価格」は無いので、
-Productクラス内のメソッドで税込み価格を新しく算出する
-end note
+Product <- 税込み価格カリキュレータ : 税込み価格
+deactivate 税込み価格カリキュレータ
 ViewAllProductServlet <- Product : Productオブジェクトを返却(商品ID, 商品名, 商品カテゴリ, 税抜き価格, **税込み価格**)
-
 deactivate Product
 
-note right of ViewAllProductServlet
-ProductオブジェクトをJSON文字列に変換
-end note
-Browser <- ViewAllProductServlet : レスポンス(JSON)
+	note right of ViewAllProductServlet
+	ProductオブジェクトをJSON文字列に変換
+	end note
+	Browser <- ViewAllProductServlet : レスポンス(JSON)
 
-note left of ViewAllProductServlet
-jQuery.getメソッド
-第三引数(callback)：通信成功時に実行するコールバック関数
-	.done(function (data) {
-		//jQueryのセレクタを使って商品名、税込み価格、税抜き価格の行を指定
-    		//返ってきたJSONデータを使って商品表示領域を動的に変える
-	}).fail(function (error) {
-		// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
-		console.log(error);
-	});
-}
-end note
+	note left of ViewAllProductServlet
+	jQuery.getメソッド
+	第三引数(callback)：通信成功時に実行するコールバック関数
+		.done(function (data) {
+			//jQueryのセレクタを使って商品名、税込み価格、税抜き価格の行を指定
+				//返ってきたJSONデータを使って商品表示領域を動的に変える
+		}).fail(function (error) {
+			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
+			console.log(error);
+		});
+	}
+	end note
 
 deactivate ViewAllProductServlet
 
 利用者 <- Browser
-note right of 利用者
-jsonファイルから読み込んだ全ての商品情報を含んだ商品一覧画面がWebブラウザに表示される
-end note
+	note right of 利用者
+	jsonファイルから読み込んだ全ての商品情報を含んだ商品一覧画面がWebブラウザに表示される
+	end note
 
 deactivate Browser
 
