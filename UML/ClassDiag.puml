@@ -5,15 +5,10 @@ class ViewAllProductServlet {
     +{static} final long serialVersionUID
 
     #void doGet(HttpServletRequest request, HttpServletResponse response)
-    ' -Product JSONを商品オブジェクトに変換する(String jsonstr)
-    ' -String 商品オブジェクトをJSONに変換する(Product product)
 }
 
 ViewAllProductServlet ..> Product
 class Product {
-    ' -{static}final double 軽減税率
-    ' -{static}final double 標準税率
-
     -final int 商品ID
     -final String 商品名
     -final String 商品カテゴリ
@@ -21,7 +16,6 @@ class Product {
     -final double 税込み価格
 
     -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
-    ' -double 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
 }
 
 Product ..> 税込み価格カリキュレータ
