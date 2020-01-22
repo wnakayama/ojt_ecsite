@@ -13,7 +13,7 @@ class Product {
     -final String 商品名
     -final String 商品カテゴリ
     -final int 税抜き価格
-    -final double 税込み価格
+    -final int 税込み価格
 
     -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
 }
@@ -23,7 +23,12 @@ class 税込み価格カリキュレータ {
     -{static}final double 軽減税率
     -{static}final double 標準税率
 
-    +double 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+    +int 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+}
+
+ViewAllProductServlet ..> PriceComparator
+class PriceComparator {
+    +int 価格を比較する(Product 商品1, Product 商品2)
 }
 
 @enduml
