@@ -10,7 +10,8 @@ activate Browser
 	jQuery.getメソッドを実行する
 	end note
 
-Browser -> ViewAllProductServlet : jQuery.getメソッドでリクエストを送信
+Browser ->> ViewAllProductServlet : jQuery.getメソッドでリクエストを送信
+deactivate Browser
 activate ViewAllProductServlet
 
 	note left of ViewAllProductServlet
@@ -67,7 +68,10 @@ deactivate PriceComparator
 	note over ViewAllProductServlet
 	ProductオブジェクトのArrayListをJSON文字列に変換
 	end note
-	Browser <-- ViewAllProductServlet : レスポンス(JSON)
+
+Browser <<-- ViewAllProductServlet : レスポンス(JSON)
+deactivate ViewAllProductServlet
+activate Browser
 
 	note left of ViewAllProductServlet
 	jQuery.getメソッド
@@ -82,7 +86,6 @@ deactivate PriceComparator
 	}
 	end note
 
-deactivate ViewAllProductServlet
 
 利用者 <-- Browser
 	note right of 利用者
