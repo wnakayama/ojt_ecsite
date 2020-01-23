@@ -21,48 +21,51 @@ activate ViewAllProductServlet
 
 
 	note right of ViewAllProductServlet
-	csvParser(自作ライブラリ)のJSON変換を使用
-	読み込むcsvファイルを指定 
+	csvParser(自作ライブラリ)を使用
 	end note
 
-ViewAllProductServlet -> 商品データ.csv
+ViewAllProductServlet -> CsvParser : CSVを2次元配列に変換する(String 読み込むCSVファイルのパス)
+activate CsvParser
 
-	note over ViewAllProductServlet
-	CSVをJSON形式に変換
-	end note
+ViewAllProductServlet <-- CsvParser : return String[][] 商品データを格納した2次元配列
+deactivate CsvParser
 
-ViewAllProductServlet -> Product : ObjectMapper.readValue
-activate Product
-
-	note left of Product
-	商品ID, 商品名, 商品カテゴリ, 税抜き価格
-	end note
-
-Product -> 税込み価格カリキュレータ : 税込み価格を算出する(String 商品カテゴリ, int 税抜き価格)
+loop 読み込んだCSVファイルの行数(商品データの件数)分実施する
+ViewAllProductServlet -> 税込み価格カリキュレータ : 税込み価格を算出する(商品カテゴリ, 税抜き価格)
 activate 税込み価格カリキュレータ
 
 	note over of 税込み価格カリキュレータ
-	元のJSONデータに無い「税込み価格」を
+	商品カテゴリを見て適用する税率を判断し、
+	CSVファイルに無い「税込み価格」を
 	新しく算出する
 	(小数点以下は切り捨て)
 	end note
 
-Product <-- 税込み価格カリキュレータ : return int 税込み価格
+ViewAllProductServlet <-- 税込み価格カリキュレータ : return int 税込み価格
 deactivate 税込み価格カリキュレータ
-ViewAllProductServlet <-- Product : List<Product>
+
+ViewAllProductServlet -> Product : new Product (商品ID, 商品名, 商品カテゴリ, 税抜き価格, 税込み価格)
+activate Product
+
+ViewAllProductServlet <-- Product : return Product
 deactivate Product
+	note over ViewAllProductServlet
+	ProductオブジェクトをArrayListに追加
+	end note
+end loop
+
 ViewAllProductServlet -> PriceComparator : Product 商品1,Product 商品2
 activate PriceComparator
 ViewAllProductServlet <-- PriceComparator : int 比較結果
 deactivate PriceComparator
 
 	note over ViewAllProductServlet
-	Productオブジェクトを、価格が安い順に並び換える
+	ProductオブジェクトのArrayListを、価格が安い順に並び換える
 	Collections.sort(productList, new PriceComparator());
 	end note
 
 	note over ViewAllProductServlet
-	ProductオブジェクトをJSON文字列に変換
+	ProductオブジェクトのArrayListをJSON文字列に変換
 	end note
 	Browser <-- ViewAllProductServlet : レスポンス(JSON)
 
@@ -71,7 +74,7 @@ deactivate PriceComparator
 	第三引数(callback)：通信成功時に実行するコールバック関数
 		.done(function (data) {
 			//jQueryのセレクタを使って商品名、税込み価格、税抜き価格の行を指定
-				//返ってきたJSONデータを使って商品表示領域を動的に変える
+				//返ってきたJSON文字列を使って商品表示領域を動的に変える
 		}).fail(function (error) {
 			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
 			console.log(error);
@@ -83,7 +86,7 @@ deactivate ViewAllProductServlet
 
 利用者 <-- Browser
 	note right of 利用者
-	jsonファイルから読み込んだ全ての商品情報を含んだ商品一覧画面がWebブラウザに表示される
+	CSVファイルにあった全ての商品情報を含んだ商品一覧画面がWebブラウザに表示される
 	end note
 
 deactivate Browser
