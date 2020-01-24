@@ -1,0 +1,21 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+!ojt-csvParser.jar
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Build
+out
+build
+bin
+
+# Other
+*.log
+*.swp
+*.bak
