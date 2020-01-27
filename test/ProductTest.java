@@ -6,56 +6,45 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * 税込み価格を比較するクラスのテスト.
+ * 商品データを扱うデータクラスのテスト.
  *
  * @author nakayama
  *
  */
-public class PriceComparatorTest {
+public class ProductTest {
 
-    /**
-     * 2つの商品データのうち,1つ目の商品の税込み価格が高いとき,compareメソッドは1を返却する.
-     */
     @Test
-    public void firstProductIsMoreExpensive() {
-        int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax + 1);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax);
-        PriceComparator priceComparator = new PriceComparator();
-
-        int compareResult = priceComparator.compare(firstProduct, secondProduct);
-        assertThat(compareResult, is(1));
+    public void testGetProductID() {
+        Product product = new Product(1, null, null, 0, 0);
+        int result = product.getProductID();
+        assertThat(result, is(1));
     }
 
-    /**
-     * 2つの商品データの税込み価格が同じであるとき,compareメソッドは1を返却する.
-     */
     @Test
-    public void evenPrice() {
-        int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax);
-        PriceComparator priceComparator = new PriceComparator();
-
-        int compareResult = priceComparator.compare(firstProduct, secondProduct);
-
-        // p1.getPriceIncludeTax() < p2.getPriceIncludeTax()) ? -1 : 1;
-        // 上記のようにcompareメソッドを実装するため,同じ価格であっても0ではなく1を返却することを期待する.
-        assertThat(compareResult, is(1));
+    public void testGetName() {
+        Product product = new Product(0, "きのみジュース", null, 0, 0);
+        String result = product.getName();
+        assertThat(result, is("きのみジュース"));
     }
 
-    /**
-     * 2つの商品データのうち,2つ目の商品の税込み価格が高いとき,compareメソッドは-1を返却する.
-     */
     @Test
-    public void secondProductIsMoreExpensive() {
-        int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax + 1);
-        PriceComparator priceComparator = new PriceComparator();
-
-        int compareResult = priceComparator.compare(firstProduct, secondProduct);
-        assertThat(compareResult, is(-1));
+    public void testGetCategory() {
+        Product product = new Product(0, null, "酒類", 0, 0);
+        String result = product.getCategory();
+        assertThat(result, is("酒類"));
     }
 
+    @Test
+    public void testGetPriceWithoutTax() {
+        Product product = new Product(0, null, null, 100, 0);
+        int result = product.getPriceWithoutTax();
+        assertThat(result, is(100));
+    }
+
+    @Test
+    public void testGetPriceIncludeTax() {
+        Product product = new Product(1, null, null, 0, 108);
+        int result = product.getPriceIncludeTax();
+        assertThat(result, is(108));
+    }
 }
