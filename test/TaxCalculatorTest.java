@@ -43,7 +43,7 @@ public class TaxCalculatorTest {
     }
 
     /**
-     * 商品カテゴリがnullのとき,TaxCalculatorクラス単体ではNullPointerExceptionが発生する
+     * 商品カテゴリがnullのとき,TaxCalculatorクラス単体ではNullPointerExceptionが発生する.
      */
     @Test(expected = NullPointerException.class)
     public void categoryIsNull() {
