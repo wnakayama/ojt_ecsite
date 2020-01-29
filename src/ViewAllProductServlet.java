@@ -28,6 +28,12 @@ import readCSV_practice.IrregularColumnsException;
 public class ViewAllProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    static final String CSVPATH = "c:\\csvTest\\ecData.csv";
+    static final int COLMUN_ID = 0;
+    static final int COLMUN_NAME = 1;
+    static final int COLMUN_CATEGORY = 2;
+    static final int COLMUN_PRICE_EXCLUDE_TAX = 3;
+
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      *      response)
@@ -37,28 +43,32 @@ public class ViewAllProductServlet extends HttpServlet {
         CsvParser csvParser = new CsvParser();
         String[][] sample2dArray = null;
         List<Product> productList = new ArrayList<>();
+
         try {
-            sample2dArray = csvParser.convertTo2dArray("c:\\csvTest\\ecData.csv");
+            sample2dArray = csvParser.convertTo2dArray(CSVPATH);
 
             // 商品データを1レコードずつProductオブジェクトとして初期化する
+            TaxCalculator taxCalculator = new TaxCalculator();
             for (int i = 0; i < sample2dArray.length; i++) {
-                int productID = Integer.parseInt(sample2dArray[i][0]);
-                String name = sample2dArray[i][1];
-                String category = sample2dArray[i][2];
-                int priceWithoutTax = Integer.parseInt(sample2dArray[i][3]);
+                int productID = Integer.parseInt(sample2dArray[i][COLMUN_ID]);
+                String name = sample2dArray[i][COLMUN_NAME];
+                String category = sample2dArray[i][COLMUN_CATEGORY];
+                int priceExcludeTax = Integer.parseInt(sample2dArray[i][COLMUN_PRICE_EXCLUDE_TAX]);
+                int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-                TaxCalculator taxCalculator = new TaxCalculator();
-                int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceWithoutTax);
-
-                Product product = new Product(productID, name, category, priceWithoutTax, priceIncludeTax);
+                Product product = new Product(productID, name, category, priceExcludeTax, priceIncludeTax);
                 productList.add(product);
             }
             // Productオブジェクトのコレクションを税込み価格が安い順にソートする
             Collections.sort(productList, new PriceComparator());
 
         } catch (IOException e) {
+            // CSVファイルの読み込みに失敗した場合と指定したファイルが見つからなかった場合にスローされる例外.
+            // 開発者向けに,コンソールで原因を伝えるメッセージが出力される.
             e.printStackTrace();
         } catch (IrregularColumnsException e) {
+            // CSVファイルの列数が揃っていないときに自作ライブラリCsvParserがスローする例外.
+            // 開発者向けに,コンソールで原因を伝えるメッセージが出力される.
             e.printStackTrace();
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -71,7 +81,7 @@ public class ViewAllProductServlet extends HttpServlet {
             int fromIndex = 0; // subListの下端点(これを含む)
             int toIndex = 12; // subListの上端点(これを含まない)
 
-            if (fromIndex < 0 || toIndex > productList.size()) {
+            if (toIndex > productList.size()) {
                 // 指定するインデックス値が商品リストの範囲外である場合, 下端を0, 上端をリストのsizeに指定する
                 fromIndex = 0;
                 toIndex = productList.size();
@@ -90,6 +100,8 @@ public class ViewAllProductServlet extends HttpServlet {
             out.print(responseJSON);
 
         } catch (IOException e) {
+            // javaオブジェクトからJSON文字列への変換に失敗したとき,getWriterでボディメッセージ出力に失敗したときに発生.
+            // 基本的に発生しないため,スタックトレースの出力のみで簡易的に例外処理を実装
             e.printStackTrace();
         }
     }

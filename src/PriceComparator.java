@@ -3,8 +3,7 @@ package ojt_ecsite;
 import java.util.Comparator;
 
 /**
- * 2つの商品の税込み価格を比較するクラス. Collections.sortメソッドの第二引数にこのクラスを渡すことで,
- * リスト中のすべての商品が持つ税込み価格を安い順にソートする.
+ * 2つの商品の税込み価格を比較するクラス.
  *
  * @author nakayama
  */
