@@ -15,6 +15,7 @@ public class TaxCalculatorTest {
 
     /**
      * 商品カテゴリが"飲食料品"であったとき,軽減税率を適用して税抜き価格を1.08倍する. 税込み価格はint型にキャストし,小数点以下を切り捨てる.
+     * (999 * 1.08 = 1078.92 四捨五入や切り上げの場合1079となるが,ここでは1078を期待する)
      *
      * @param category        商品カテゴリ
      * @param priceExcludeTax 税抜き価格
@@ -22,24 +23,25 @@ public class TaxCalculatorTest {
     @Test
     public void applyReducedTaxrate() {
         String category = "飲食料品";
-        int priceExcludeTax = 1000;
+        int priceExcludeTax = 999;
         TaxCalculator taxCalculator = new TaxCalculator();
         int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-        assertThat(priceIncludeTax, is((int) (priceExcludeTax * 1.08)));
+        assertThat(priceIncludeTax, is(1078));
     }
 
     /**
-     * 商品カテゴリが"飲食料品"以外のとき,標準税率を適用して税抜き価格を1.10倍する. 税込み価格はint型にキャストし,小数点以下を切り捨てる.
+     * 商品カテゴリが"飲食料品"以外であったとき,軽減税率を適用して税抜き価格を1.08倍する. 税込み価格はint型にキャストし,小数点以下を切り捨てる.
+     * (999 * 1.08 = 1078.92 四捨五入や切り上げの場合1079となるが,ここでは1078を期待する)
      */
     @Test
     public void applyStandardTaxrate() {
         String category = "酒類";
-        int priceExcludeTax = 1000;
+        int priceExcludeTax = 999;
         TaxCalculator taxCalculator = new TaxCalculator();
         int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-        assertThat(priceIncludeTax, is((int) (priceExcludeTax * 1.10)));
+        assertThat(priceIncludeTax, is(1098));
     }
 
     /**
@@ -48,7 +50,7 @@ public class TaxCalculatorTest {
     @Test(expected = NullPointerException.class)
     public void categoryIsNull() {
         String category = null;
-        int priceExcludeTax = 1000;
+        int priceExcludeTax = 999;
         TaxCalculator taxCalculator = new TaxCalculator();
         taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
     }
@@ -60,11 +62,11 @@ public class TaxCalculatorTest {
     @Test
     public void categoryIsEmptyString() {
         String category = "";
-        int priceExcludeTax = 1000;
+        int priceExcludeTax = 999;
         TaxCalculator taxCalculator = new TaxCalculator();
         int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-        assertThat(priceIncludeTax, is((int) (priceExcludeTax * 1.10)));
+        assertThat(priceIncludeTax, is(1098));
     }
 
     /**
@@ -74,11 +76,11 @@ public class TaxCalculatorTest {
     @Test
     public void applyReducedTaxrateToMinusPrice() {
         String category = "飲食料品";
-        int priceExcludeTax = -1000;
+        int priceExcludeTax = -999;
         TaxCalculator taxCalculator = new TaxCalculator();
         int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-        assertThat(priceIncludeTax, is((int) (priceExcludeTax * 1.08)));
+        assertThat(priceIncludeTax, is(-1078));
     }
 
     /**
@@ -88,11 +90,11 @@ public class TaxCalculatorTest {
     @Test
     public void applyStandardTaxrateToMinusPrice() {
         String category = "酒類";
-        int priceExcludeTax = -1000;
+        int priceExcludeTax = -999;
         TaxCalculator taxCalculator = new TaxCalculator();
         int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
-        assertThat(priceIncludeTax, is((int) (priceExcludeTax * 1.10)));
+        assertThat(priceIncludeTax, is(-1098));
     }
 
 }
