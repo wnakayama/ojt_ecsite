@@ -29,10 +29,10 @@ public class ViewAllProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     static final String CSVPATH = "c:\\csvTest\\ecData.csv";
-    static final int COLMUN_ID = 0;
-    static final int COLMUN_NAME = 1;
-    static final int COLMUN_CATEGORY = 2;
-    static final int COLMUN_PRICE_EXCLUDE_TAX = 3;
+    static final int COLUMN_PRODUCT_ID = 0;
+    static final int COLUMN_NAME = 1;
+    static final int COLUMN_CATEGORY = 2;
+    static final int COLUMN_PRICE_EXCLUDE_TAX = 3;
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -50,10 +50,10 @@ public class ViewAllProductServlet extends HttpServlet {
             // 商品データを1レコードずつProductオブジェクトとして初期化する
             TaxCalculator taxCalculator = new TaxCalculator();
             for (int i = 0; i < sample2dArray.length; i++) {
-                int productID = Integer.parseInt(sample2dArray[i][COLMUN_ID]);
-                String name = sample2dArray[i][COLMUN_NAME];
-                String category = sample2dArray[i][COLMUN_CATEGORY];
-                int priceExcludeTax = Integer.parseInt(sample2dArray[i][COLMUN_PRICE_EXCLUDE_TAX]);
+                int productID = Integer.parseInt(sample2dArray[i][COLUMN_PRODUCT_ID]);
+                String name = sample2dArray[i][COLUMN_NAME];
+                String category = sample2dArray[i][COLUMN_CATEGORY];
+                int priceExcludeTax = Integer.parseInt(sample2dArray[i][COLUMN_PRICE_EXCLUDE_TAX]);
                 int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
 
                 Product product = new Product(productID, name, category, priceExcludeTax, priceIncludeTax);
