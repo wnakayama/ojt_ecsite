@@ -1,0 +1,19 @@
+.productInfoArea {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+    /* ul {
+      margin: 10px;
+      padding: 20px;
+      border-radius: 5px;
+      line-hight: 1;
+      color: #fff;
+      background: #aaffaa;
+    }
+  
+  
+    ul {
+      margin: 0;
+      padding: 0;
+    } */
