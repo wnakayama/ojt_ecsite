@@ -28,11 +28,16 @@ import readCSV_practice.IrregularColumnsException;
 public class ViewAllProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    static final String CSVPATH = "c:\\csvTest\\ecData.csv";
-    static final int COLUMN_PRODUCT_ID = 0;
-    static final int COLUMN_NAME = 1;
-    static final int COLUMN_CATEGORY = 2;
-    static final int COLUMN_PRICE_EXCLUDE_TAX = 3;
+    private static final String CSVPATH = "c:\\csvTest\\ecData.csv";
+    private static final int COLUMN_PRODUCT_ID = 0;
+    private static final int COLUMN_NAME = 1;
+    private static final int COLUMN_CATEGORY = 2;
+    private static final int COLUMN_PRICE_EXCLUDE_TAX = 3;
+
+    // 1ページに表示する商品データの範囲はsubListメソッドで絞り込む.
+    // ここでは機能仕様書に沿って12件目までを表示させるよう設定する.
+    private static final int DISPLAY_PRODUCTS_LOWERLIMIT = 0; // subListの下端点(これを含む)
+    private static final int DISPLAY_PRODUCTS_UPPERLIMIT = 12; // subListの上端点(これを含まない)
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -40,11 +45,10 @@ public class ViewAllProductServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-        CsvParser csvParser = new CsvParser();
-        String[][] sample2dArray = null;
         List<Product> productList = new ArrayList<>();
-
         try {
+            CsvParser csvParser = new CsvParser();
+            String[][] sample2dArray = null;
             sample2dArray = csvParser.convertTo2dArray(CSVPATH);
 
             // 商品データを1レコードずつProductオブジェクトとして初期化する
@@ -76,17 +80,7 @@ public class ViewAllProductServlet extends HttpServlet {
         }
 
         try {
-            // 1ページに表示する商品データの範囲をsubListメソッドで絞り込む
-            // ここでは機能仕様書に沿って1件目から12件目までを表示させる
-            int fromIndex = 0; // subListの下端点(これを含む)
-            int toIndex = 12; // subListの上端点(これを含まない)
-
-            if (toIndex > productList.size()) {
-                // 指定するインデックス値が商品リストの範囲外である場合, 下端を0, 上端をリストのsizeに指定する
-                fromIndex = 0;
-                toIndex = productList.size();
-            }
-            List<Product> subList = productList.subList(fromIndex, toIndex);
+            List<Product> subList = productList.subList(DISPLAY_PRODUCTS_LOWERLIMIT, DISPLAY_PRODUCTS_UPPERLIMIT);
 
             // CSVファイルから読み込んで安い順にソートした商品データをJSON文字列に変換してクライアントに返却する
             ObjectMapper mapper = new ObjectMapper();
