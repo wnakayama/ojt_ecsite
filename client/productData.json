@@ -1,0 +1,86 @@
+[
+    {
+        "productID": 1,
+        "name": "おいしいみず",
+        "category": "飲食料品",
+        "priceExcludeTax": 10000,
+        "priceIncludeTax": 10800
+    },
+    {
+        "productID": 3,
+        "name": "ミックスオレ",
+        "category": "飲食料品",
+        "priceExcludeTax": 16000,
+        "priceIncludeTax": 17280
+    },
+    {
+        "productID": 8,
+        "name": "スーパーボール",
+        "category": "ボール",
+        "priceExcludeTax": 20000,
+        "priceIncludeTax": 22000
+    },
+    {
+        "productID": 10,
+        "name": "一番ビール",
+        "category": "酒類",
+        "priceExcludeTax": 22000,
+        "priceIncludeTax": 24200
+    },
+    {
+        "productID": 4,
+        "name": "むしよけスプレー",
+        "category": "日用品",
+        "priceExcludeTax": 35000,
+        "priceIncludeTax": 38500
+    },
+    {
+        "productID": 5,
+        "name": "フルーツタルト",
+        "category": "飲食料品",
+        "priceExcludeTax": 45000,
+        "priceIncludeTax": 48600
+    },
+    {
+        "productID": 12,
+        "name": "チーズケーキチーズケーキチーズケーキチーズケーキチーズケーキチーズケーキチーズケーキ",
+        "category": "飲食料品",
+        "priceExcludeTax": 50000,
+        "priceIncludeTax": 54000
+    },
+    {
+        "productID": 6,
+        "name": "メモ帳",
+        "category": "日用品",
+        "priceExcludeTax": 80000,
+        "priceIncludeTax": 88000
+    },
+    {
+        "productID": 7,
+        "name": "雑誌",
+        "category": "日用品",
+        "priceExcludeTax": 98000,
+        "priceIncludeTax": 107800
+    },
+    {
+        "productID": 2,
+        "name": "サイコソーダ",
+        "category": "飲食料品",
+        "priceExcludeTax": 1500000,
+        "priceIncludeTax": 1620000
+    },
+    {
+        "productID": 11,
+        "name": "銀色ビール",
+        "category": "酒類",
+        "priceExcludeTax": 2200000,
+        "priceIncludeTax": 2420000
+    },
+    {
+        "productID": 9,
+        "name": "AP過去問",
+        "category": "書籍",
+        "priceExcludeTax": 36000000,
+        "priceIncludeTax": 39600000
+    }
+]
