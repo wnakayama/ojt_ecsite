@@ -80,7 +80,14 @@ public class ViewAllProductServlet extends HttpServlet {
         }
 
         try {
-            List<Product> subList = productList.subList(DISPLAY_PRODUCTS_LOWERLIMIT, DISPLAY_PRODUCTS_UPPERLIMIT);
+            int toIndex = DISPLAY_PRODUCTS_LOWERLIMIT;
+            int fromIndex = DISPLAY_PRODUCTS_UPPERLIMIT;
+
+            if (DISPLAY_PRODUCTS_UPPERLIMIT > productList.size()) {
+                // 設定した上限が元のListのsizeを超えていたら,元のListのsizeに合わせる
+                toIndex = productList.size();
+            }
+            List<Product> subList = productList.subList(fromIndex, toIndex);
 
             // CSVファイルから読み込んで安い順にソートした商品データをJSON文字列に変換してクライアントに返却する
             ObjectMapper mapper = new ObjectMapper();
