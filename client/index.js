@@ -27,10 +27,10 @@ function sendget() {
 
                     for (var k = 0; k < cols; k++) {
                         $('.test' + i + '').append('<td class="product' + j + '"></td>');
-                        $('.product' + j + '').append('<li data-text="' + product[j].name + '"><h4>' + omitLongProductName(product[j].name) + '</h4>');
+                        $('.product' + j + '').append('<h4 class="productName" data-text="' + product[j].name + '">' + omitLongProductName(product[j].name) + '</h4>');
                         $('.product' + j + '').append(separateWithComma(product[j].priceIncludeTax) + '円 ');
                         $('.product' + j + '').append('(' + separateWithComma(product[j].priceExcludeTax) + '円) <br>');
-                        $('.product' + j + '').append('<input type="checkbox" name="choose" value="1">選択' + '<br></li>');
+                        $('.product' + j + '').append('<input type="checkbox" class="checkbox" value="' + product[j].name + '">選択' + '<br>');
                         j++
                     }
                 }
@@ -54,10 +54,24 @@ function omitLongProductName(name) {
 
 
 $(document).on(
-    'mouseover', 'li', function () {
+    'mouseover', '.productName', function () {
 
         var datatext = $(this).attr('data-text');
         $(this).attr('title', datatext);
         // $(this).append('<div class=#product-tooltips">' + text + '</div>');
+    }
+);
+
+$(document).on(
+    'click', '.buy', function () {
+        var checked = $('.checkbox:checked').map(function () {
+            return $(this).val();
+        }).get();
+        console.log(checked);
+        if (checked.length === 0) {
+            $('.message').replaceWith('<h4 class="message">' + '購入に失敗しました(商品が選択されていません)');
+        } else {
+            $('.message').replaceWith('<h4 class="message">' + checked.join(''));
+        }
     }
 );
