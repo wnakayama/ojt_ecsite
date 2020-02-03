@@ -1,86 +1,98 @@
 [
     {
         "productID": 1,
-        "name": "おいしいみず",
+        "name": "*おいしいみず",
         "category": "飲食料品",
-        "priceExcludeTax": 10000,
-        "priceIncludeTax": 10800
+        "priceExcludeTax": 100,
+        "priceIncludeTax": 108,
+        "imagePath": "images/water.png"
+    },
+    {
+        "productID": 2,
+        "name": "*サイコソーダ",
+        "category": "飲食料品",
+        "priceExcludeTax": 150,
+        "priceIncludeTax": 162,
+        "imagePath": "images/soda.png"
     },
     {
         "productID": 3,
-        "name": "ミックスオレ",
+        "name": "*ミックスオレ",
         "category": "飲食料品",
-        "priceExcludeTax": 16000,
-        "priceIncludeTax": 17280
-    },
-    {
-        "productID": 8,
-        "name": "スーパーボール",
-        "category": "ボール",
-        "priceExcludeTax": 20000,
-        "priceIncludeTax": 22000
+        "priceExcludeTax": 160,
+        "priceIncludeTax": 172,
+        "imagePath": "images/mix.png"
     },
     {
         "productID": 10,
         "name": "一番ビール",
         "category": "酒類",
-        "priceExcludeTax": 22000,
-        "priceIncludeTax": 24200
+        "priceExcludeTax": 220,
+        "priceIncludeTax": 242,
+        "imagePath": "images/ichiban.png"
     },
     {
         "productID": 4,
         "name": "むしよけスプレー",
         "category": "日用品",
-        "priceExcludeTax": 35000,
-        "priceIncludeTax": 38500
+        "priceExcludeTax": 350,
+        "priceIncludeTax": 385,
+        "imagePath": "images/spray.png"
     },
     {
-        "productID": 5,
-        "name": "フルーツタルト",
-        "category": "飲食料品",
-        "priceExcludeTax": 45000,
-        "priceIncludeTax": 48600
-    },
-    {
-        "productID": 12,
-        "name": "Enterprise Earth/Polyphia/Fit For A King/Polaris/Erra",
-        "category": "CD",
-        "priceExcludeTax": 50000,
-        "priceIncludeTax": 54000
+        "productID": 8,
+        "name": "スーパーボール",
+        "category": "ボール",
+        "priceExcludeTax": 500,
+        "priceIncludeTax": 550,
+        "imagePath": "images/superball.png"
     },
     {
         "productID": 6,
         "name": "メモ帳",
         "category": "日用品",
-        "priceExcludeTax": 80000,
-        "priceIncludeTax": 88000
+        "priceExcludeTax": 800,
+        "priceIncludeTax": 880,
+        "imagePath": "images/memopad.png"
     },
     {
         "productID": 7,
-        "name": "雑誌",
+        "name": "流行雑誌",
         "category": "日用品",
-        "priceExcludeTax": 98000,
-        "priceIncludeTax": 107800
+        "priceExcludeTax": 980,
+        "priceIncludeTax": 1078,
+        "imagePath": "images/magazine.png"
     },
     {
-        "productID": 2,
-        "name": "サイコソーダ",
+        "productID": 12,
+        "name": "Enterprise Earth/Polyphia/Fit For A King/Polaris/Erra",
+        "category": "CD",
+        "priceExcludeTax": 2800,
+        "priceIncludeTax": 3080,
+        "imagePath": "images/cd.png"
+    },
+    {
+        "productID": 9,
+        "name": "AP過去問",
+        "category": "書籍",
+        "priceExcludeTax": 3600,
+        "priceIncludeTax": 3960,
+        "imagePath": "images/kakomon.png"
+    },
+    {
+        "productID": 5,
+        "name": "*高級・ヒーリングフルーツタルト",
         "category": "飲食料品",
-        "priceExcludeTax": 1500000,
-        "priceIncludeTax": 1620000
+        "priceExcludeTax": 4500,
+        "priceIncludeTax": 4860,
+        "imagePath": "images/fruit_tarte.png"
     },
     {
         "productID": 11,
         "name": "銀色ビール",
         "category": "酒類",
         "priceExcludeTax": 2200000,
-        "priceIncludeTax": 2420000
-    },
-    {
-        "productID": 9,
-        "name": "AP過去問",
-        "category": "書籍",
-        "priceExcludeTax": 36000000,
-        "priceIncludeTax": 39600000
+        "priceIncludeTax": 2420000,
+        "imagePath": "images/giniro.png"
     }
 ]
