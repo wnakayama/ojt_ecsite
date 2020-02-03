@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', sendget());
  * 商品一覧を表示するスクリプト
  */
 function sendget() {
-    $.get('http://localhost:8080/ojt_ecsite/ViewAllProductServlet')
+    $.get('http://10.63.8.160:8080/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
 
