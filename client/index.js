@@ -16,21 +16,15 @@ function sendget() {
                 $('.productInfoArea').append('<table class="productInfoTable"></table>');
                 const cols = 4; // 列数を設定
                 const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
-                var k = 0;
                 for (var i = 0; i < rows; i++) {
                     $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
-                    for (; k < (product.length); k++) {
-                        $('.productInfoRow' + i + '').append('<td class="product' + k + '"></td>');
-                        $('.product' + k + '').append('<img src ="' + separateWithComma(product[k].imagePath) + '">');
-                        $('.product' + k + '').append('<h4 class="productName" data-text="' + product[k].name + '">' + omitLongProductName(product[k].name) + '</h4>');
-                        $('.product' + k + '').append(separateWithComma(product[k].priceIncludeTax) + '円 ');
-                        $('.product' + k + '').append('(' + separateWithComma(product[k].priceExcludeTax) + '円) <br>');
-                        $('.product' + k + '').append('<input type="checkbox" class="checkbox" value="' + product[k].name + '">選択' + '<br>');
-                        if ((k + 1) % cols === 0) {
-                            // 設定した列数まで商品データを追加したら,子のfor文を一旦抜けて次の行(tr)を追加する
-                            k++
-                            break;
-                        }
+                    for (var j = 0; j < cols; j++) {
+                        $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
+                        $('.product' + (i * cols + j) + '').append('<img src ="' + separateWithComma(product[(i * cols + j)].imagePath) + '">');
+                        $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
+                        $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
+                        $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
+                        $('.product' + (i * cols + j) + '').append('<input type="checkbox" class="checkbox" value="' + product[(i * cols + j)].name + '">選択' + '<br>');
                     }
                 }
             }
@@ -69,9 +63,9 @@ $(document).on(
             return $(this).val();
         }).get();
         if (checked.length === 0) {
-            $('.message').replaceWith('<h4 class="message">' + '購入に失敗しました(商品が選択されていません)');
+            $('.message').replaceWith('<h4>' + '購入に失敗しました(商品が選択されていません)</h4>');
         } else {
-            $('.message').replaceWith('<h4 class="message">' + checked.join(''));
+            $('.message').replaceWith('<h4>' + checked.join('') + '</h4>');
         }
     }
 );
