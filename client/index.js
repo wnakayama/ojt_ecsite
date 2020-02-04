@@ -20,7 +20,7 @@ function sendget() {
                     $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
                     for (var j = 0; j < cols; j++) {
                         $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
-                        $('.product' + (i * cols + j) + '').append('<img src ="' + separateWithComma(product[(i * cols + j)].imagePath) + '">');
+                        $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
                         $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
                         $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
                         $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
@@ -43,7 +43,7 @@ function separateWithComma(price) {
 
 // 商品名が30文字を超えている場合, 31文字目から省略する
 function omitLongProductName(name) {
-    name = name || {};
+    name = name || "";
     return name.length > 30 ? (name).slice(0, 30) + "…" : name;
 }
 
