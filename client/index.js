@@ -9,11 +9,7 @@ function sendget() {
     $.get('http://10.63.8.160:8080/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
-
-            //レスポンスのJSON文字列をjavaScriptオブジェクトに変換
-            const jsonstr = JSON.stringify(data);
-            const product = JSON.parse(jsonstr);
-
+            const product = data || {};
             if (product.length == 0) {
                 $('.productInfoArea').append('商品データがありません<br>');
             } else {
@@ -23,9 +19,9 @@ function sendget() {
                 const rows = (product.length) / cols;
 
                 for (var i = 0; i < rows; i++) {
-                    $('.productInfoTable').append('<tr class ="test' + i + '">');
+                    $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
                     for (var k = 0; k < cols; k++) {
-                        $('.test' + i + '').append('<td class="product' + j + '"></td>');
+                        $('.productInfoRow' + i + '').append('<td class="product' + j + '"></td>');
                         $('.product' + j + '').append('<img src ="' + separateWithComma(product[j].imagePath) + '">');
                         $('.product' + j + '').append('<h4 class="productName" data-text="' + product[j].name + '">' + omitLongProductName(product[j].name) + '</h4>');
                         $('.product' + j + '').append(separateWithComma(product[j].priceIncludeTax) + '円 ');
@@ -67,7 +63,6 @@ $(document).on(
         var checked = $('.checkbox:checked').map(function () {
             return $(this).val();
         }).get();
-        console.log(checked);
         if (checked.length === 0) {
             $('.message').replaceWith('<h4 class="message">' + '購入に失敗しました(商品が選択されていません)');
         } else {
