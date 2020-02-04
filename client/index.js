@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', sendget());
  * 商品一覧を表示するスクリプト
  */
 function sendget() {
-    $.get('http://10.63.8.160:8080/ojt_ecsite/ViewAllProductServlet')
+    $.get('http://' + location.host + '/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
             const product = data || {};
@@ -55,6 +55,7 @@ $(document).on(
     }
 );
 
+// 「購入へ進む」ボタン押下時の処理を分岐する.
 // チェックボックスで選択されている商品がある場合,メッセージ領域に選択した商品を表示
 // 何も選択していない場合,エラーメッセージを出力 (画面仕様評価の為,ユースケース02に先行して簡易的に実装.)
 $(document).on(
@@ -63,9 +64,9 @@ $(document).on(
             return $(this).val();
         }).get();
         if (checked.length === 0) {
-            $('.message').replaceWith('<h4>' + '購入に失敗しました(商品が選択されていません)</h4>');
+            $('.message').text('購入に失敗しました(商品が選択されていません)');
         } else {
-            $('.message').replaceWith('<h4>' + checked.join('') + '</h4>');
+            $('.message').text(checked.join(''));
         }
     }
 );
