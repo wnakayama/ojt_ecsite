@@ -1,0 +1,38 @@
+.controller-above {
+  display: table;
+  position:relative;
+  width: 100%;
+}
+
+.controller-below {
+  display: table;
+  position:relative;
+  width: 100%;
+}
+
+.buy {
+  display: table-cell;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.nameSearchForm,.priceSearchForm {
+  display: table-cell;
+}
+
+.messageArea {
+  display: table-cell;
+  text-align: center;
+}
+
+.productInfoArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+img {
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+}
