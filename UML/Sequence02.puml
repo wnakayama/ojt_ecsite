@@ -1,0 +1,92 @@
+@startuml
+title ECサイト_UC02商品を購入する
+
+actor 利用者
+
+利用者 -> Browser : 「購入へ進む」ボタン押下
+activate Browser
+	note right of Browser
+	jQuery
+	選択されているチェックボックスの値を取得する
+	end note
+
+Browser ->> BuyProductServlet : jQuery.postメソッドでリクエストを送信
+deactivate Browser
+activate BuyProductServlet
+
+	note left of BuyProductServlet
+	jQuery.postメソッド
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/BuyProductServlet'
+	第二引数(data)：選択されているチェックボックスの値
+	end note
+
+	note over BuyProductServlet
+	data → JSON.Stringify() → JSON
+	JSON → objectMapper.readValue → javaオブジェクト
+	
+	チェックボックスの値を格納したjavaオブジェクトを
+	購入明細メーカーに渡す
+	end note
+
+BuyProductServlet -> 購入明細メーカー : 購入明細をつくる(チェックボックスの値)
+activate 購入明細メーカー
+
+	note right of 購入明細メーカー
+	①String 購入日時を取得する
+	②List<Product> リクエストに対応する商品を取得する
+		全商品のデータをgetSessionで呼び出す
+		チェックボックスの値を使って対応する商品を探す
+		「購入した商品リスト」を作成
+	③int 税抜き合計金額を算出する
+	④int 税込み合計金額を算出する
+	end note
+
+
+購入明細メーカー -> 購入明細 : new 購入明細(購入日時, 購入した商品リスト, 税抜き合計金額, 税込み合計金額)
+activate 購入明細
+購入明細メーカー <-- 購入明細 : 購入明細
+deactivate 購入明細
+
+BuyProductServlet <-- 購入明細メーカー : 購入明細
+deactivate 購入明細メーカー
+
+	note over BuyProductServlet
+	購入明細→ objectMapper.writeValueAsString → JSON
+
+	{
+	"購入日時" : "2020/02/06 13:30",
+	"購入した商品" : [
+		{"name":"*おいしいみず","priceExcludeTax":100,"priceIncludeTax":108,"imagePath":"images/water.png"},
+		{"name":"*サイコソーダ","priceExcludeTax":150,"priceIncludeTax":162,"imagePath":"images/soda.png"},
+		{"name":"*ミックスオレ","priceExcludeTax":160,"priceIncludeTax":172,"imagePath":"images/mix.png"}
+		]
+	"税抜き合計金額" : 410
+	"税込み合計金額" : 442
+	}
+	end note
+
+Browser <<-- BuyProductServlet : レスポンス(JSON)
+deactivate BuyProductServlet
+activate Browser
+
+	note left of BuyProductServlet
+	jQuery.postメソッド
+	第三引数(callback)：通信成功時に実行するコールバック関数
+		.done(function (data) {
+				//返ってきたJSON文字列を使って購入明細を表示
+		}).fail(function (error) {
+			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
+			console.log(error);
+		});
+	}
+	end note
+
+
+利用者 <-- Browser
+	note right of 利用者
+	購入明細画面がWebブラウザに表示される
+	end note
+
+deactivate Browser
+
+@enduml

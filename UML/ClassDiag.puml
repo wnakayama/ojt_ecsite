@@ -3,8 +3,29 @@ title ECサイト_クラス図
 
 class ViewAllProductServlet {
     +{static} final long serialVersionUID
-
+    -{static} final String 読み込むCSVファイルのパス
     #void doGet(HttpServletRequest request, HttpServletResponse response)
+}
+
+class BuyProductServlet {
+    +{static} final long serialVersionUID
+    #void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+
+BuyProductServlet ..> 購入明細メーカー
+class 購入明細メーカー {
+    +String 購入日時を取得する(引数なし)
+    +List<Product> 選ばれた商品の商品情報を取得する(チェックボックスの値)
+    +int 合計金額(税抜き)を算出する(List<Product> productList) 
+    +int 合計金額(税込み)を算出する(List<Product> productList) 
+}
+
+購入明細メーカー ..> 購入明細
+class 購入明細 {
+    -final String 購入日時
+    -final List<Product> 購入した商品
+    -final int 合計金額
+    -コンストラクタ(String 購入日時, List<Product> 購入した商品, int 合計金額)
 }
 
 ViewAllProductServlet ..> CsvParser
@@ -12,20 +33,8 @@ class CsvParser {
     +String[][] CSVを2次元配列に変換する(String 読み込むCSVファイルのパス)
 }
 
-
-ViewAllProductServlet ..> Product
-class Product {
-    -final int 商品ID
-    -final String 商品名
-    -final String 商品カテゴリ
-    -final int 税抜き価格
-    -final int 税込み価格
-
-    -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
-}
-
-ViewAllProductServlet ..> 税込み価格カリキュレータ
-class 税込み価格カリキュレータ {
+ViewAllProductServlet ..> TaxCalculator
+class TaxCalculator {
     -{static}final double 軽減税率
     -{static}final double 標準税率
 
@@ -37,4 +46,22 @@ class PriceComparator {
     +int 価格を比較する(Product 商品1, Product 商品2)
 }
 
+ViewAllProductServlet ..> Product
+購入明細メーカー ..> Product
+購入明細 ..> Product
+class Product {
+    -final int 商品ID
+    -final String 商品名
+    -final String 商品カテゴリ
+    -final int 税抜き価格
+    -final int 税込み価格
+    -final String 画像データのパス
+    -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
+    +int get商品ID()
+    +String get商品名()
+    +String get商品カテゴリ()
+    +int get税抜き価格()
+    +int get税込み価格()
+    +String get画像データのパス()
+}
 @enduml
