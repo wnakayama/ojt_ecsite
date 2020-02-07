@@ -66,6 +66,11 @@ deactivate PriceComparator
 	end note
 
 	note over ViewAllProductServlet
+	ProductオブジェクトのArrayListをHttpSessionオブジェクトに保存
+	(他のユースケースで商品情報を取得する際に使用する)
+	end note
+
+	note over ViewAllProductServlet
 	ProductオブジェクトのArrayListをJSON文字列に変換
 	end note
 

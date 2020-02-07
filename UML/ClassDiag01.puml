@@ -1,40 +1,10 @@
 @startuml
-title ECサイト_クラス図
+title ECサイト_クラス図_UC01商品を一覧表示する
 
 class ViewAllProductServlet {
     +{static} final long serialVersionUID
     -{static} final String 読み込むCSVファイルのパス
     #void doGet(HttpServletRequest request, HttpServletResponse response)
-}
-
-class BuyProductServlet {
-    +{static} final long serialVersionUID
-    #void doPost(HttpServletRequest request, HttpServletResponse response)
-}
-
-BuyProductServlet ..> 購入明細メーカー
-class 購入明細メーカー {
-    +Receipt 購入明細を作成する(String[] チェックボックスの値)
-}
-
-購入明細メーカー ..> 商品情報コレクター
-class 商品情報コレクター {
-    +List<Product> 選択された商品の商品情報を取得する(String[] チェックボックスの値)
-}
-
-購入明細メーカー ..> 合計金額カリキュレータ 
-class 合計金額カリキュレータ {
-    +int 合計金額(税抜き)を算出する(List<Product> 選ばれた商品のリスト)
-    +int 合計金額(税込み)を算出する(List<Product> 選ばれた商品のリスト)
-}
-
-購入明細メーカー ..> Receipt
-class Receipt {
-    -final String 購入日時
-    -final List<Product> 購入した商品
-    -final int 税抜き合計金額
-    -final int 税込み合計金額
-    -コンストラクタ(String 購入日時, List<Product> 購入した商品, int 税抜き合計金額, int 税込み合計金額)
 }
 
 ViewAllProductServlet ..> CsvParser
@@ -71,4 +41,5 @@ class Product {
     +int get税込み価格()
     +String get画像データのパス()
 }
+
 @enduml
