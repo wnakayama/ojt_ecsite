@@ -5,10 +5,6 @@ actor 利用者
 
 利用者 -> Browser : 「購入へ進む」ボタン押下
 activate Browser
-	note right of Browser
-	jQuery
-	選択されているチェックボックスの値を取得する
-	end note
 
 Browser ->> BuyProductServlet : jQuery.postメソッドでリクエストを送信
 deactivate Browser
@@ -17,32 +13,53 @@ activate BuyProductServlet
 	note left of BuyProductServlet
 	jQuery.postメソッド
 	第一引数(url)：'http://' + location.host + '/ojt_ecsite/BuyProductServlet'
-	第二引数(data)：選択されているチェックボックスの値
+	第二引数(data)：選択されているチェックボックスの値(productID)
 	end note
 
 	note over BuyProductServlet
-	data → JSON.Stringify() → JSON
-	JSON → objectMapper.readValue → javaオブジェクト
-	
 	チェックボックスの値を格納したjavaオブジェクトを
 	購入明細メーカーに渡す
 	end note
 
-BuyProductServlet -> 購入明細メーカー : 購入明細をつくる(チェックボックスの値)
+BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(チェックボックスの値)
 activate 購入明細メーカー
 
 	note right of 購入明細メーカー
 	①String 購入日時を取得する
-	②List<Product> リクエストに対応する商品を取得する
-		全商品のデータをgetSessionで呼び出す
-		チェックボックスの値を使って対応する商品を探す
-		「購入した商品リスト」を作成
-	③int 税抜き合計金額を算出する
-	④int 税込み合計金額を算出する
+	Calenderクラスを使用
 	end note
 
 
-購入明細メーカー -> 購入明細 : new 購入明細(購入日時, 購入した商品リスト, 税抜き合計金額, 税込み合計金額)
+購入明細メーカー -> 選択された商品の商品情報を取得するer : 選択された商品の商品情報を取得する(int?[] チェックボックスの値(productID))
+activate 選択された商品の商品情報を取得するer
+	note right of 選択された商品の商品情報を取得するer
+	②List<Product> リクエストに対応する商品を取得する
+		UC01[商品を一覧表示する]で使った
+		全商品のデータをgetSessionで呼び出す
+		チェックボックスの値を使って対応する商品を探す
+		「購入した商品リスト」を作成
+	end note
+購入明細メーカー <-- 選択された商品の商品情報を取得するer : List<Product> 選択された商品のリスト
+deactivate 選択された商品の商品情報を取得するer
+
+購入明細メーカー -> 合計金額カリキュレータ : int 税抜き合計金額を算出する(List<Product> 選択された商品のリスト)
+activate 合計金額カリキュレータ
+	note right of 合計金額カリキュレータ
+	③int 税抜き合計金額を算出する
+	end note
+購入明細メーカー <-- 合計金額カリキュレータ : int 税抜き合計金額
+deactivate 合計金額カリキュレータ
+
+購入明細メーカー -> 合計金額カリキュレータ : int 税込み合計金額を算出する(List<Product> 選択された商品のリスト)
+activate 合計金額カリキュレータ
+	note right of 合計金額カリキュレータ
+	④int 税込み合計金額を算出する
+	end note
+購入明細メーカー <-- 合計金額カリキュレータ : int 税込み合計金額
+deactivate 合計金額カリキュレータ
+
+
+購入明細メーカー -> 購入明細 : new 購入明細(購入日時, 選択された商品のリスト, 税抜き合計金額, 税込み合計金額)
 activate 購入明細
 購入明細メーカー <-- 購入明細 : 購入明細
 deactivate 購入明細
@@ -56,9 +73,9 @@ deactivate 購入明細メーカー
 	{
 	"購入日時" : "2020/02/06 13:30",
 	"購入した商品" : [
-		{"name":"*おいしいみず","priceExcludeTax":100,"priceIncludeTax":108,"imagePath":"images/water.png"},
-		{"name":"*サイコソーダ","priceExcludeTax":150,"priceIncludeTax":162,"imagePath":"images/soda.png"},
-		{"name":"*ミックスオレ","priceExcludeTax":160,"priceIncludeTax":172,"imagePath":"images/mix.png"}
+		{"ID" : 1, "商品名": "おいしいみず", ...},
+		{"ID" : 2, "商品名": "サイコソーダ", ...},
+		{"ID" : 3, "商品名": "ミックスオレ", ...},
 		]
 	"税抜き合計金額" : 410
 	"税込み合計金額" : 442

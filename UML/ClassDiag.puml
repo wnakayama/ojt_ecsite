@@ -14,18 +14,27 @@ class BuyProductServlet {
 
 BuyProductServlet ..> 購入明細メーカー
 class 購入明細メーカー {
-    +String 購入日時を取得する(引数なし)
-    +List<Product> 選ばれた商品の商品情報を取得する(チェックボックスの値)
-    +int 合計金額(税抜き)を算出する(List<Product> productList) 
-    +int 合計金額(税込み)を算出する(List<Product> productList) 
+    +Receipt 購入明細を作成する(String[] チェックボックスの値)
 }
 
-購入明細メーカー ..> 購入明細
-class 購入明細 {
+購入明細メーカー ..> 選択された商品の商品情報を取得するer
+class 選択された商品の商品情報を取得するer {
+    +List<Product> 選択された商品の商品情報を取得する(String[] チェックボックスの値
+}
+
+購入明細メーカー ..> 合計金額カリキュレータ 
+class 合計金額カリキュレータ {
+    +int 合計金額(税抜き)を算出する(List<Product> 選ばれた商品のリスト)
+    +int 合計金額(税込み)を算出する(List<Product> 選ばれた商品のリスト)
+}
+
+購入明細メーカー ..> Receipt
+class Receipt {
     -final String 購入日時
     -final List<Product> 購入した商品
-    -final int 合計金額
-    -コンストラクタ(String 購入日時, List<Product> 購入した商品, int 合計金額)
+    -final int 税抜き合計金額
+    -final int 税込み合計金額
+    -コンストラクタ(String 購入日時, List<Product> 購入した商品, int 税抜き合計金額, int 税込み合計金額)
 }
 
 ViewAllProductServlet ..> CsvParser
@@ -47,8 +56,6 @@ class PriceComparator {
 }
 
 ViewAllProductServlet ..> Product
-購入明細メーカー ..> Product
-購入明細 ..> Product
 class Product {
     -final int 商品ID
     -final String 商品名
