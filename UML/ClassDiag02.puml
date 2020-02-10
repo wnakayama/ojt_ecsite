@@ -35,12 +35,12 @@ class BuyProductServlet {
 
 BuyProductServlet ..> 購入明細メーカー
 class 購入明細メーカー {
-    +Receipt 購入明細を作成する(String[] チェックボックスの値)
+    +Receipt 購入明細を作成する(List<Product> 全商品のデータ, String[] チェックボックスの値)
 }
 
 購入明細メーカー ..> 商品情報コレクター
 class 商品情報コレクター {
-    +List<Product> 選択された商品の商品情報を取得する(String[] チェックボックスの値)
+    +List<Product> 選択された商品の商品情報を取得する(List<Product> 全商品のデータ, String[] チェックボックスの値)
 }
 
 購入明細メーカー ..> 合計金額カリキュレータ 

@@ -17,11 +17,11 @@ activate BuyProductServlet
 	end note
 
 	note over BuyProductServlet
-	チェックボックスの値を格納したjavaオブジェクトを
-	購入明細メーカーに渡す
+	UC01[商品を一覧表示する]で用意した
+	全商品のデータをHttpSession.getAttributeで呼び出す
 	end note
 
-BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(チェックボックスの値)
+BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(List<Product> 全商品のデータ, String[] チェックボックスの値)
 activate 購入明細メーカー
 
 	note right of 購入明細メーカー
@@ -30,13 +30,12 @@ activate 購入明細メーカー
 	end note
 
 
-購入明細メーカー -> 商品情報コレクター : 選択された商品の商品情報を取得する(String[] チェックボックスの値)
+購入明細メーカー -> 商品情報コレクター : 選択された商品の商品情報を取得する(List<Product> 全商品のデータ,String[] チェックボックスの値)
 activate 商品情報コレクター
 	note right of 商品情報コレクター
 	②List<Product> リクエストに対応する商品を取得する
-		UC01[商品を一覧表示する]で用意した
-		全商品のデータをgetSessionで呼び出す
-		チェックボックスの値を使って対応する商品を探し出し
+		リクエストに対応する商品を全商品のデータから
+		チェックボックスの値を使って探し出し
 		「購入した商品リスト」を作成
 	end note
 購入明細メーカー <-- 商品情報コレクター : List<Product> 選択された商品のリスト
