@@ -25,8 +25,9 @@ BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(List
 activate 購入明細メーカー
 
 	note right of 購入明細メーカー
-	①String 購入日時を取得する
-	Calenderクラスを使用
+	①Calendarクラスにて現在日時を取得し,購入日時とする
+	日時のフォーマットは以下の通りである
+	"yyyy/MM/dd HH:mm"
 	end note
 
 
