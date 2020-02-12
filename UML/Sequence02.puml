@@ -18,10 +18,11 @@ activate BuyProductServlet
 
 	note over BuyProductServlet
 	UC01[商品を一覧表示する]で用意した
-	全商品のデータをHttpSession.getAttributeで呼び出す
+	全商品のデータをHttpSession.getAttributeで取得し,
+	商品情報コレクターのstaticフィールドに格納する
 	end note
 
-BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(List<Product> 全商品のデータ, String[] チェックボックスの値)
+BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(String[] チェックボックスの値)
 activate 購入明細メーカー
 
 	note right of 購入明細メーカー
@@ -31,7 +32,7 @@ activate 購入明細メーカー
 	end note
 
 
-購入明細メーカー -> 商品情報コレクター : 選択された商品の商品情報を取得する(List<Product> 全商品のデータ,String[] チェックボックスの値)
+購入明細メーカー -> 商品情報コレクター : 選択された商品の商品情報を取得する(String[] チェックボックスの値)
 activate 商品情報コレクター
 	note right of 商品情報コレクター
 	②List<Product> リクエストに対応する商品を取得する
