@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +34,7 @@ public class ViewAllProductServlet extends HttpServlet {
     private static final int COLUMN_NAME = 1;
     private static final int COLUMN_CATEGORY = 2;
     private static final int COLUMN_PRICE_EXCLUDE_TAX = 3;
+    private static final int COLUMN_IMAGE_PATH = 4;
 
     // 1ページに表示する商品データの範囲はsubListメソッドで絞り込む.
     // ここでは機能仕様書に沿って12件目までを表示させるよう設定する.
@@ -59,10 +61,17 @@ public class ViewAllProductServlet extends HttpServlet {
                 String category = sample2dArray[i][COLUMN_CATEGORY];
                 int priceExcludeTax = Integer.parseInt(sample2dArray[i][COLUMN_PRICE_EXCLUDE_TAX]);
                 int priceIncludeTax = taxCalculator.calculatePriceIncludeTax(category, priceExcludeTax);
+                String imagePath = "images/" + sample2dArray[i][COLUMN_IMAGE_PATH] + "";
 
-                Product product = new Product(productID, name, category, priceExcludeTax, priceIncludeTax);
+                Product product = new Product(productID, name, category, priceExcludeTax, priceIncludeTax, imagePath);
                 productList.add(product);
             }
+
+            // セッションを生成して,そこへ全商品データを格納したproductListを保存する
+            // 保存した全商品データは,別のユースケース(購入,検索)で値を変えないまま使用する
+            HttpSession session = request.getSession();
+            session.setAttribute("ALLPRODUCT", productList);
+
             // Productオブジェクトのコレクションを税込み価格が安い順にソートする
             Collections.sort(productList, new PriceComparator());
 

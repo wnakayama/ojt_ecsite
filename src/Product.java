@@ -13,6 +13,7 @@ public class Product {
     private final String category;
     private final int priceExcludeTax;
     private final int priceIncludeTax;
+    private final String imagePath;
 
     public int getProductID() {
         return productID;
@@ -34,11 +35,16 @@ public class Product {
         return priceIncludeTax;
     }
 
-    Product(int productID, String name, String category, int priceExcludeTax, int priceIncludeTax) {
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    Product(int productID, String name, String category, int priceExcludeTax, int priceIncludeTax, String imagePath) {
         this.productID = productID;
         this.name = name;
         this.category = category;
         this.priceExcludeTax = priceExcludeTax;
         this.priceIncludeTax = priceIncludeTax;
+        this.imagePath = imagePath;
     }
 }

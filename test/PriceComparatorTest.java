@@ -19,8 +19,8 @@ public class PriceComparatorTest {
     @Test
     public void firstProductIsMoreExpensive() {
         int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax + 1);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax);
+        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax + 1, null);
+        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax, null);
         PriceComparator priceComparator = new PriceComparator();
 
         int compareResult = priceComparator.compare(firstProduct, secondProduct);
@@ -33,8 +33,8 @@ public class PriceComparatorTest {
     @Test
     public void evenPrice() {
         int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax);
+        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax, null);
+        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax, null);
         PriceComparator priceComparator = new PriceComparator();
 
         int compareResult = priceComparator.compare(firstProduct, secondProduct);
@@ -48,8 +48,8 @@ public class PriceComparatorTest {
     @Test
     public void secondProductIsMoreExpensive() {
         int priceIncludeTax = 0;
-        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax);
-        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax + 1);
+        Product firstProduct = new Product(1, null, null, 0, priceIncludeTax, null);
+        Product secondProduct = new Product(2, null, null, 0, priceIncludeTax + 1, null);
         PriceComparator priceComparator = new PriceComparator();
 
         int compareResult = priceComparator.compare(firstProduct, secondProduct);
