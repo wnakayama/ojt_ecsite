@@ -1,0 +1,110 @@
+@startuml
+title ECサイト_UC02商品を購入する
+
+actor 利用者
+
+利用者 -> Browser : 「購入へ進む」ボタン押下
+activate Browser
+
+Browser ->> BuyProductServlet : jQuery.postメソッドでリクエストを送信
+deactivate Browser
+activate BuyProductServlet
+
+	note left of BuyProductServlet
+	jQuery.postメソッド
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/BuyProductServlet'
+	第二引数(data)：選択されているチェックボックスの値(productID)
+	end note
+
+	note over BuyProductServlet
+	UC01[商品を一覧表示する]で用意した
+	全商品のデータをHttpSession.getAttributeで取得し,
+	商品情報コレクターのstaticフィールドに格納する
+	end note
+
+BuyProductServlet -> 購入明細メーカー : 購入明細を作成する(String[] チェックボックスの値)
+activate 購入明細メーカー
+
+	note right of 購入明細メーカー
+	①Calendarクラスにて現在日時を取得し,購入日時とする
+	日時のフォーマットは以下の通りである
+	"yyyy/MM/dd HH:mm"
+	end note
+
+
+購入明細メーカー -> 商品情報コレクター : 選択された商品の商品情報を取得する(String[] チェックボックスの値)
+activate 商品情報コレクター
+	note right of 商品情報コレクター
+	②List<Product> リクエストに対応する商品を取得する
+		リクエストに対応する商品を全商品のデータから
+		チェックボックスの値を使って探し出し
+		「購入した商品リスト」を作成
+	end note
+購入明細メーカー <-- 商品情報コレクター : List<Product> 選択された商品のリスト
+deactivate 商品情報コレクター
+
+購入明細メーカー -> 合計金額カリキュレータ : int 税抜き合計金額を算出する(List<Product> 選択された商品のリスト)
+activate 合計金額カリキュレータ
+	note right of 合計金額カリキュレータ
+	③int 税抜き合計金額を算出する
+	end note
+購入明細メーカー <-- 合計金額カリキュレータ : int 税抜き合計金額
+deactivate 合計金額カリキュレータ
+
+購入明細メーカー -> 合計金額カリキュレータ : int 税込み合計金額を算出する(List<Product> 選択された商品のリスト)
+activate 合計金額カリキュレータ
+	note right of 合計金額カリキュレータ
+	④int 税込み合計金額を算出する
+	end note
+購入明細メーカー <-- 合計金額カリキュレータ : int 税込み合計金額
+deactivate 合計金額カリキュレータ
+
+
+購入明細メーカー -> 購入明細 : new 購入明細(購入日時, 選択された商品のリスト, 税抜き合計金額, 税込み合計金額)
+activate 購入明細
+購入明細メーカー <-- 購入明細 : 購入明細
+deactivate 購入明細
+
+BuyProductServlet <-- 購入明細メーカー : 購入明細
+deactivate 購入明細メーカー
+
+	note over BuyProductServlet
+	購入明細→ objectMapper.writeValueAsString → JSON
+
+	{
+	"購入日時" : "2020/02/06 13:30",
+	"購入した商品" : [
+		{"ID" : 1, "商品名": "おいしいみず", ...},
+		{"ID" : 2, "商品名": "サイコソーダ", ...},
+		{"ID" : 3, "商品名": "ミックスオレ", ...},
+		]
+	"税抜き合計金額" : 410
+	"税込み合計金額" : 442
+	}
+	end note
+
+Browser <<-- BuyProductServlet : レスポンス(JSON)
+deactivate BuyProductServlet
+activate Browser
+
+	note left of BuyProductServlet
+	jQuery.postメソッド
+	第三引数(callback)：通信成功時に実行するコールバック関数
+		.done(function (data) {
+				//返ってきたJSON文字列を使って購入明細を表示
+		}).fail(function (error) {
+			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
+			console.log(error);
+		});
+	}
+	end note
+
+
+利用者 <-- Browser
+	note right of 利用者
+	購入明細画面がWebブラウザに表示される
+	end note
+
+deactivate Browser
+
+@enduml

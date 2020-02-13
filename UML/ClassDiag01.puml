@@ -1,0 +1,45 @@
+@startuml
+title ECサイト_クラス図_UC01商品を一覧表示する
+
+class ViewAllProductServlet {
+    +{static} final long serialVersionUID
+    -{static} final String 読み込むCSVファイルのパス
+    #void doGet(HttpServletRequest request, HttpServletResponse response)
+}
+
+ViewAllProductServlet ..> CsvParser
+class CsvParser {
+    +String[][] CSVを2次元配列に変換する(String 読み込むCSVファイルのパス)
+}
+
+ViewAllProductServlet ..> TaxCalculator
+class TaxCalculator {
+    -{static}final double 軽減税率
+    -{static}final double 標準税率
+
+    +int 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+}
+
+ViewAllProductServlet ..> PriceComparator
+class PriceComparator {
+    +int 価格を比較する(Product 商品1, Product 商品2)
+}
+
+ViewAllProductServlet ..> Product
+class Product {
+    -final int 商品ID
+    -final String 商品名
+    -final String 商品カテゴリ
+    -final int 税抜き価格
+    -final int 税込み価格
+    -final String 画像データのパス
+    -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
+    +int get商品ID()
+    +String get商品名()
+    +String get商品カテゴリ()
+    +int get税抜き価格()
+    +int get税込み価格()
+    +String get画像データのパス()
+}
+
+@enduml

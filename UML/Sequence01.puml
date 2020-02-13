@@ -3,7 +3,7 @@ title ECサイト_UC01商品を一覧表示する
 
 actor 利用者
 
-利用者 -> Browser : URL入力「http:// ~~~ / ecsite.html」
+利用者 -> Browser : URL入力「http:// ~~~ / index.html」
 activate Browser
 	note right of Browser
 	html表示
@@ -16,7 +16,7 @@ activate ViewAllProductServlet
 
 	note left of ViewAllProductServlet
 	jQuery.getメソッド
-	第一引数(url)：http://localhost:8080/ojt_ecsite/ViewAllProductServlet
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/ViewAllProductServlet'
 	第二引数(data)：無し
 	end note
 
@@ -32,20 +32,20 @@ ViewAllProductServlet <-- CsvParser : return String[][] 商品データを格納
 deactivate CsvParser
 
 loop 読み込んだCSVファイルの行数(商品データの件数)分実施する
-ViewAllProductServlet -> 税込み価格カリキュレータ : 税込み価格を算出する(商品カテゴリ, 税抜き価格)
-activate 税込み価格カリキュレータ
+ViewAllProductServlet -> TaxCalculator : 税込み価格を算出する(商品カテゴリ, 税抜き価格)
+activate TaxCalculator
 
-	note over of 税込み価格カリキュレータ
+	note over of TaxCalculator
 	商品カテゴリを見て適用する税率を判断し、
 	CSVファイルに無い「税込み価格」を
 	新しく算出する
 	(小数点以下は切り捨て)
 	end note
 
-ViewAllProductServlet <-- 税込み価格カリキュレータ : return int 税込み価格
-deactivate 税込み価格カリキュレータ
+ViewAllProductServlet <-- TaxCalculator : return int 税込み価格
+deactivate TaxCalculator
 
-ViewAllProductServlet -> Product : new Product (商品ID, 商品名, 商品カテゴリ, 税抜き価格, 税込み価格)
+ViewAllProductServlet -> Product : new Product (商品ID, 商品名, 商品カテゴリ, 税抜き価格, 税込み価格, 画像データのパス)
 activate Product
 
 ViewAllProductServlet <-- Product : return Product
@@ -66,6 +66,11 @@ deactivate PriceComparator
 	end note
 
 	note over ViewAllProductServlet
+	ProductオブジェクトのArrayListをHttpSessionオブジェクトに保存
+	(他のユースケースで商品情報を取得する際に使用する)
+	end note
+
+	note over ViewAllProductServlet
 	ProductオブジェクトのArrayListをJSON文字列に変換
 	end note
 
@@ -77,8 +82,8 @@ activate Browser
 	jQuery.getメソッド
 	第三引数(callback)：通信成功時に実行するコールバック関数
 		.done(function (data) {
-			//jQueryのセレクタを使って商品名、税込み価格、税抜き価格の行を指定
-				//返ってきたJSON文字列を使って商品表示領域を動的に変える
+			//jQueryのセレクタを使って商品情報表示領域を指定
+			//返ってきたJSON文字列を使って商品情報を含んだhtml要素を動的に追加
 		}).fail(function (error) {
 			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
 			console.log(error);
