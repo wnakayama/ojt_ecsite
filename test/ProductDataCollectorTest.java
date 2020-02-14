@@ -1,7 +1,9 @@
 package ojt_ecsite;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.not;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,20 +35,12 @@ public class ProductDataCollectorTest {
         allProductList.add(productForTest2);
         allProductList.add(productForTest3);
 
-        List<Product> expected = new ArrayList<>();
-        expected.add(productForTest3);
-        expected.add(productForTest1);
-        expected.add(productForTest2);
-
         String[] requestProductID = { "3", "1", "2" };
 
         new ProductDataCollector(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
-        assertThat(result, is(expected));
-        assertThat(result.get(0).getName(), is("テスト3"));
-        assertThat(result.get(1).getName(), is("テスト1"));
-        assertThat(result.get(2).getName(), is("テスト2"));
+        assertThat(result, is(contains(productForTest3, productForTest1, productForTest2)));
     }
 
     /**
@@ -57,7 +51,7 @@ public class ProductDataCollectorTest {
      * @param requestedProductID 利用者が選択した商品のID
      */
     @Test
-    public void requestWrongProductI() {
+    public void requestWrongProductId() {
         Product productForTest1 = new Product(1, "テスト1", "飲食料品", 100, 108, null);
         Product productForTest2 = new Product(2, "テスト2", "飲食料品", 200, 216, null);
         Product productForTest3 = new Product(3, "テスト3", "酒類", 300, 330, null);
@@ -67,19 +61,13 @@ public class ProductDataCollectorTest {
         allProductList.add(productForTest2);
         allProductList.add(productForTest3);
 
-        List<Product> expected = new ArrayList<>();
-        expected.add(productForTest3);
-        expected.add(productForTest1);
-        expected.add(productForTest2);
-
         String[] requestProductID = { "3", "999", "2" };
 
         new ProductDataCollector(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
-        assertThat(result, is(not(expected)));
-        assertThat(result.get(0).getName(), is("テスト3"));
-        assertThat(result.get(1).getName(), is("テスト2"));
+        assertThat(result, is(contains(productForTest3, productForTest2)));
+        assertThat(result.size(), is(2));
     }
 
     /**
@@ -104,7 +92,7 @@ public class ProductDataCollectorTest {
         new ProductDataCollector(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
-        assertThat(result.isEmpty(), is(true));
+        assertThat(result, is(empty()));
     }
 
     /**
@@ -145,17 +133,13 @@ public class ProductDataCollectorTest {
 
         List<Product> emptyListForTest = Collections.emptyList();
 
-        List<Product> expected = new ArrayList<>();
-        expected.add(productForTest3);
-        expected.add(productForTest1);
-
-        String[] requestProductID = { "3", "1" };
+        String[] requestProductID = { "3", "1", "2" };
 
         new ProductDataCollector(emptyListForTest);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
-        assertThat(result, is(not(expected)));
-        assertThat(result.isEmpty(), is(true));
+        assertThat(result, is(not(contains(productForTest3, productForTest1, productForTest2))));
+        assertThat(result, is(empty()));
     }
 
 }
