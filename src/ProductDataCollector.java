@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 public class ProductDataCollector {
     static List<Product> allProductList;
 
+    static void setAllProductList(List<Product> allProductList) {
+        ProductDataCollector.allProductList = allProductList;
+    }
+
     /**
      * String配列に入っている商品IDを手掛かりに,利用者が購入したがっている商品は何か,全商品データから探し出す.
      *
@@ -24,15 +28,24 @@ public class ProductDataCollector {
      */
     public static List<Product> collectProductData(String[] checkValues) {
 
+        // リクエストに対応する商品を探す処理を効率化するため,ListをMapに変換
         Map<Integer, Product> allProductMap = new HashMap<>();
         allProductMap = allProductList.stream().collect(
                 Collectors.toMap(allProductList -> allProductList.getProductID(), allProductList -> allProductList));
 
+        // リクエストに対応する商品を探し出し,リストに格納してから返却する.
         List<Product> purchasedProductList = new ArrayList<>();
+
+        // 普通のfor文
         for (int i = 0; i < checkValues.length; i++) {
             int requestedID = Integer.parseInt(checkValues[i]);
             purchasedProductList.add(allProductMap.get(requestedID));
         }
         return purchasedProductList;
+
+        // 拡張for文
+
+        // ラムダ式
+
     }
 }
