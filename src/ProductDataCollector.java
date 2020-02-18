@@ -35,17 +35,9 @@ public class ProductDataCollector {
 
         // リクエストに対応する商品を探し出し,リストに格納してから返却する.
         List<Product> purchasedProductList = new ArrayList<>();
-
-        // 普通のfor文
-        for (int i = 0; i < checkValues.length; i++) {
-            int requestedID = Integer.parseInt(checkValues[i]);
-            purchasedProductList.add(allProductMap.get(requestedID));
+        for (String selected : checkValues) {
+            purchasedProductList.add(allProductMap.get(Integer.parseInt(selected)));
         }
         return purchasedProductList;
-
-        // 拡張for文
-
-        // ラムダ式
-
     }
 }
