@@ -34,7 +34,7 @@ public class BuyProductServlet extends HttpServlet {
         // セッションオブジェクトから全商品のデータを受け取る
         // リクエストされた商品を全商品のデータから探し出すProductDataCollectorのstaticフィールドに格納する
         HttpSession session = request.getSession();
-        new ProductDataCollector((List<Product>) session.getAttribute("ALLPRODUCT"));
+        ProductDataCollector.allProductList = ((List<Product>) session.getAttribute("ALLPRODUCT"));
 
         // リクエストのあった商品IDを取得する
         String[] checkValues = request.getParameterValues("requestedProductID[]");

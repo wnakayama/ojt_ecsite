@@ -14,11 +14,7 @@ import java.util.stream.Collectors;
  */
 
 public class ProductDataCollector {
-    private static List<Product> allProductList;
-
-    ProductDataCollector(List<Product> allProductList) {
-        ProductDataCollector.allProductList = allProductList;
-    }
+    static List<Product> allProductList;
 
     /**
      * String配列に入っている商品IDを手掛かりに,利用者が購入したがっている商品は何か,全商品データから探し出す.
