@@ -39,11 +39,11 @@ public class BuyProductServlet extends HttpServlet {
         // リクエストのあった商品IDを取得する
         String[] selectedIdArray = request.getParameterValues("requestedProductID[]");
 
-        // 購入明細を作る
-        ReceiptMaker receiptMaker = new ReceiptMaker();
-        Receipt receipt = receiptMaker.makeReceipt(selectedIdArray);
-
         try {
+            // 購入明細を作る
+            ReceiptMaker receiptMaker = new ReceiptMaker();
+            Receipt receipt = receiptMaker.makeReceipt(selectedIdArray);
+
             // 購入明細のオブジェクトをJSON形式の文字列に変換
             ObjectMapper mapper = new ObjectMapper();
             String responseJSON = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(receipt);
