@@ -60,6 +60,10 @@ public class BuyProductServlet extends HttpServlet {
             // javaオブジェクトからJSON文字列への変換に失敗したとき,getWriterでボディメッセージ出力に失敗したときに発生.
             // 基本的に発生しないため,スタックトレースの出力のみで簡易的に例外処理を実装
             e.printStackTrace();
+        } catch (NullPointerException | NumberFormatException e) {
+            // クライアントから購入リクエストのあった商品のIDを格納するString配列にnullが含まれているとき発生.
+            // 基本的に発生しないため,スタックトレースの出力のみで簡易的に例外処理を実装
+            e.printStackTrace();
         }
     }
 
