@@ -15,10 +15,10 @@ public class ReceiptMaker {
     /**
      * 購入日時,選択された商品のデータ,税抜き合計金額,税込み合計金額を取得して, それらをセットした購入明細オブジェクトを返却する.
      *
-     * @param checkValues クライアント側で選択された商品のID
+     * @param selectedIdArray クライアント側で選択された商品のID
      * @return receipt 購入明細
      */
-    public Receipt makeReceipt(String[] checkValues) {
+    public Receipt makeReceipt(String[] selectedIdArray) {
 
         // 購入日時を取得する
         Calendar calendar = Calendar.getInstance();
@@ -27,7 +27,7 @@ public class ReceiptMaker {
 
         // 選択された商品のデータを取得する
         List<Product> purchasedProductList = new ArrayList<>();
-        purchasedProductList = ProductDataCollector.collectProductData(checkValues);
+        purchasedProductList = ProductDataCollector.collectProductData(selectedIdArray);
 
         // 税抜き合計金額を算出する
         TotalPriceCalculator totalCalc = new TotalPriceCalculator();

@@ -23,10 +23,10 @@ public class ProductDataCollector {
     /**
      * String配列に入っている商品IDを手掛かりに,利用者が購入したがっている商品は何か,全商品データから探し出す.
      *
-     * @param checkValues クライアント側で選択された商品のID
+     * @param selectedIdArray クライアント側で選択された商品のID
      * @return purchasedProductList 全商品データと照合が取れた選択済み商品のリスト
      */
-    public static List<Product> collectProductData(String[] checkValues) {
+    public static List<Product> collectProductData(String[] selectedIdArray) {
 
         // リクエストに対応する商品を探す処理を効率化するため,staticフィールドにセットされているListをMapに変換
         Map<Integer, Product> allProductMap = new HashMap<>();
@@ -35,8 +35,8 @@ public class ProductDataCollector {
 
         // リクエストに対応する商品を探し出し,リストに格納してから返却する.
         List<Product> purchasedProductList = new ArrayList<>();
-        for (String selected : checkValues) {
-            Product getResult = allProductMap.get(Integer.parseInt(selected));
+        for (String selectedId : selectedIdArray) {
+            Product getResult = allProductMap.get(Integer.parseInt(selectedId));
             if (getResult != null)
                 purchasedProductList.add(getResult);
         }
