@@ -28,7 +28,7 @@ public class ProductDataCollector {
      */
     public static List<Product> collectProductData(String[] checkValues) {
 
-        // リクエストに対応する商品を探す処理を効率化するため,ListをMapに変換
+        // リクエストに対応する商品を探す処理を効率化するため,staticフィールドにセットされているListをMapに変換
         Map<Integer, Product> allProductMap = new HashMap<>();
         allProductMap = allProductList.stream().collect(
                 Collectors.toMap(allProductList -> allProductList.getProductID(), allProductList -> allProductList));
@@ -36,7 +36,9 @@ public class ProductDataCollector {
         // リクエストに対応する商品を探し出し,リストに格納してから返却する.
         List<Product> purchasedProductList = new ArrayList<>();
         for (String selected : checkValues) {
-            purchasedProductList.add(allProductMap.get(Integer.parseInt(selected)));
+            Product getResult = allProductMap.get(Integer.parseInt(selected));
+            if (getResult != null)
+                purchasedProductList.add(getResult);
         }
         return purchasedProductList;
     }
