@@ -37,7 +37,7 @@ public class ProductDataCollectorTest {
 
         String[] requestProductID = { "3", "1", "2" };
 
-        new ProductDataCollector(allProductList);
+        ProductDataCollector.setAllProductList(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
         assertThat(result, is(contains(productForTest3, productForTest1, productForTest2)));
@@ -63,7 +63,7 @@ public class ProductDataCollectorTest {
 
         String[] requestProductID = { "3", "999", "2" };
 
-        new ProductDataCollector(allProductList);
+        ProductDataCollector.setAllProductList(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
         assertThat(result, is(contains(productForTest3, productForTest2)));
@@ -89,7 +89,7 @@ public class ProductDataCollectorTest {
 
         String[] requestProductID = { "-1", "0", "999" };
 
-        new ProductDataCollector(allProductList);
+        ProductDataCollector.setAllProductList(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
         assertThat(result, is(empty()));
@@ -115,7 +115,7 @@ public class ProductDataCollectorTest {
 
         String[] requestProductID = null;
 
-        new ProductDataCollector(allProductList);
+        ProductDataCollector.setAllProductList(allProductList);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
     }
 
@@ -135,7 +135,7 @@ public class ProductDataCollectorTest {
 
         String[] requestProductID = { "3", "1", "2" };
 
-        new ProductDataCollector(emptyListForTest);
+        ProductDataCollector.setAllProductList(emptyListForTest);
         List<Product> result = ProductDataCollector.collectProductData(requestProductID);
 
         assertThat(result, is(not(contains(productForTest3, productForTest1, productForTest2))));
