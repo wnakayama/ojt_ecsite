@@ -52,7 +52,6 @@ public class BuyProductServlet extends HttpServlet {
             response.setHeader("Cache-Control", "nocache");
             response.setCharacterEncoding("utf-8");
 
-            System.out.println(responseJSON);
             PrintWriter out = response.getWriter();
             out.print(responseJSON);
 
