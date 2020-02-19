@@ -1,0 +1,38 @@
+.controller-above {
+    display: table;
+    position:relative;
+    width: 100%;
+  }
+  
+  .controller-below {
+    display: table;
+    position:relative;
+    width: 100%;
+  }
+  
+  .buy {
+    display: table-cell;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+  }
+  
+  .purchaseMessage,.priceSearchForm {
+    display: table-cell;
+  }
+  
+  .messageArea {
+    display: table-cell;
+    text-align: center;
+  }
+    
+  img {
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .totalPrice {
+    text-align: right;
+  }
+  
