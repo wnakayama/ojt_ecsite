@@ -22,7 +22,7 @@ public class TotalPriceCalculatorTest {
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceExcludeTax() {
+    public void calculateTotalExcludeTax() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, 100, 108, null);
@@ -44,7 +44,7 @@ public class TotalPriceCalculatorTest {
      * @param emptyListForTest 利用者が選択した商品のリストに見立てて用意した,空のリスト
      */
     @Test
-    public void calculateTotalPriceExcludeTaxEmptyList() {
+    public void calculateTotalExcludeTaxEmptyList() {
         List<Product> emptyListForTest = Collections.emptyList();
 
         TotalPriceCalculator totalCalc = new TotalPriceCalculator();
@@ -58,7 +58,7 @@ public class TotalPriceCalculatorTest {
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceExcludeTaxAllMinus() {
+    public void calculateTotalExcludeTaxAllMinus() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, -100, -108, null);
@@ -79,7 +79,7 @@ public class TotalPriceCalculatorTest {
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceExcludeTaxContainsMinus() {
+    public void calculateTotalExcludeTaxContainsMinus() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, 100, 108, null);
@@ -95,12 +95,33 @@ public class TotalPriceCalculatorTest {
     }
 
     /**
+     * 一部の商品オブジェクトがnullであるとき,正常に税抜き価格が合算されず,
+     * TotalPriceCalculator単体ではNullPointerExceptionが発生する. (結合後は基本的に発生しないケース)
+     *
+     * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
+     */
+    @Test(expected = NullPointerException.class)
+    public void calculateTotalExcludeTaxContainsNullProduct() {
+        List<Product> productListForTest = new ArrayList<>();
+
+        Product productForTest1 = new Product(1, null, null, 100, 108, null);
+        Product productForTest2 = null;
+        Product productForTest3 = new Product(3, null, null, 300, 330, null);
+        productListForTest.add(productForTest1);
+        productListForTest.add(productForTest2);
+        productListForTest.add(productForTest3);
+
+        TotalPriceCalculator totalCalc = new TotalPriceCalculator();
+        int result = totalCalc.calculateTotalPriceExcludeTax(productListForTest);
+    }
+
+    /**
      * 選択した各商品の税込み価格が正常に合算されることをテストする.
      *
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceIncludeTax() {
+    public void calculateTotalIncludeTax() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, 100, 108, null);
@@ -122,7 +143,7 @@ public class TotalPriceCalculatorTest {
      * @param emptyListForTest 利用者が選択した商品のリストに見立てて用意した,空のリスト
      */
     @Test
-    public void calculateTotalPriceIncludeTaxEmptyList() {
+    public void calculateTotalIncludeTaxEmptyList() {
         List<Product> emptyListForTest = Collections.emptyList();
 
         TotalPriceCalculator totalCalc = new TotalPriceCalculator();
@@ -136,7 +157,7 @@ public class TotalPriceCalculatorTest {
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceIncludeTaxAllMinus() {
+    public void calculateTotalIncludeTaxAllMinus() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, -100, -108, null);
@@ -157,7 +178,7 @@ public class TotalPriceCalculatorTest {
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test
-    public void calculateTotalPriceIncludeTaxContainsMinus() {
+    public void calculateTotalIncludeTaxContainsMinus() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, 100, 108, null);
@@ -173,13 +194,13 @@ public class TotalPriceCalculatorTest {
     }
 
     /**
-     * 一部の商品オブジェクトがnullであるとき,TotalPriceCalculator単体ではNullPointerExceptionが発生する.
-     * (結合後は基本的に発生しないケース)
+     * 一部の商品オブジェクトがnullであるとき,正常に税込み価格が合算されず,
+     * TotalPriceCalculator単体ではNullPointerExceptionが発生する. (結合後は基本的に発生しないケース)
      *
      * @param productListForTest 利用者が選択した商品のリストに見立てて用意した,サンプル商品のリスト
      */
     @Test(expected = NullPointerException.class)
-    public void containsNullProduct() {
+    public void calculateTotalIncludeTaxContainsNullProduct() {
         List<Product> productListForTest = new ArrayList<>();
 
         Product productForTest1 = new Product(1, null, null, 100, 108, null);
