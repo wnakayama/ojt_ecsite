@@ -81,15 +81,14 @@ function sendSelectedId(selectedId) {
         {
             "requestedProductID": selectedId
         }
-    )
-        .done(function (data) {
-            // サーバから返ってきた購入明細はSessionStorageに保存して
-            // 購入明細を表示するスクリプト(purchase.js)でも使えるようにしておく
-            var receipt = JSON.stringify(data);
-            sessionStorage.setItem('receipt', receipt);
-            window.location.href = 'purchase.html'; // 購入明細画面に遷移
-        }).fail(function (error) {
-            // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
-            console.log(error);
-        });
+    ).done(function (data) {
+        // サーバから返ってきた購入明細はSessionStorageに保存して
+        // 購入明細を表示するスクリプト(purchase.js)でも使えるようにしておく
+        var receipt = JSON.stringify(data);
+        sessionStorage.setItem('receipt', receipt);
+        window.location.href = 'purchase.html'; // 購入明細画面に遷移
+    }).fail(function (error) {
+        // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
+        console.log(error);
+    });
 }
