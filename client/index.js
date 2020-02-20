@@ -66,7 +66,7 @@ $(document).on(
         if (selectedIdArray.length === 0) {
             $('.message').text('購入に失敗しました(商品が選択されていません)');
         } else {
-            sendSelectedId(selectedIdArray);
+            sendSelectedIdArray(selectedIdArray);
         }
     }
 );
