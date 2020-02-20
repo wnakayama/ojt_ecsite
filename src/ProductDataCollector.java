@@ -37,8 +37,9 @@ public class ProductDataCollector {
         List<Product> purchasedProductList = new ArrayList<>();
         for (String selectedId : selectedIdArray) {
             Product getResult = allProductMap.get(Integer.parseInt(selectedId));
-            if (getResult != null)
+            if (getResult != null) {
                 purchasedProductList.add(getResult);
+            }
         }
         return purchasedProductList;
     }
