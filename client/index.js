@@ -60,13 +60,13 @@ $(document).on(
 // 何も選択していない場合,エラーメッセージを出力する.
 $(document).on(
     'click', '.buy', function () {
-        var selectedId = $('.checkbox:checked').map(function () {
+        var selectedIdArray = $('.checkbox:checked').map(function () {
             return $(this).val();
         }).get();
-        if (selectedId.length === 0) {
+        if (selectedIdArray.length === 0) {
             $('.message').text('購入に失敗しました(商品が選択されていません)');
         } else {
-            sendSelectedId(selectedId);
+            sendSelectedId(selectedIdArray);
         }
     }
 );
@@ -76,10 +76,10 @@ $(document).on(
  * 利用者がチェックボックスを押下して選んだ商品のIDをPOST送信する.
  * サーバ側から購入明細の返却を受け取り,購入明細画面に遷移する.
  */
-function sendSelectedId(selectedId) {
+function sendSelectedIdArray(selectedIdArray) {
     $.post('http://' + location.host + '/ojt_ecsite/BuyProductServlet',
         {
-            "requestedProductID": selectedId
+            "requestedProductID[]": selectedIdArray
         }
     ).done(function (data) {
         // サーバから返ってきた購入明細はSessionStorageに保存して
