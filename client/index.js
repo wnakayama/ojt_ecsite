@@ -49,7 +49,7 @@ function omitLongProductName(name) {
 
 // 省略されている商品名をマウスオーバーすると,全文を表示する.
 $(document).on(
-    'mouseover', '.productName', function displayFullProductName() {
+    'mouseover', '.productName', function () {
         var datatext = $(this).attr('data-text');
         $(this).attr('title', datatext);
     }
@@ -59,7 +59,7 @@ $(document).on(
 // チェックボックスを押下して選んだ商品がある場合,選んだ商品のIDを購入処理(sendSelectedId)の引数に渡す.
 // 何も選択していない場合,エラーメッセージを出力する.
 $(document).on(
-    'click', '.buy', function requestPurchase() {
+    'click', '.buy', function () {
         var selectedId = $('.checkbox:checked').map(function () {
             return $(this).val();
         }).get();

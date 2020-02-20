@@ -38,7 +38,7 @@ function separateWithComma(price) {
 
 // 商品名をマウスオーバーすると,全文を表示する.
 $(document).on(
-    'mouseover', '.productName', function displayFullProductName() {
+    'mouseover', '.productName', function () {
         var datatext = $(this).attr('data-text');
         $(this).attr('title', datatext);
     }
@@ -46,7 +46,7 @@ $(document).on(
 
 // 全商品一覧へ戻るボタンを押下すると,商品一覧画面に戻る
 $(document).on(
-    'click', '.goBack', function goBackAllProductView() {
+    'click', '.goBack', function () {
         window.location.href = 'index.html';
     }
 );
