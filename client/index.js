@@ -1,11 +1,11 @@
 
-// index.htmlのDOMツリーが構築された後にsendgetメソッドを実行
-window.addEventListener('DOMContentLoaded', sendget());
+// index.htmlのDOMツリーが構築された後にviewAllProductメソッドを実行
+window.addEventListener('DOMContentLoaded', viewAllProduct());
 
 /**
  * 商品一覧を表示するスクリプト
  */
-function sendget() {
+function viewAllProduct() {
     $.get('http://' + location.host + '/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
@@ -49,24 +49,24 @@ function omitLongProductName(name) {
 
 // 省略されている商品名をマウスオーバーすると,全文を表示する.
 $(document).on(
-    'mouseover', '.productName', function () {
+    'mouseover', '.productName', function displayFullProductName() {
         var datatext = $(this).attr('data-text');
         $(this).attr('title', datatext);
     }
 );
 
 // 「購入へ進む」ボタン押下時の処理を分岐する.
-// チェックボックスを押下して選んだ商品がある場合,選んだ商品のIDを購入処理(sendpost)の引数に渡す.
+// チェックボックスを押下して選んだ商品がある場合,選んだ商品のIDを購入処理(sendSelectedId)の引数に渡す.
 // 何も選択していない場合,エラーメッセージを出力する.
 $(document).on(
-    'click', '.buy', function () {
-        var checked = $('.checkbox:checked').map(function () {
+    'click', '.buy', function requestPurchase() {
+        var selectedId = $('.checkbox:selectedId').map(function () {
             return $(this).val();
         }).get();
-        if (checked.length === 0) {
+        if (selectedId.length === 0) {
             $('.message').text('購入に失敗しました(商品が選択されていません)');
         } else {
-            sendpost(checked);
+            sendSelectedId(selectedId);
         }
     }
 );
@@ -76,10 +76,10 @@ $(document).on(
  * 利用者がチェックボックスを押下して選んだ商品のIDをPOST送信する.
  * サーバ側から購入明細の返却を受け取り,購入明細画面に遷移する.
  */
-function sendpost(checked) {
+function sendSelectedId(selectedId) {
     $.post('http://' + location.host + '/ojt_ecsite/BuyProductServlet',
         {
-            "requestedProductID": checked
+            "requestedProductID": selectedId
         }
     )
         .done(function (data) {
