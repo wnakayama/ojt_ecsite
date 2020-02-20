@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * リクエストのあった商品IDを手掛かりに,利用者が購入したがっている商品は何か,全商品データから探し出すクラス.
@@ -30,8 +29,7 @@ public class ProductDataCollector {
 
         // リクエストに対応する商品を探す処理を効率化するため,staticフィールドにセットされているListをMapに変換
         Map<Integer, Product> allProductMap = new HashMap<>();
-        allProductMap = allProductList.stream().collect(
-                Collectors.toMap(allProductList -> allProductList.getProductID(), allProductList -> allProductList));
+        allProductList.forEach(product -> allProductMap.put(product.getProductID(), product));
 
         // リクエストに対応する商品を探し出し,リストに格納してから返却する.
         List<Product> purchasedProductList = new ArrayList<>();
