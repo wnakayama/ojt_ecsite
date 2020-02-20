@@ -37,7 +37,7 @@ function viewAllProduct() {
 
 // "一の位から3桁ずつ,カンマ区切り"で商品価格を表示する
 function separateWithComma(price) {
-    price = price || {};
+    price = price || 0;
     return String(price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 }
 
