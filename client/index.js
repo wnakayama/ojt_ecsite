@@ -60,7 +60,7 @@ $(document).on(
 // 何も選択していない場合,エラーメッセージを出力する.
 $(document).on(
     'click', '.buy', function requestPurchase() {
-        var selectedId = $('.checkbox:selectedId').map(function () {
+        var selectedId = $('.checkbox:checked').map(function () {
             return $(this).val();
         }).get();
         if (selectedId.length === 0) {
