@@ -17,7 +17,7 @@
   right: 0px;
 }
 
-.nameSearchForm,.priceSearchForm {
+.purchaseMessage,.priceSearchForm {
   display: table-cell;
 }
 
@@ -25,14 +25,13 @@
   display: table-cell;
   text-align: center;
 }
-
-.productInfoArea {
-  display: flex;
-  justify-content: space-between;
-}
-
+  
 img {
-  width: 300px;
+  width: 150px;
   max-width: 100%;
   height: auto;
+}
+
+.totalPrice {
+  text-align: right;
 }

@@ -1,11 +1,11 @@
 
-// index.htmlのDOMツリーが構築された後にsendgetメソッドを実行
-window.addEventListener('DOMContentLoaded', sendget());
+// index.htmlのDOMツリーが構築された後にviewAllProductメソッドを実行
+window.addEventListener('DOMContentLoaded', viewAllProduct());
 
 /**
  * 商品一覧を表示するスクリプト
  */
-function sendget() {
+function viewAllProduct() {
     $.get('http://' + location.host + '/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
@@ -24,7 +24,7 @@ function sendget() {
                         $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
                         $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
                         $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
-                        $('.product' + (i * cols + j) + '').append('<input type="checkbox" class="checkbox" value="' + product[(i * cols + j)].name + '">選択' + '<br>');
+                        $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
                     }
                 }
             }
@@ -37,7 +37,7 @@ function sendget() {
 
 // "一の位から3桁ずつ,カンマ区切り"で商品価格を表示する
 function separateWithComma(price) {
-    price = price || {};
+    price = price || 0;
     return String(price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 }
 
@@ -56,17 +56,39 @@ $(document).on(
 );
 
 // 「購入へ進む」ボタン押下時の処理を分岐する.
-// チェックボックスで選択されている商品がある場合,メッセージ領域に選択した商品を表示
-// 何も選択していない場合,エラーメッセージを出力 (画面仕様評価の為,ユースケース02に先行して簡易的に実装.)
+// チェックボックスを押下して選んだ商品がある場合,選んだ商品のIDを購入処理(sendSelectedId)の引数に渡す.
+// 何も選択していない場合,エラーメッセージを出力する.
 $(document).on(
     'click', '.buy', function () {
-        var checked = $('.checkbox:checked').map(function () {
+        var selectedIdArray = $('.checkbox:checked').map(function () {
             return $(this).val();
         }).get();
-        if (checked.length === 0) {
+        if (selectedIdArray.length === 0) {
             $('.message').text('購入に失敗しました(商品が選択されていません)');
         } else {
-            $('.message').text(checked.join(''));
+            sendSelectedIdArray(selectedIdArray);
         }
     }
 );
+
+/**
+ * 購入処理
+ * 利用者がチェックボックスを押下して選んだ商品のIDをPOST送信する.
+ * サーバ側から購入明細の返却を受け取り,購入明細画面に遷移する.
+ */
+function sendSelectedIdArray(selectedIdArray) {
+    $.post('http://' + location.host + '/ojt_ecsite/BuyProductServlet',
+        {
+            "requestedProductID[]": selectedIdArray
+        }
+    ).done(function (data) {
+        // サーバから返ってきた購入明細はSessionStorageに保存して
+        // 購入明細を表示するスクリプト(purchase.js)でも使えるようにしておく
+        var receipt = JSON.stringify(data);
+        sessionStorage.setItem('receipt', receipt);
+        window.location.href = 'purchase.html'; // 購入明細画面に遷移
+    }).fail(function (error) {
+        // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
+        console.log(error);
+    });
+}
