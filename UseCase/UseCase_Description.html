@@ -1074,6 +1074,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="red">検索フォーム(価格)の下限値欄と上限値欄両方に入力があり、上限値の入力価格が下限値欄の入力価格より小さい場合
 </span>　⇒ <a href="#altflow_uc03">代替フロー2に移行</a></p>
 </li>
+<li>
+<p><span class="red">検索フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
+</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
+</li>
 </ul>
 </div>
 </li>
@@ -1082,7 +1086,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red">検索条件を満たす商品データが0件の場合</span>　⇒ <a href="#altflow_uc03">代替フロー3に移行</a></p>
+<p><span class="red">検索条件を満たす商品データが0件の場合</span>　⇒ <a href="#altflow_uc03">代替フロー4に移行</a></p>
 <div class="paragraph">
 <p>(参考画像：検索実行後の画面イメージ)</p>
 </div>
@@ -1121,6 +1125,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ol class="loweralpha" type="a">
 <li>
 <p>エラーメッセージ04を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+</li>
+<li>
+<p><a href="#mainflow_uc03">基本フロー</a>のステップ1に戻る</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>検索フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>エラーメッセージ05を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc03">基本フロー</a>のステップ1に戻る</p>
@@ -1190,6 +1207,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
+<p>エラーメッセージ05</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>シングルクォーテーション(')またはダブルクォーテーション(")が含まれる文字列では検索できません</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>商品名の検索フォームと価格の検索フォーム両方に正しい入力があった場合は、
 商品名での絞り込みと価格での絞り込みを同時に行う(AND検索を実行する)。</p>
 </div>
@@ -1255,7 +1280,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-01-17 14:58:36 +0900
+Last updated 2020-02-25 15:39:15 +0900
 </div>
 </div>
 </body>
