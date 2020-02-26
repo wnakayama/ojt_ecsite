@@ -40,8 +40,8 @@ class 購入明細メーカー {
 
 購入明細メーカー ..> 商品情報コレクター
 class 商品情報コレクター {
-    -static List<Product> 全商品データ;
-    +コンストラクタ(List<Product> 全商品データ);
+    ~static List<Product> 全商品データ;
+    ~void set全商品データ(List<Product> 全商品データ)
     +List<Product> 選択された商品の商品情報を取得する(String[] チェックボックスの値)
 }
 
