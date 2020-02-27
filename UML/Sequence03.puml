@@ -34,18 +34,17 @@ activate InputChecker
 	・下限価格,上限価格
 		- 1以上の整数である
 		- 9文字以下
-		- 数字以外の文字列を含まない
 		- 下限価格 ≦ 上限価格
 	end note
 
 	note left of InputChecker 
 	enum CheckResult {
-		VALID,
-		INVALID_EMPTY_FORMS,
-		INVALID_CONTAINS_QUOTATION,
-		INVALID_EXCEEDS_CHARACTERS,
-		INVALID_NOT_UNSIGNED_INTEGER,
-		INVALID_REVERSED_PRICE_RANGE
+		VALID(正常な入力値)
+		INVALID_EMPTY_FORMS(すべて空欄)
+		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
+		INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
+		INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
+		INVALID_REVERSED_PRICE_RANGE(下限価格 > 上限価格になっている)
 	}
 	end note
 
