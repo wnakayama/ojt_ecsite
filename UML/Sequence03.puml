@@ -14,7 +14,6 @@ activate SearchProductServlet
 	jQuery.getメソッド
 	第一引数(url)：'http://' + location.host + '/ojt_ecsite/SearchProductServlet'
 	第二引数(data)：指定した検索条件(商品名, 下限価格, 上限価格)
-
 	end note
 
 	note over SearchProductServlet
@@ -33,8 +32,9 @@ activate InputChecker
 		- クォーテーションを含まない
 		- 250文字以下
 	・下限価格,上限価格
-		- ともに整数である
-		- ともに9文字以下
+		- 1以上の整数である
+		- 9文字以下
+		- 数字以外の文字列を含まない
 		- 下限価格 ≦ 上限価格
 	end note
 
@@ -129,7 +129,7 @@ activate Browser
 
 利用者 <-- Browser
 	note right of 利用者
-	絞り込みを完了した商品一覧画面 / システムメッセージが
+	絞り込みを完了した商品一覧画面またはエラーメッセージが
 	Webブラウザに表示される
 	end note
 

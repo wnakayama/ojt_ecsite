@@ -27,7 +27,6 @@ UC03「商品を検索する」ではこのリストを再利用する
 ※ 各Productオブジェクトが持つ値の変更はしない
 end note
 
-
 class SearchProductServlet {
     +{static} final long serialVersionUID
     #void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,19 +34,18 @@ class SearchProductServlet {
 
 CheckResult -- InputChecker
 enum CheckResult {
-    	VALID
-		INVALID_EMPTY_FORMS
-		INVALID_CONTAINS_QUOTATION
-		INVALID_EXCEEDS_CHARACTERS
-		INVALID_NOT_UNSIGNED_INTEGER
-		INVALID_REVERSED_PRICE_RANGE
+    VALID
+    INVALID_EMPTY_FORMS
+    INVALID_CONTAINS_QUOTATION
+    INVALID_EXCEEDS_CHARACTERS
+    INVALID_NOT_UNSIGNED_INTEGER
+    INVALID_REVERSED_PRICE_RANGE
 }
 
 SearchProductServlet ..> InputChecker
 class InputChecker {
     +CheckResult 入力内容をチェックする(商品名, 下限価格, 上限価格)
 }
-
 
 SearchProductServlet ..> SearchParameter
 class SearchParameter {
@@ -63,10 +61,5 @@ class 検索結果メーカー {
     ~set全商品データ(List<Product> 全商品データ)
     +List<Product> 検索条件に合う商品データを取得する(SearchParameter 検索条件)
 }
-
-
-
-
-
 
 @enduml
