@@ -12,17 +12,20 @@ activate SearchProductServlet
 
 	note left of SearchProductServlet
 	jQuery.getメソッド
-	第一引数(url)：'http://' + location.host + '/ojt_ecsite/SearchProductServlet'
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/検索結果メーカー'
 	第二引数(data)：指定した検索条件(商品名, 下限価格, 上限価格)
 	end note
 
 	note over SearchProductServlet
 	UC01[商品を一覧表示する]で用意した
 	全商品のデータをHttpSession.getAttributeで取得し,
-	検索結果メーカークラスのstaticフィールドにセットする
+	SearchEngineクラスのstaticフィールドにセットする
 	end note
+	
+SearchProductServlet -> 検索結果メーカー : 検索結果を出す(商品名, 下限価格, 上限価格)
+activate 検索結果メーカー
 
-SearchProductServlet -> InputChecker : 入力内容をチェックする(商品名, 下限価格, 上限価格)
+検索結果メーカー -> InputChecker : 入力内容をチェックする(商品名, 下限価格, 上限価格)
 activate InputChecker
 
 	note over InputChecker
@@ -48,72 +51,84 @@ activate InputChecker
 	}
 	end note
 
-SearchProductServlet <-- InputChecker : CheckResult
+検索結果メーカー <-- InputChecker : CheckResult
 deactivate InputChecker
 
 
 alt VALID
 	
-	note over SearchProductServlet
+	note over 検索結果メーカー
 	正常と判断された入力内容を、
 	javaオブジェクト(SearchParameter 検索条件)にする
 	end note
 
-SearchProductServlet -> SearchParameter : new 検索条件(String 商品名, int 下限価格, int 上限価格)
+検索結果メーカー -> SearchParameter : new 検索条件(String 商品名, int 下限価格, int 上限価格)
 activate SearchParameter
-SearchProductServlet <-- SearchParameter : 検索条件
+検索結果メーカー <-- SearchParameter : 検索条件
 deactivate SearchParameter
 
-SearchProductServlet -> 検索結果メーカー : 検索条件に合う商品データを取得する(SearchParameter 検索条件)
-activate 検索結果メーカー
+検索結果メーカー -> SearchEngine : 検索条件に合う商品データを取得する(SearchParameter 検索条件)
+activate SearchEngine
 
-	note over 検索結果メーカー
+	note over SearchEngine
 	staticフィールドにある全商品データと
 	サーブレットから受け取った検索条件で検索
 	end note
 
-SearchProductServlet <-- 検索結果メーカー : List<Product> foundProductList
-deactivate 検索結果メーカー
+検索結果メーカー <-- SearchEngine : List<Product> foundProductList
+deactivate SearchEngine
 
-	note over SearchProductServlet
+	note over 検索結果メーカー
 	foundProductList → objectMapper.writeValueAsString → JSON
 
-	{
-	"foundProductList" : [
-		{"ID" : 1, "商品名": "一番ビール", ...},
-		{"ID" : 4, "商品名": "ほぼビール", ...},
-		{"ID" : 5, "商品名": "ビールテイスト", ...},
-		]
-	}
+	[
+	{"ID" : 1, "商品名": "一番ビール", ...},
+	{"ID" : 4, "商品名": "ほぼビール", ...},
+	{"ID" : 5, "商品名": "ビールテイスト", ...},
+	]
 	end note
 
 else INVALID
 
-	note over SearchProductServlet
-	validationError → objectMapper.writeValueAsString → JSON
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID, メッセージ)
+activate ErrorMessage
+検索結果メーカー <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over 検索結果メーカー
+	ErrorMessage → objectMapper.writeValueAsString → JSON
 
 	{
-	"validationError" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
+	"ErrorId" : xx
+	"Message" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
 	}
 	end note
 
 else default
 
-	note over SearchProductServlet
-	unexpectedError → objectMapper.writeValueAsString → JSON
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID, メッセージ)
+activate ErrorMessage
+検索結果メーカー <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over 検索結果メーカー
+	ErrorMessage → objectMapper.writeValueAsString → JSON
 
 	{
-	"unexpectedError" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
+	"ErrorId" : xx
+	"Message" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
 	}
 	end note
 
 end
 
+SearchProductServlet <- 検索結果メーカー : String responseJSON
+deactivate 検索結果メーカー
 Browser <<-- SearchProductServlet : レスポンス(JSON)
 deactivate SearchProductServlet
 activate Browser
 
-	note left of SearchProductServlet
+	note left of 検索結果メーカー
 	jQuery.getメソッド
 	第三引数(callback)：通信成功時に実行するコールバック関数
 		.done(function (data) {

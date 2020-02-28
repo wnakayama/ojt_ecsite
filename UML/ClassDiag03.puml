@@ -32,6 +32,11 @@ class SearchProductServlet {
     #void doGet(HttpServletRequest request, HttpServletResponse response)
 }
 
+SearchProductServlet ..> 検索結果メーカー
+class 検索結果メーカー {
+    +String 検索結果を出す(商品名, 下限価格, 上限価格)
+}
+
 CheckResult -- InputChecker
 enum CheckResult {
     VALID(正常な入力値)
@@ -42,12 +47,12 @@ enum CheckResult {
     INVALID_REVERSED_PRICE_RANGE(下限価格 > 上限価格になっている)
 }
 
-SearchProductServlet ..> InputChecker
+検索結果メーカー ..> InputChecker
 class InputChecker {
     +CheckResult 入力内容をチェックする(商品名, 下限価格, 上限価格)
 }
 
-SearchProductServlet ..> SearchParameter
+検索結果メーカー ..> SearchParameter
 class SearchParameter {
     -final String 商品名
     -final int 下限価格
@@ -55,8 +60,8 @@ class SearchParameter {
     +コンストラクタ(String 商品名, int 下限価格, int 上限価格)
 }
 
-SearchProductServlet ..> 検索結果メーカー
-class 検索結果メーカー {
+検索結果メーカー ..> SearchEngine
+class SearchEngine {
     ~static List<Product> 全商品データ
     ~set全商品データ(List<Product> 全商品データ)
     +List<Product> 検索条件に合う商品データを取得する(SearchParameter 検索条件)
