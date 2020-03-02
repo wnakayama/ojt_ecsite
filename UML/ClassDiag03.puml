@@ -34,7 +34,7 @@ class SearchProductServlet {
 
 SearchProductServlet ..> 検索結果メーカー
 class 検索結果メーカー {
-    +String 検索結果を出す(商品名, 下限価格, 上限価格)
+    +String 検索結果を出す(Map<String> 入力チェック前の検索条件)
 }
 
 CheckResult -- InputChecker
@@ -49,7 +49,7 @@ enum CheckResult {
 
 検索結果メーカー ..> InputChecker
 class InputChecker {
-    +CheckResult 入力内容をチェックする(商品名, 下限価格, 上限価格)
+    +CheckResult 入力内容をチェックする(Map<String> 入力チェック前の検索条件)
 }
 
 検索結果メーカー ..> SearchParameter
@@ -65,6 +65,12 @@ class SearchEngine {
     ~static List<Product> 全商品データ
     ~set全商品データ(List<Product> 全商品データ)
     +List<Product> 検索条件に合う商品データを取得する(SearchParameter 検索条件)
+}
+
+検索結果メーカー ..> ErrorMessage
+class ErrorMessage {
+    -final String エラーメッセージ
+    +コンストラクタ(int エラーID)
 }
 
 @enduml

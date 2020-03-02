@@ -22,10 +22,10 @@ activate SearchProductServlet
 	SearchEngineクラスのstaticフィールドにセットする
 	end note
 	
-SearchProductServlet -> 検索結果メーカー : 検索結果を出す(商品名, 下限価格, 上限価格)
+SearchProductServlet -> 検索結果メーカー : 検索結果を出す(Map<String> 入力チェック前の検索条件)
 activate 検索結果メーカー
 
-検索結果メーカー -> InputChecker : 入力内容をチェックする(商品名, 下限価格, 上限価格)
+検索結果メーカー -> InputChecker : 入力内容をチェックする(Map<String> 入力チェック前の検索条件)
 activate InputChecker
 
 	note over InputChecker
@@ -90,8 +90,14 @@ deactivate SearchEngine
 
 else INVALID
 
-検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID, メッセージ)
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID)
 activate ErrorMessage
+
+	note over ErrorMessage
+	渡されたエラーIDに応じて、
+	コンストラクタで生成したエラーメッセージを返却する
+	end note
+
 検索結果メーカー <-- ErrorMessage : ErrorMessage
 deactivate ErrorMessage
 
@@ -99,14 +105,13 @@ deactivate ErrorMessage
 	ErrorMessage → objectMapper.writeValueAsString → JSON
 
 	{
-	"ErrorId" : xx
-	"Message" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
+	"ErrorMessage" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
 	}
 	end note
 
 else default
 
-検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID, メッセージ)
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID)
 activate ErrorMessage
 検索結果メーカー <-- ErrorMessage : ErrorMessage
 deactivate ErrorMessage
@@ -115,8 +120,7 @@ deactivate ErrorMessage
 	ErrorMessage → objectMapper.writeValueAsString → JSON
 
 	{
-	"ErrorId" : xx
-	"Message" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
+	"ErrorMessage" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
 	}
 	end note
 
