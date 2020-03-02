@@ -30,7 +30,7 @@ activate InputChecker
 
 	note over InputChecker
 	<チェック内容>
-	・少なくとも1つのフォームに入力がある
+	・少なくとも1つの検索条件を指定している
 	・商品名
 		- クォーテーションを含まない
 		- 250文字以下
@@ -43,7 +43,7 @@ activate InputChecker
 	note left of InputChecker 
 	enum CheckResult {
 		VALID(正常な入力値)
-		INVALID_EMPTY_FORMS(すべて空欄)
+		INVALID_ALL_EMPTY(すべての検索条件を指定していない)
 		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
 		INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
 		INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
