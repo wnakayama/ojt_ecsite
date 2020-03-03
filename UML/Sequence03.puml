@@ -1,0 +1,155 @@
+@startuml
+title ECサイト_UC03商品を検索する
+
+actor 利用者
+
+利用者 -> Browser : 「検索」ボタン押下
+activate Browser
+
+Browser ->> SearchProductServlet : jQuery.getメソッドでリクエストを送信
+deactivate Browser
+activate SearchProductServlet
+
+	note left of SearchProductServlet
+	jQuery.getメソッド
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/検索結果メーカー'
+	第二引数(data)：指定した検索条件(商品名, 下限価格, 上限価格)
+	end note
+
+	note over SearchProductServlet
+	UC01[商品を一覧表示する]で用意した
+	全商品のデータをHttpSession.getAttributeで取得し,
+	SearchEngineクラスのstaticフィールドにセットする
+	end note
+	
+SearchProductServlet -> 検索結果メーカー : 検索結果を出す(Map<String,String[]> 入力チェック前の検索条件)
+activate 検索結果メーカー
+
+検索結果メーカー -> InputChecker : 入力内容をチェックする(Map<String,String[]> 入力チェック前の検索条件)
+activate InputChecker
+
+	note over InputChecker
+	<実施するチェックの順序>
+	①少なくとも1つの検索条件を指定している
+	②商品名にクォーテーションを含まない
+	③文字数をオーバーしていない
+		商品名:250文字以下
+		下限価格,上限価格:9文字以下
+	④下限価格,上限価格ともに1以上の整数である
+	⑤下限価格 ≦ 上限価格 を満たしている
+	end note
+
+	note left of InputChecker 
+	enum CheckResult {
+		VALID(正常な入力値)
+		INVALID_ALL_INPUT_EMPTY(すべての検索条件を指定していない)
+		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
+		INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
+		INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
+		INVALID_REVERSED_PRICE_RANGE(下限価格 > 上限価格になっている)
+	}
+	end note
+
+検索結果メーカー <-- InputChecker : CheckResult
+deactivate InputChecker
+
+
+alt VALID
+	
+	note over 検索結果メーカー
+	正常と判断された入力内容を、
+	javaオブジェクト(SearchParameter 検索条件)にする
+	end note
+
+検索結果メーカー -> SearchParameter : new 検索条件(String 商品名, int 下限価格, int 上限価格)
+activate SearchParameter
+検索結果メーカー <-- SearchParameter : 検索条件
+deactivate SearchParameter
+
+検索結果メーカー -> SearchEngine : 検索条件に合う商品データを取得する(SearchParameter 検索条件)
+activate SearchEngine
+
+	note over SearchEngine
+	staticフィールドにある全商品データと
+	サーブレットから受け取った検索条件で検索
+	end note
+
+検索結果メーカー <-- SearchEngine : List<Product> foundProductList
+deactivate SearchEngine
+
+	note over 検索結果メーカー
+	foundProductList → objectMapper.writeValueAsString → JSON
+
+	[
+	{"ID" : 1, "商品名": "一番ビール", ...},
+	{"ID" : 4, "商品名": "ほぼビール", ...},
+	{"ID" : 5, "商品名": "ビールテイスト", ...},
+	]
+	end note
+
+else INVALID
+
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID)
+activate ErrorMessage
+
+	note over ErrorMessage
+	渡されたエラーIDに応じて、
+	コンストラクタで生成したエラーメッセージを返却する
+	end note
+
+検索結果メーカー <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over 検索結果メーカー
+	ErrorMessage → objectMapper.writeValueAsString → JSON
+
+	{
+	"ErrorMessage" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
+	}
+	end note
+
+else default
+
+検索結果メーカー -> ErrorMessage : new ErrorMessage(エラーID)
+activate ErrorMessage
+検索結果メーカー <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over 検索結果メーカー
+	ErrorMessage → objectMapper.writeValueAsString → JSON
+
+	{
+	"ErrorMessage" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
+	}
+	end note
+
+end
+
+SearchProductServlet <- 検索結果メーカー : String responseJSON
+deactivate 検索結果メーカー
+Browser <<-- SearchProductServlet : レスポンス(JSON)
+deactivate SearchProductServlet
+activate Browser
+
+	note left of 検索結果メーカー
+	jQuery.getメソッド
+	第三引数(callback)：通信成功時に実行するコールバック関数
+		.done(function (data) {
+			//返ってきたJSON文字列を使って動的に商品一覧画面の表示を変更
+		}).fail(function (error) {
+			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
+			console.log(error);
+		});
+	}
+	end note
+
+
+利用者 <-- Browser
+	note right of 利用者
+	絞り込みを完了した商品一覧画面またはエラーメッセージが
+	Webブラウザに表示される
+	end note
+
+deactivate Browser
+
+@enduml

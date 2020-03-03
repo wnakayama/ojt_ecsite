@@ -1,0 +1,76 @@
+@startuml
+title ECサイト_クラス図_UC03商品を検索する
+
+class Product {
+    -final int 商品ID
+    -final String 商品名
+    -final String 商品カテゴリ
+    -final int 税抜き価格
+    -final int 税込み価格
+    -final String 画像データのパス
+    -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
+    +int get商品ID()
+    +String get商品名()
+    +String get商品カテゴリ()
+    +int get税抜き価格()
+    +int get税込み価格()
+    +String get画像データのパス()
+}
+
+note bottom of Product
+[参考]
+UC01「商品を一覧表示する」で
+商品データ(Product)のリストをセッションオブジェクトに保存している
+
+検索条件に合う商品データを取得するために
+UC03「商品を検索する」ではこのリストを再利用する
+※ 各Productオブジェクトが持つ値の変更はしない
+end note
+
+class SearchProductServlet {
+    +{static} final long serialVersionUID
+    #void doGet(HttpServletRequest request, HttpServletResponse response)
+}
+
+SearchProductServlet ..> 検索結果メーカー
+class 検索結果メーカー {
+    +String 検索結果を出す(Map<String, String[]> 入力チェック前の検索条件)
+}
+
+CheckResult -- InputChecker
+enum CheckResult {
+    VALID(正常な入力値)
+    INVALID_ALL_INPUT_EMPTY(すべての検索条件を指定していない)
+    INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
+    INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
+    INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
+    INVALID_REVERSED_PRICE_RANGE(下限価格 > 上限価格になっている)
+}
+
+検索結果メーカー ..> InputChecker
+class InputChecker {
+    +CheckResult 入力内容をチェックする(Map<String,String[]> 入力チェック前の検索条件)
+}
+
+検索結果メーカー ..> SearchParameter
+class SearchParameter {
+    -final String 商品名
+    -final int 下限価格
+    -final int 上限価格
+    +コンストラクタ(String 商品名, int 下限価格, int 上限価格)
+}
+
+検索結果メーカー ..> SearchEngine
+class SearchEngine {
+    ~static List<Product> 全商品データ
+    ~set全商品データ(List<Product> 全商品データ)
+    +List<Product> 検索条件に合う商品データを取得する(SearchParameter 検索条件)
+}
+
+検索結果メーカー ..> ErrorMessage
+class ErrorMessage {
+    -final String エラーメッセージ
+    +コンストラクタ(int エラーID)
+}
+
+@enduml
