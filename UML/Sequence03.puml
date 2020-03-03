@@ -22,10 +22,10 @@ activate SearchProductServlet
 	SearchEngineクラスのstaticフィールドにセットする
 	end note
 	
-SearchProductServlet -> 検索結果メーカー : 検索結果を出す(Map<String> 入力チェック前の検索条件)
+SearchProductServlet -> 検索結果メーカー : 検索結果を出す(Map<String,String[]> 入力チェック前の検索条件)
 activate 検索結果メーカー
 
-検索結果メーカー -> InputChecker : 入力内容をチェックする(Map<String> 入力チェック前の検索条件)
+検索結果メーカー -> InputChecker : 入力内容をチェックする(Map<String,String[]> 入力チェック前の検索条件)
 activate InputChecker
 
 	note over InputChecker

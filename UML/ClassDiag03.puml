@@ -34,7 +34,7 @@ class SearchProductServlet {
 
 SearchProductServlet ..> 検索結果メーカー
 class 検索結果メーカー {
-    +String 検索結果を出す(Map<String> 入力チェック前の検索条件)
+    +String 検索結果を出す(Map<String, String[]> 入力チェック前の検索条件)
 }
 
 CheckResult -- InputChecker
@@ -49,7 +49,7 @@ enum CheckResult {
 
 検索結果メーカー ..> InputChecker
 class InputChecker {
-    +CheckResult 入力内容をチェックする(Map<String> 入力チェック前の検索条件)
+    +CheckResult 入力内容をチェックする(Map<String,String[]> 入力チェック前の検索条件)
 }
 
 検索結果メーカー ..> SearchParameter
