@@ -25,7 +25,7 @@ public class InputCheckerTest {
     @Test
     public void valid() {
         Map<String, String[]> map = new HashMap<>();
-        String[] NameArray = { "AP" };
+        String[] nameArray = { "AP" };
         String[] minPriceArray = { "100" };
         String[] maxPriceArray = { "500" };
         map.put("productName", NameArray);
