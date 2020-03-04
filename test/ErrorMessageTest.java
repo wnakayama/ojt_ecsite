@@ -5,6 +5,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * コンストラクタでエラーIDを引数に受け取り,IDに応じたエラーメッセージのオブジェクトを生成するクラスのテスト.
+ *
+ * @author nakayama
+ *
+ */
 public class ErrorMessageTest {
 
     @Test

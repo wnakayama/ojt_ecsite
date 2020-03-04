@@ -20,7 +20,7 @@ public class InputCheckerTest {
      * 商品名,下限価格,上限価格のいずれも正しく指定しているとき, 合格を示す結果"VALID"を返す.
      *
      * @param map ユーザー入力で指定された検索条件を格納したMap
-     * @return CheckResult 検証結果
+     * @return checkResult 検証結果
      */
     @Test
     public void valid() {

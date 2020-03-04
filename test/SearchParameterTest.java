@@ -5,12 +5,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * ユーザーが入力した検索条件を格納するデータクラスのテスト.
+ *
+ * @author nakayama
+ *
+ */
 public class SearchParameterTest {
 
     @Test
-    public void testGetKeyWord() {
+    public void testGetProductName() {
         SearchParameter param = new SearchParameter("test", 0, 0);
-        String result = param.getKeyword();
+        String result = param.getProductName();
         assertThat(result, is("test"));
     }
 
