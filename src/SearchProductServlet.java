@@ -56,8 +56,9 @@ public class SearchProductServlet extends HttpServlet {
             // 基本的に発生しないため,スタックトレースの出力のみで簡易的に例外処理を実装
             e.printStackTrace();
         } catch (NullPointerException e) {
-            //
-            // 基本的に発生しないため,スタックトレースの出力のみで簡易的に例外処理を実装
+            // 検索条件の指定にnullが含まれていたときに発生.
+            // システム利用者の入力が無いとき,getParameterMapの返り値は空文字列の入ったMapとなるため,
+            // 基本的に発生しない例外と判断し,スタックトレースの出力のみで簡易的に例外処理を実装
             e.printStackTrace();
         }
     }
