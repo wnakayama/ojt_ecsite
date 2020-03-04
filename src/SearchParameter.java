@@ -1,12 +1,18 @@
 package ojt_ecsite;
 
+/**
+ * ユーザーが入力した検索条件を格納するデータクラス.
+ *
+ * @author nakayama
+ *
+ */
 public class SearchParameter {
-    private final String keyword;
+    private final String productName;
     private final int minPrice;
     private final int maxPrice;
 
-    public String getKeyword() {
-        return keyword;
+    public String getProductName() {
+        return productName;
     }
 
     public int getMinPrice() {
@@ -17,8 +23,8 @@ public class SearchParameter {
         return maxPrice;
     }
 
-    SearchParameter(String keyword, int minPrice, int maxPrice) {
-        this.keyword = keyword;
+    SearchParameter(String productName, int minPrice, int maxPrice) {
+        this.productName = productName;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
     }

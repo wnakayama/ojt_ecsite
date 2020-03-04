@@ -1,5 +1,11 @@
 package ojt_ecsite;
 
+/**
+ * コンストラクタでエラーIDを引数に受け取り,IDに応じたエラーメッセージのオブジェクトを生成するクラス.
+ *
+ * @author nakayama
+ *
+ */
 public class ErrorMessage {
     private final String errorMessage;
 

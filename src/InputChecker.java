@@ -4,6 +4,12 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * ユーザー入力で指定された検索条件がバリデーション条件に違反していないか検証するクラス.
+ *
+ * @author nakayama
+ *
+ */
 public class InputChecker {
 
     private final int KEYWORD_UPPERLIMIT = 250;
@@ -14,6 +20,12 @@ public class InputChecker {
         INVALID_NOT_UNSIGNED_INTEGER, INVALID_REVERSED_PRICE_RANGE,
     }
 
+    /**
+     * ユーザー入力で指定された検索条件がバリデーション条件に違反していないか検証するクラス.
+     *
+     * @param inputParameterMap ユーザー入力で指定された検索条件を格納したMap
+     * @return CheckResult 検証結果
+     */
     public CheckResult validateSearchParameters(Map<String, String[]> inputParameterMap) {
         String inputProductName = inputParameterMap.get("productName")[0];
         String inputMinPrice = inputParameterMap.get("minPrice")[0];
@@ -30,7 +42,7 @@ public class InputChecker {
             return CheckResult.INVALID_CONTAINS_QUOTATION;
         }
 
-        // 商品名が251文字以上,価格が10文字以上のいずれかでエラーを弾く
+        // 商品名が251文字以上,価格が10文字以上のいずれかでエラーを返す
         if (inputProductName.length() > KEYWORD_UPPERLIMIT) {
             return CheckResult.INVALID_EXCEEDS_CHARACTERS;
         }
@@ -41,13 +53,13 @@ public class InputChecker {
             return CheckResult.INVALID_EXCEEDS_CHARACTERS;
         }
 
-        // Integer.parseIntが正常に出来なければエラーを返す
+        // String型→Int型への変換を実施し,正常に出来なければエラーを返す
         // 1以上の整数でなければエラーを返す
         try {
             int parsedMinPrice = 1;
             int parsedMaxPrice = 1;
             if (!StringUtils.isEmpty(inputMinPrice)) {
-                parsedMinPrice = Integer.parseInt(inputMinPrice); // 空欄じゃなければ変換してみる
+                parsedMinPrice = Integer.parseInt(inputMinPrice);
             }
             if (!StringUtils.isEmpty(inputMaxPrice)) {
                 parsedMaxPrice = Integer.parseInt(inputMaxPrice);

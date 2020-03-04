@@ -9,8 +9,21 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 検索条件のバリデーションや検索実行のメソッドを呼び出し,検索結果を生成するクラス.
+ *
+ * @author nakayama
+ *
+ */
 public class SearchResultMaker {
 
+    /**
+     * ユーザー入力で指定された検索条件がバリデーション条件に違反していないか検証するクラス.
+     *
+     * @param inputParameterMap ユーザー入力で指定された検索条件を格納したMap
+     * @return searchResultJson 検索結果のJSON文字列
+     * @throws JsonProcessingException 検索結果をJSON文字列に変換する際にエラーが発生した場合にスローされる例外
+     */
     public String makeSearchResult(Map<String, String[]> inputParameterMap) throws JsonProcessingException {
         // 入力チェック
         InputChecker inputChecker = new InputChecker();
