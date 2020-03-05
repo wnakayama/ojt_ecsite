@@ -41,7 +41,7 @@ public class SearchProductServlet extends HttpServlet {
 
             // 検索結果をJSON形式の文字列に変換
             ObjectMapper mapper = new ObjectMapper();
-            String responseJSON = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(searchResultJson);
+            String responseJSON = mapper.writeValueAsString(searchResultJson);
 
             response.setContentType("application/json");
             response.setHeader("Cache-Control", "nocache");
@@ -49,7 +49,6 @@ public class SearchProductServlet extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             out.print(responseJSON);
-            System.out.println(responseJSON);
 
         } catch (IOException e) {
             // javaオブジェクトからJSON文字列への変換に失敗したとき,getWriterでボディメッセージ出力に失敗したときに発生.
