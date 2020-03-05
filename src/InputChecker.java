@@ -2,8 +2,6 @@ package ojt_ecsite;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * ユーザー入力で指定された検索条件がバリデーション条件に違反していないか検証するクラス.
  *
@@ -17,7 +15,7 @@ public class InputChecker {
 
     enum CheckResult {
         VALID, INVALID_ALL_INPUT_EMPTY, INVALID_CONTAINS_QUOTATION, INVALID_EXCEEDS_CHARACTERS,
-        INVALID_NOT_UNSIGNED_INTEGER, INVALID_REVERSED_PRICE_RANGE,
+        INVALID_NOT_UNSIGNED_INTEGER, INVALID_REVERSED_PRICE_RANGE
     }
 
     /**
@@ -32,8 +30,9 @@ public class InputChecker {
         String inputMaxPrice = inputParameterMap.get("maxPrice")[0];
 
         // パラメータが3つともnullもしくは空であればエラーを返す
-        if (StringUtils.isEmpty(inputProductName) && StringUtils.isEmpty(inputMinPrice)
-                && StringUtils.isEmpty(inputMaxPrice)) {
+        if ((inputProductName == null || inputProductName.isEmpty())
+                && (inputMinPrice == null || inputMinPrice.isEmpty())
+                && (inputMaxPrice == null || inputMaxPrice.isEmpty())) {
             return CheckResult.INVALID_ALL_INPUT_EMPTY;
         }
 
@@ -53,15 +52,16 @@ public class InputChecker {
             return CheckResult.INVALID_EXCEEDS_CHARACTERS;
         }
 
+        // 下限価格,上限価格に入力があるとき
         // String型→Int型への変換を実施し,正常に出来なければエラーを返す
         // 1以上の整数でなければエラーを返す
         try {
             int parsedMinPrice = 1;
             int parsedMaxPrice = 1;
-            if (!StringUtils.isEmpty(inputMinPrice)) {
+            if (inputMinPrice != null && !inputMinPrice.isEmpty()) {
                 parsedMinPrice = Integer.parseInt(inputMinPrice);
             }
-            if (!StringUtils.isEmpty(inputMaxPrice)) {
+            if (inputMaxPrice != null && !inputMaxPrice.isEmpty()) {
                 parsedMaxPrice = Integer.parseInt(inputMaxPrice);
             }
 
@@ -69,8 +69,10 @@ public class InputChecker {
                 return CheckResult.INVALID_NOT_UNSIGNED_INTEGER;
             }
 
+            // 下限価格と上限価格の両方に入力があったときのみ,以下のチェックを実施
             // 下限価格 > 上限価格であればエラーを返す
-            if (!StringUtils.isEmpty(inputMinPrice) && !StringUtils.isEmpty(inputMaxPrice)) {
+            if ((inputMinPrice != null && !inputMinPrice.isEmpty())
+                    && (inputMaxPrice != null && !inputMaxPrice.isEmpty())) {
                 if (parsedMinPrice > parsedMaxPrice) {
                     return CheckResult.INVALID_REVERSED_PRICE_RANGE;
                 }

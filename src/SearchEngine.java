@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * ユーザーが入力した検索条件に該当する商品データを,全商品データから探し出すクラス.
  *
@@ -34,7 +32,7 @@ public class SearchEngine {
 
         // 商品名の指定があるとき,指定された商品名と部分一致する商品のみに絞り込む.
         // アルファベットは全て小文字に揃えて検索する.
-        if (!StringUtils.isEmpty(searchParameter.getProductName())) {
+        if (searchParameter.getProductName() != null && !searchParameter.getProductName().isEmpty()) {
             foundProductList = foundProductList.stream()
                     .filter(p -> p.getName().toLowerCase().contains(searchParameter.getProductName().toLowerCase()))
                     .collect(Collectors.toList());
