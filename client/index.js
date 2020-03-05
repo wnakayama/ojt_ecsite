@@ -13,6 +13,7 @@ function viewAllProduct() {
             if (product.length == 0) {
                 $('.productInfoArea').append('商品データがありません<br>');
             } else {
+                console.log(data);
                 $('.productInfoArea').append('<table class="productInfoTable"></table>');
                 const cols = 4; // 列数を設定
                 const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
@@ -87,6 +88,66 @@ function sendSelectedIdArray(selectedIdArray) {
         var receipt = JSON.stringify(data);
         sessionStorage.setItem('receipt', receipt);
         window.location.href = 'purchase.html'; // 購入明細画面に遷移
+    }).fail(function (error) {
+        // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
+        console.log(error);
+    });
+}
+
+
+// 「検索」ボタン押下時の処理を分岐する.
+$(document).on(
+    'click', '.search', function () {
+        /**
+         * 本当はクライアント側でもボタン押下時に入力チェックをする
+         */
+        console.log("clicked")
+        const productName = $('input[name="productName"]').val();
+        const minPrice = $('input[name="minPrice"]').val();
+        const maxPrice = $('input[name="maxPrice"]').val();
+        sendSearchParameter(productName, minPrice, maxPrice)
+    }
+);
+
+/**
+ * 検索処理
+ * 利用者がフォームに入力した検索条件をGETで送信する.
+ * サーバ側から検索結果のJSONを受け取り,商品一覧画面の表示を動的に変更する.
+ */
+
+function sendSearchParameter(productName, minPrice, maxPrice) {
+    $.get('http://' + location.host + '/ojt_ecsite/SearchProductServlet',
+        {
+            "productName": productName,
+            "minPrice": minPrice,
+            "maxPrice": maxPrice
+        }
+    ).done(function (data) {
+        // 通信成功時
+        console.log(data)
+        const product = data || {};
+        if (product.length == 0) {
+            //     $('.productInfoArea').empty();
+            //     $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
+        } else {
+            console.log(product);
+            //     $('.productInfoArea').empty();
+            //     $('.productInfoArea').append('<table class="productInfoTable"></table>');
+            //     const cols = 4; // 列数を設定
+            //     const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
+            //     for (var i = 0; i < rows; i++) {
+            //         $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
+            //         for (var j = 0; j < cols; j++) {
+            //             $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
+            //             $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
+            //             $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
+            //             $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
+            //             $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
+            //             $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
+            //         }
+            //     }
+        }
+
     }).fail(function (error) {
         // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
         console.log(error);
