@@ -25,9 +25,24 @@ public class InputChecker {
      * @return CheckResult 検証結果
      */
     public CheckResult validateSearchParameters(Map<String, String[]> inputParameterMap) {
-        String inputProductName = inputParameterMap.get("productName")[0];
-        String inputMinPrice = inputParameterMap.get("minPrice")[0];
-        String inputMaxPrice = inputParameterMap.get("maxPrice")[0];
+        String inputProductName = "";
+        String inputMinPrice = "";
+        String inputMaxPrice = "";
+
+        if (inputParameterMap.get("productName") != null && inputParameterMap.get("productName")[0] != null
+                && !inputParameterMap.get("productName")[0].isEmpty()) {
+            inputProductName = inputParameterMap.get("productName")[0];
+        }
+
+        if (inputParameterMap.get("minPrice") != null && inputParameterMap.get("minPrice")[0] != null
+                && !inputParameterMap.get("minPrice")[0].isEmpty()) {
+            inputMinPrice = inputParameterMap.get("minPrice")[0];
+        }
+
+        if (inputParameterMap.get("maxPrice") != null && inputParameterMap.get("maxPrice") != null
+                && !inputParameterMap.get("maxPrice")[0].isEmpty()) {
+            inputMaxPrice = inputParameterMap.get("maxPrice")[0];
+        }
 
         // パラメータが3つともnullもしくは空であればエラーを返す
         if ((inputProductName == null || inputProductName.isEmpty())
@@ -36,9 +51,12 @@ public class InputChecker {
             return CheckResult.INVALID_ALL_INPUT_EMPTY;
         }
 
+        //
         // 商品名にクォーテーションが含まれていたらエラーを返す
-        if (inputProductName.contains("'") || inputProductName.contains("\"")) {
-            return CheckResult.INVALID_CONTAINS_QUOTATION;
+        if (inputProductName != null && !inputProductName.isEmpty()) {
+            if (inputProductName.contains("'") || inputProductName.contains("\"")) {
+                return CheckResult.INVALID_CONTAINS_QUOTATION;
+            }
         }
 
         // 商品名が251文字以上,価格が10文字以上のいずれかでエラーを返す
@@ -69,7 +87,7 @@ public class InputChecker {
                 return CheckResult.INVALID_NOT_UNSIGNED_INTEGER;
             }
 
-            // 下限価格と上限価格の両方に入力があったときのみ,以下のチェックを実施
+            // 下限価格と上限価格の両方に指定があったときのみ,以下のチェックを実施
             // 下限価格 > 上限価格であればエラーを返す
             if ((inputMinPrice != null && !inputMinPrice.isEmpty())
                     && (inputMaxPrice != null && !inputMaxPrice.isEmpty())) {

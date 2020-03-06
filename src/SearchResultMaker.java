@@ -32,16 +32,27 @@ public class SearchResultMaker {
         switch (checkResult) {
             case VALID:
                 // 検索条件をオブジェクトにセット
+                String productName = null;
                 int minPrice = 0;
                 int maxPrice = 0;
-                if (inputParameterMap.get("minPrice")[0] != null && !inputParameterMap.get("minPrice")[0].isEmpty()) {
+
+                // クライアント側より取得した値がnullや空文字列でない場合のみ,初期値へ代入する.
+                if (inputParameterMap.get("productName") != null && inputParameterMap.get("productName")[0] != null
+                        && !inputParameterMap.get("productName")[0].isEmpty()) {
+                    productName = inputParameterMap.get("produtName")[0];
+                }
+
+                if (inputParameterMap.get("minPrice") != null && inputParameterMap.get("minPrice")[0] != null
+                        && !inputParameterMap.get("minPrice")[0].isEmpty()) {
                     minPrice = Integer.parseInt(inputParameterMap.get("minPrice")[0]);
                 }
-                if (inputParameterMap.get("maxPrice")[0] != null && !inputParameterMap.get("maxPrice")[0].isEmpty()) {
+
+                if (inputParameterMap.get("minPrice") != null && inputParameterMap.get("maxPrice") != null
+                        && !inputParameterMap.get("maxPrice")[0].isEmpty()) {
                     maxPrice = Integer.parseInt(inputParameterMap.get("maxPrice")[0]);
                 }
-                SearchParameter searchParameter = new SearchParameter(inputParameterMap.get("productName")[0], minPrice,
-                        maxPrice);
+
+                SearchParameter searchParameter = new SearchParameter(productName, minPrice, maxPrice);
 
                 // 検索を実行、結果をList<Product>で取得
                 List<Product> foundProductList = new ArrayList<>();
