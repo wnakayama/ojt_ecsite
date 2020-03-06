@@ -10,6 +10,11 @@ import java.util.Map;
  */
 public class InputChecker {
 
+    private static final String KEY_PRODUCTNAME = "productName";
+    private static final String KEY_MINPRICE = "minPrice";
+    private static final String KEY_MAXPRICE = "maxPrice";
+    private static final int FIRST_VALUE = 0;
+
     private final int KEYWORD_UPPERLIMIT = 250;
     private final int PRICE_DIGIT_UPPERLIMIT = 9;
 
@@ -29,19 +34,20 @@ public class InputChecker {
         String inputMinPrice = "";
         String inputMaxPrice = "";
 
-        if (inputParameterMap.get("productName") != null && inputParameterMap.get("productName")[0] != null
-                && !inputParameterMap.get("productName")[0].isEmpty()) {
-            inputProductName = inputParameterMap.get("productName")[0];
+        if (inputParameterMap.get(KEY_PRODUCTNAME) != null
+                && inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE] != null
+                && !inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE].isEmpty()) {
+            inputProductName = inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE];
         }
 
-        if (inputParameterMap.get("minPrice") != null && inputParameterMap.get("minPrice")[0] != null
-                && !inputParameterMap.get("minPrice")[0].isEmpty()) {
-            inputMinPrice = inputParameterMap.get("minPrice")[0];
+        if (inputParameterMap.get(KEY_MINPRICE) != null && inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE] != null
+                && !inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE].isEmpty()) {
+            inputMinPrice = inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE];
         }
 
-        if (inputParameterMap.get("maxPrice") != null && inputParameterMap.get("maxPrice") != null
-                && !inputParameterMap.get("maxPrice")[0].isEmpty()) {
-            inputMaxPrice = inputParameterMap.get("maxPrice")[0];
+        if (inputParameterMap.get(KEY_MAXPRICE) != null && inputParameterMap.get(KEY_MAXPRICE) != null
+                && !inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE].isEmpty()) {
+            inputMaxPrice = inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE];
         }
 
         // パラメータが3つともnullもしくは空であればエラーを返す
