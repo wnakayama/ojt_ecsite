@@ -530,23 +530,141 @@ public class InputCheckerTest {
         assertThat(checkResult, is(checkResult.INVALID_NOT_UNSIGNED_INTEGER));
     }
 
-    // "条件指定なし"を空文字列ではなくnullを渡すことで示す場合のテスト
-
     /**
-     * 商品名を正しく指定していて,下限価格,上限価格の指定がnullであるとき
+     * "条件指定なし"を空文字列ではなくnullを渡すことで示す場合のテストでは,空文字列で示している場合と同様の結果を期待する.
+     */
+    /**
+     * 商品名を正しく指定していて,下限価格,上限価格の指定がnullであるとき, 不合格を示す結果"INVALID_ALL_INPUT_EMPTY"を返す.
      */
     @Test
-    public void test() {
-        fail("未実装");
+    public void allInputNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = null;
+        String[] minPriceArray = null;
+        String[] maxPriceArray = null;
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.INVALID_ALL_INPUT_EMPTY));
     }
 
     /**
-     * 下限価格を正しく指定していて,商品名,上限価格の指定がnullであるとき
+     * 商品名を正しく指定していて,下限価格,上限価格の指定がnullであるとき, 合格を示す結果"VALID"を返す.
      */
+    @Test
+    public void minPricemMaxPriceNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = { "AP過去問" };
+        String[] minPriceArray = null;
+        String[] maxPriceArray = null;
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
 
     /**
-     * 上限価格を正しく指定していて,商品名,下限価格の指定がnullであるとき
+     * 下限価格を正しく指定していて,商品名,上限価格の指定がnullであるとき, 合格を示す結果"VALID"を返す.
      */
+    @Test
+    public void productNameMaxPriceNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = null;
+        String[] minPriceArray = { "123456789" };
+        String[] maxPriceArray = null;
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
+
+    /**
+     * 上限価格を正しく指定していて,商品名,下限価格の指定がnullであるとき, 合格を示す結果"VALID"を返す.
+     */
+    @Test
+    public void productNameMinPriceNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = null;
+        String[] minPriceArray = null;
+        String[] maxPriceArray = { "123456789" };
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
+
+    /**
+     * 下限価格,上限価格を正しく指定していて,商品名の指定がnullであるとき, 合格を示す結果"VALID"を返す.
+     */
+    @Test
+    public void productNameNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = null;
+        String[] minPriceArray = { "123456789" };
+        String[] maxPriceArray = { "987654321" };
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
+
+    /**
+     * 商品名,上限価格を正しく指定していて,下限価格の指定がnullであるとき, 合格を示す結果"VALID"を返す.
+     */
+    @Test
+    public void minPriceNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = { "AP過去問" };
+        String[] minPriceArray = null;
+        String[] maxPriceArray = { "987654321" };
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
+
+    /**
+     * 商品名,下限価格を正しく指定していて,上限価格の指定がnullであるとき, 合格を示す結果"VALID"を返す.
+     */
+    @Test
+    public void maxPriceNull() {
+        Map<String, String[]> map = new HashMap<>();
+        String[] nameArray = { "AP過去問" };
+        String[] minPriceArray = { "123456789" };
+        String[] maxPriceArray = null;
+        map.put("productName", nameArray);
+        map.put("minPrice", minPriceArray);
+        map.put("maxPrice", maxPriceArray);
+
+        InputChecker inputChecker = new InputChecker();
+        ojt_ecsite.InputChecker.CheckResult checkResult = inputChecker.validateSearchParameters(map);
+
+        assertThat(checkResult, is(checkResult.VALID));
+    }
 
     /**
      *
