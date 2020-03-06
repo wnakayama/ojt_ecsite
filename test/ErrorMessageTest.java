@@ -49,4 +49,10 @@ public class ErrorMessageTest {
         assertThat(result.getErrorMessage(), is("予期せぬエラーが発生しました お手数ですが開発者までご連絡ください"));
     }
 
+    @Test
+    public void defaultErrorId() {
+        ErrorMessage result = new ErrorMessage(123);
+        assertThat(result.getErrorMessage(), is("予期せぬエラーが発生しました お手数ですが開発者までご連絡ください"));
+    }
+
 }
