@@ -22,12 +22,6 @@ public class SearchResultMaker {
      * @return searchResultJson 検索結果のJSON文字列
      * @throws JsonProcessingException 検索結果をJSON文字列に変換する際にエラーが発生した場合にスローされる例外
      */
-
-    private static final String KEY_PRODUCTNAME = "productName";
-    private static final String KEY_MINPRICE = "minPrice";
-    private static final String KEY_MAXPRICE = "maxPrice";
-    private static final int FIRST_VALUE = 0;
-
     public String makeSearchResult(Map<String, String[]> inputParameterMap) throws JsonProcessingException {
         // 入力チェック
         InputChecker inputChecker = new InputChecker();
@@ -43,22 +37,24 @@ public class SearchResultMaker {
                 int maxPrice = 0;
 
                 // クライアント側より取得した値がnullや空文字列でない場合のみ,初期値へ代入する.
-                if (inputParameterMap.get(KEY_PRODUCTNAME) != null
-                        && inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE] != null
-                        && !inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE].isEmpty()) {
-                    productName = inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE];
+                if (inputParameterMap.get(InputConstant.KEY_PRODUCTNAME) != null
+                        && inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE] != null
+                        && !inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE].isEmpty()) {
+                    productName = inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE];
                 }
 
-                if (inputParameterMap.get(KEY_MINPRICE) != null
-                        && inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE] != null
-                        && !inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE].isEmpty()) {
-                    minPrice = Integer.parseInt(inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE]);
+                if (inputParameterMap.get(InputConstant.KEY_MINPRICE) != null
+                        && inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE] != null
+                        && !inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE].isEmpty()) {
+                    minPrice = Integer
+                            .parseInt(inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE]);
                 }
 
-                if (inputParameterMap.get(KEY_MAXPRICE) != null
-                        && inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE] != null
-                        && !inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE].isEmpty()) {
-                    maxPrice = Integer.parseInt(inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE]);
+                if (inputParameterMap.get(InputConstant.KEY_MAXPRICE) != null
+                        && inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE] != null
+                        && !inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE].isEmpty()) {
+                    maxPrice = Integer
+                            .parseInt(inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE]);
                 }
 
                 SearchParameter searchParameter = new SearchParameter(productName, minPrice, maxPrice);

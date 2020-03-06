@@ -1,7 +1,6 @@
 package ojt_ecsite;
 
 import java.util.Map;
-
 /**
  * ユーザー入力で指定された検索条件がバリデーション条件に違反していないか検証するクラス.
  *
@@ -9,18 +8,16 @@ import java.util.Map;
  *
  */
 public class InputChecker {
-
-    private static final String KEY_PRODUCTNAME = "productName";
-    private static final String KEY_MINPRICE = "minPrice";
-    private static final String KEY_MAXPRICE = "maxPrice";
-    private static final int FIRST_VALUE = 0;
-
     private final int KEYWORD_UPPERLIMIT = 250;
     private final int PRICE_DIGIT_UPPERLIMIT = 9;
 
     enum CheckResult {
-        VALID, INVALID_ALL_INPUT_EMPTY, INVALID_CONTAINS_QUOTATION, INVALID_EXCEEDS_CHARACTERS,
-        INVALID_NOT_UNSIGNED_INTEGER, INVALID_REVERSED_PRICE_RANGE
+        VALID,
+        INVALID_ALL_INPUT_EMPTY,
+        INVALID_CONTAINS_QUOTATION,
+        INVALID_EXCEEDS_CHARACTERS,
+        INVALID_NOT_UNSIGNED_INTEGER,
+        INVALID_REVERSED_PRICE_RANGE
     }
 
     /**
@@ -34,20 +31,22 @@ public class InputChecker {
         String inputMinPrice = "";
         String inputMaxPrice = "";
 
-        if (inputParameterMap.get(KEY_PRODUCTNAME) != null
-                && inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE] != null
-                && !inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE].isEmpty()) {
-            inputProductName = inputParameterMap.get(KEY_PRODUCTNAME)[FIRST_VALUE];
+        if(inputParameterMap.get(InputConstant.KEY_PRODUCTNAME) != null &&
+                inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE] != null &&
+                !inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE].isEmpty()) {
+            inputProductName = inputParameterMap.get(InputConstant.KEY_PRODUCTNAME)[InputConstant.FIRST_VALUE];
         }
 
-        if (inputParameterMap.get(KEY_MINPRICE) != null && inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE] != null
-                && !inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE].isEmpty()) {
-            inputMinPrice = inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE];
+        if(inputParameterMap.get(InputConstant.KEY_MINPRICE) != null &&
+                inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE] != null &&
+                !inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE].isEmpty()) {
+            inputMinPrice = inputParameterMap.get(InputConstant.KEY_MINPRICE)[InputConstant.FIRST_VALUE];
         }
 
-        if (inputParameterMap.get(KEY_MAXPRICE) != null && inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE] != null
-                && !inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE].isEmpty()) {
-            inputMaxPrice = inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE];
+        if(inputParameterMap.get(InputConstant.KEY_MAXPRICE) != null &&
+                inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE] != null &&
+                !inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE].isEmpty()) {
+            inputMaxPrice = inputParameterMap.get(InputConstant.KEY_MAXPRICE)[InputConstant.FIRST_VALUE];
         }
 
         // パラメータが3つともnullもしくは空であればエラーを返す
@@ -59,7 +58,7 @@ public class InputChecker {
 
         //
         // 商品名にクォーテーションが含まれていたらエラーを返す
-        if (inputProductName != null && !inputProductName.isEmpty()) {
+        if(inputProductName != null && !inputProductName.isEmpty()) {
             if (inputProductName.contains("'") || inputProductName.contains("\"")) {
                 return CheckResult.INVALID_CONTAINS_QUOTATION;
             }
@@ -80,27 +79,27 @@ public class InputChecker {
         // String型→Int型への変換を実施し,正常に出来なければエラーを返す
         // 1以上の整数でなければエラーを返す
         try {
-            int parsedMinPrice = 1;
-            int parsedMaxPrice = 1;
-            if (inputMinPrice != null && !inputMinPrice.isEmpty()) {
-                parsedMinPrice = Integer.parseInt(inputMinPrice);
-            }
-            if (inputMaxPrice != null && !inputMaxPrice.isEmpty()) {
-                parsedMaxPrice = Integer.parseInt(inputMaxPrice);
-            }
+        int parsedMinPrice = 1;
+        int parsedMaxPrice = 1;
+        if(inputMinPrice != null && !inputMinPrice.isEmpty()) {
+            parsedMinPrice = Integer.parseInt(inputMinPrice);
+        }
+        if(inputMaxPrice != null && !inputMaxPrice.isEmpty()) {
+            parsedMaxPrice = Integer.parseInt(inputMaxPrice);
+        }
 
-            if (parsedMinPrice <= 0 || parsedMaxPrice <= 0) {
-                return CheckResult.INVALID_NOT_UNSIGNED_INTEGER;
-            }
+        if (parsedMinPrice <= 0 || parsedMaxPrice <= 0) {
+            return CheckResult.INVALID_NOT_UNSIGNED_INTEGER;
+        }
 
-            // 下限価格と上限価格の両方に指定があったときのみ,以下のチェックを実施
-            // 下限価格 > 上限価格であればエラーを返す
-            if ((inputMinPrice != null && !inputMinPrice.isEmpty())
-                    && (inputMaxPrice != null && !inputMaxPrice.isEmpty())) {
-                if (parsedMinPrice > parsedMaxPrice) {
-                    return CheckResult.INVALID_REVERSED_PRICE_RANGE;
-                }
+        // 下限価格と上限価格の両方に指定があったときのみ,以下のチェックを実施
+        // 下限価格 > 上限価格であればエラーを返す
+        if((inputMinPrice != null && !inputMinPrice.isEmpty())
+                && (inputMaxPrice != null && !inputMaxPrice.isEmpty())) {
+            if (parsedMinPrice > parsedMaxPrice) {
+                return CheckResult.INVALID_REVERSED_PRICE_RANGE;
             }
+        }
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
