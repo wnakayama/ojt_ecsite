@@ -45,7 +45,7 @@ public class InputChecker {
             inputMinPrice = inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE];
         }
 
-        if (inputParameterMap.get(KEY_MAXPRICE) != null && inputParameterMap.get(KEY_MAXPRICE) != null
+        if (inputParameterMap.get(KEY_MAXPRICE) != null && inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE] != null
                 && !inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE].isEmpty()) {
             inputMaxPrice = inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE];
         }

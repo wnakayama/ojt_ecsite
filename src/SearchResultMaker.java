@@ -62,7 +62,8 @@ public class SearchResultMaker {
                     minPrice = Integer.parseInt(inputParameterMap.get(KEY_MINPRICE)[FIRST_VALUE]);
                 }
 
-                if (inputParameterMap.get(KEY_MAXPRICE) != null && inputParameterMap.get(KEY_MAXPRICE) != null
+                if (inputParameterMap.get(KEY_MAXPRICE) != null
+                        && inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE] != null
                         && !inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE].isEmpty()) {
                     maxPrice = Integer.parseInt(inputParameterMap.get(KEY_MAXPRICE)[FIRST_VALUE]);
                 }
