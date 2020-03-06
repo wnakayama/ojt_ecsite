@@ -28,12 +28,12 @@ public class SearchResultMaker {
     private static final String KEY_MAXPRICE = "maxPrice";
     private static final int FIRST_VALUE = 0;
 
-    private static int ID_ALL_INPUT_EMPTY = 01;
-    private static int ID_CONTAINS_QUOTATION = 05;
-    private static int ID_EXCEEDS_CHARACTERS = 02;
-    private static int ID_NOT_UNSIGNED_INTEGER = 03;
-    private static int ID_REVERSED_PRICE_RANGE = 04;
-    private static int ID_UNEXPECTED_STATE = 99;
+    private static final int ID_ALL_INPUT_EMPTY = 1;
+    private static final int ID_CONTAINS_QUOTATION = 5;
+    private static final int ID_EXCEEDS_CHARACTERS = 2;
+    private static final int ID_NOT_UNSIGNED_INTEGER = 3;
+    private static final int ID_REVERSED_PRICE_RANGE = 4;
+    private static final int ID_UNEXPECTED_STATE = 9;
 
     public String makeSearchResult(Map<String, String[]> inputParameterMap) throws JsonProcessingException {
         // 入力チェック
