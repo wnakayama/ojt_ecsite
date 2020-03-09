@@ -97,16 +97,82 @@ function sendSelectedIdArray(selectedIdArray) {
 // 「検索」ボタン押下時の処理を分岐する.
 $(document).on(
     'click', '.search', function () {
-        /**
-         * 本当はクライアント側でもボタン押下時に入力チェックをする
-         */
-        console.log("clicked")
         const productName = $('input[name="productName"]').val();
         const minPrice = $('input[name="minPrice"]').val();
         const maxPrice = $('input[name="maxPrice"]').val();
+        validateSearchParameter(productName, minPrice, maxPrice)
         sendSearchParameter(productName, minPrice, maxPrice)
     }
 );
+
+
+/**
+ * 
+ */
+$('input').change(function () {
+    // フォームに入力があったら有効化
+    if ($('input[name="productName"]').val() != "") {
+        // ボタンを有効化
+        $('.search').prop('disabled', false);
+    } else {
+        // ボタンを無効化
+        $('.search').prop('disabled', true);
+    }
+});
+
+
+/**
+ * Enumで入力エラーを宣言する
+ */
+const VALIDATION_ERROR = ({
+    ALL_INPUT_EMPTY: {
+        message: 'すべてのフォームに入力がありませんでした 条件を指定してから検索を実行してください'
+    },
+    EXCEEDS_CHARACTERS: {
+        message: '商品名は250文字,価格は9文字まで入力を受け付けます 入力を減らして再度お試しください'
+    },
+    NOT_UNSIGNED_INTEGER: {
+        message: '検索フォーム(価格)の入力が正しくありません(整数で価格を指定してください)'
+    },
+    REVERSED_PRICE_RANGE: {
+        message: '価格の範囲指定が正しくありません(価格フォームの左側に下限値,右側に上限値を入力してください)'
+    },
+    CONTAINS_QUOTATION: {
+        message: 'シングルクォーテーション(\')またはダブルクォーテーション(\")が含まれる文字列では検索できません'
+    }
+})
+
+
+/**
+ * クライアント側で実施する入力チェック
+ */
+function validateSearchParameter(productName, minPrice, maxPrice) {
+    const NAME_MAX_LENGTH = 250;
+    const PRICE_MAX_DIGIT = 9;
+
+    if (productName == "" && minPrice == "" && maxPrice == "") {
+        console.log('全空欄');
+        $('.message').text(VALIDATION_ERROR.ALL_INPUT_EMPTY.message);
+    }
+    if (productName.length > NAME_MAX_LENGTH || minPrice > PRICE_MAX_DIGIT || maxPrice > PRICE_MAX_DIGIT) {
+        console.log('文字数オーバー');
+        $('.message').text(VALIDATION_ERROR.EXCEEDS_CHARACTERS.message);
+    }
+    if (!minPrice.match(/^([1-9]\d*|0)$/) || !maxPrice.match(/^([1-9]\d*|0)$/)) {
+        console.log('数値じゃない');
+        $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
+    }
+    if (minPrice > maxPrice) {
+        console.log('下限値>上限値');
+        $('.message').text(VALIDATION_ERROR.REVERSED_PRICE_RANGE.message);
+    }
+    if (productName.includes("\'") || productName.includes("\"")) {
+        console.log('クォーテーションを含む');
+        $('.message').text(VALIDATION_ERROR.CONTAINS_QUOTATION.message);
+    }
+}
+
+
 
 /**
  * 検索処理
