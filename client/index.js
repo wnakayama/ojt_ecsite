@@ -125,7 +125,7 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
         }
     ).done(function (data) {
         // 通信成功時
-        const product = data || {};
+        const product = JSON.parse(data) || {};
         if (product.length == 0) {
             $('.productInfoArea').empty();
             $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
