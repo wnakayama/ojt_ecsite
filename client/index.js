@@ -13,8 +13,6 @@ function viewAllProduct() {
             if (product.length == 0) {
                 $('.productInfoArea').append('商品データがありません<br>');
             } else {
-                console.log('test');
-                console.log(data);
                 $('.productInfoArea').append('<table class="productInfoTable"></table>');
                 const cols = 4; // 列数を設定
                 const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
@@ -128,10 +126,11 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
         const product = JSON.parse(data) || {};
         if (product.length == 0) {
             $('.productInfoArea').empty();
+            $('.message').empty();
             $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
         } else {
-            console.log(product);
             $('.productInfoArea').empty();
+            $('.message').empty();
             $('.productInfoArea').append('<table class="productInfoTable"></table>');
             const cols = 4; // 列数を設定
             const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
@@ -146,6 +145,7 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
                     $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
                 }
             }
+            $('.message').text(product.errorMessage);
         }
 
     }).fail(function (error) {
