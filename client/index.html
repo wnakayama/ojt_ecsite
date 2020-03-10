@@ -14,7 +14,7 @@
     <h1 class="title">NW Merch -最終課題のECサイト-</h1>
     <div class="controller-above">
         <div class="nameSearchForm">
-            商品名<br><input type="text" name="productName">
+            商品名<br><input type="text" name="productName" maxlength="250">
         </div>
         <div class="messageArea">
             <h4 class="message">[メッセージ領域]</h4>
@@ -22,7 +22,8 @@
     </div>
     <div class="controller-below">
         <div class="priceSearchForm">
-            価格<br><input type="text" name="minPrice"> ～ <input type="text" name="maxPrice"> 円
+            価格<br><input type="text" name="minPrice" maxlength="9"> ～
+            <input type="text" name="maxPrice" maxlength="9">円
             <button class="search" disabled="disabled"> 検索 </button>
         </div>
         <input type="submit" class="buy" value="購入へ進む" style="background-color:orange; color: #fff;"></input>
