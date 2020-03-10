@@ -106,19 +106,27 @@ $(document).on(
 );
 
 
-/**
- * 
- */
-$('input').change(function () {
-    // フォームに入力があったら有効化
-    if ($('input[name="productName"]').val() != "") {
-        // ボタンを有効化
-        $('.search').prop('disabled', false);
-    } else {
-        // ボタンを無効化
-        $('.search').prop('disabled', true);
+// いずれかの検索フォームに入力があるのみ,検索ボタンを押下可能にする.
+$(document).on(
+    'change', 'input', function () {
+
+        if ($('input[name="productName"]').val() != "" ||
+            $('input[name="minPrice"]').val() != "" ||
+            $('input[name="maxPrice"]').val() != "") {
+
+            $('.search').prop('disabled', false);
+            $('.search').css('color', '#ffffff');
+            $('.search').css('background-color', 'blue');
+
+        } else {
+            // すべての検索フォームに入力が無いとき,検索ボタンを無効化
+            $('.search').prop('disabled', true);
+
+            $('.search').css('color', '');
+            $('.search').css('background-color', '');
+        }
     }
-});
+);
 
 
 /**
