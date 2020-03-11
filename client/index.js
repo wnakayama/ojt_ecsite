@@ -109,7 +109,7 @@ $(document).on(
 
 // いずれかの検索フォームに入力があるのみ,検索ボタンを押下可能にする.
 $(document).on(
-    'change', 'input', function () {
+    'keyup', 'input', function () {
 
         if ($('input[name="productName"]').val() != "" ||
             $('input[name="minPrice"]').val() != "" ||
@@ -159,29 +159,40 @@ function validateSearchParameter(productName, minPrice, maxPrice) {
     const PRICE_MAX_DIGIT = 9;
 
     if (productName == "" && minPrice == "" && maxPrice == "") {
-        console.log('全空欄');
         $('.message').text(VALIDATION_ERROR.ALL_INPUT_EMPTY.message);
         return false;
-    } else if (productName.length > NAME_MAX_LENGTH || minPrice.length > PRICE_MAX_DIGIT || maxPrice.length > PRICE_MAX_DIGIT) {
-        console.log('文字数オーバー');
+    }
+    if (productName.length > NAME_MAX_LENGTH || minPrice.length > PRICE_MAX_DIGIT || maxPrice.length > PRICE_MAX_DIGIT) {
         $('.message').text(VALIDATION_ERROR.EXCEEDS_CHARACTERS.message);
         return false;
-    } else if (!minPrice.match(/^([1-9]\d*|0)$/) || !maxPrice.match(/^([1-9]\d*|0)$/)) {
-        console.log('数値じゃない');
-        $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
-        return false;
-    } else if (minPrice > maxPrice) {
-        console.log('下限値>上限値');
-        $('.message').text(VALIDATION_ERROR.REVERSED_PRICE_RANGE.message);
-        return false;
-    } else if (productName.includes("\'") || productName.includes("\"")) {
-        console.log('クォーテーションを含む');
+    }
+    if (productName.includes("\'") || productName.includes("\"")) {
         $('.message').text(VALIDATION_ERROR.CONTAINS_QUOTATION.message);
         return false;
-    } else {
-        return true;
     }
+
+    if (minPrice != "") {
+        if (!minPrice.match(/^([1-9]\d*|0)$/)) {
+            $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
+            return false;
+        }
+    }
+    if (maxPrice != "") {
+        if (!maxPrice.match(/^([1-9]\d*|0)$/)) {
+
+            $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
+            return false;
+        }
+    }
+    if (minPrice != "" && maxPrice != "") {
+        if (minPrice > maxPrice) {
+            $('.message').text(VALIDATION_ERROR.REVERSED_PRICE_RANGE.message);
+            return false;
+        }
+    }
+    return true;
 }
+
 
 
 
@@ -211,6 +222,7 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
                 $('.productInfoArea').empty();
                 $('.message').empty();
                 $('.productInfoArea').append('<table class="productInfoTable"></table>');
+                $('.controller-below').append('<button class="goBack"> 全商品一覧に戻る </button>');
                 const cols = 4; // 列数を設定
                 const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
                 for (var i = 0; i < rows; i++) {
@@ -234,3 +246,10 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
         console.log(error);
     });
 }
+
+// 全商品一覧へ戻るボタンを押下すると,商品一覧画面に戻る
+$(document).on(
+    'click', '.goBack', function () {
+        window.location.href = 'index.html';
+    }
+);
