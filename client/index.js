@@ -100,8 +100,9 @@ $(document).on(
         const productName = $('input[name="productName"]').val();
         const minPrice = $('input[name="minPrice"]').val();
         const maxPrice = $('input[name="maxPrice"]').val();
-        validateSearchParameter(productName, minPrice, maxPrice)
-        sendSearchParameter(productName, minPrice, maxPrice)
+        if (validateSearchParameter(productName, minPrice, maxPrice)) {
+            sendSearchParameter(productName, minPrice, maxPrice)
+        }
     }
 );
 
@@ -121,7 +122,6 @@ $(document).on(
         } else {
             // すべての検索フォームに入力が無いとき,検索ボタンを無効化
             $('.search').prop('disabled', true);
-
             $('.search').css('color', '');
             $('.search').css('background-color', '');
         }
@@ -134,19 +134,19 @@ $(document).on(
  */
 const VALIDATION_ERROR = ({
     ALL_INPUT_EMPTY: {
-        message: 'すべてのフォームに入力がありませんでした 条件を指定してから検索を実行してください'
+        message: '●すべてのフォームに入力がありませんでした 条件を指定してから検索を実行してください'
     },
     EXCEEDS_CHARACTERS: {
-        message: '商品名は250文字,価格は9文字まで入力を受け付けます 入力を減らして再度お試しください'
+        message: '●商品名は250文字,価格は9文字まで入力を受け付けます 入力を減らして再度お試しください'
     },
     NOT_UNSIGNED_INTEGER: {
-        message: '検索フォーム(価格)の入力が正しくありません(整数で価格を指定してください)'
+        message: '●検索フォーム(価格)の入力が正しくありません(整数で価格を指定してください)'
     },
     REVERSED_PRICE_RANGE: {
-        message: '価格の範囲指定が正しくありません(価格フォームの左側に下限値,右側に上限値を入力してください)'
+        message: '●価格の範囲指定が正しくありません(価格フォームの左側に下限値,右側に上限値を入力してください)'
     },
     CONTAINS_QUOTATION: {
-        message: 'シングルクォーテーション(\')またはダブルクォーテーション(\")が含まれる文字列では検索できません'
+        message: '●シングルクォーテーション(\')またはダブルクォーテーション(\")が含まれる文字列では検索できません'
     }
 })
 
@@ -161,22 +161,25 @@ function validateSearchParameter(productName, minPrice, maxPrice) {
     if (productName == "" && minPrice == "" && maxPrice == "") {
         console.log('全空欄');
         $('.message').text(VALIDATION_ERROR.ALL_INPUT_EMPTY.message);
-    }
-    if (productName.length > NAME_MAX_LENGTH || minPrice > PRICE_MAX_DIGIT || maxPrice > PRICE_MAX_DIGIT) {
+        return false;
+    } else if (productName.length > NAME_MAX_LENGTH || minPrice.length > PRICE_MAX_DIGIT || maxPrice.length > PRICE_MAX_DIGIT) {
         console.log('文字数オーバー');
         $('.message').text(VALIDATION_ERROR.EXCEEDS_CHARACTERS.message);
-    }
-    if (!minPrice.match(/^([1-9]\d*|0)$/) || !maxPrice.match(/^([1-9]\d*|0)$/)) {
+        return false;
+    } else if (!minPrice.match(/^([1-9]\d*|0)$/) || !maxPrice.match(/^([1-9]\d*|0)$/)) {
         console.log('数値じゃない');
         $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
-    }
-    if (minPrice > maxPrice) {
+        return false;
+    } else if (minPrice > maxPrice) {
         console.log('下限値>上限値');
         $('.message').text(VALIDATION_ERROR.REVERSED_PRICE_RANGE.message);
-    }
-    if (productName.includes("\'") || productName.includes("\"")) {
+        return false;
+    } else if (productName.includes("\'") || productName.includes("\"")) {
         console.log('クォーテーションを含む');
         $('.message').text(VALIDATION_ERROR.CONTAINS_QUOTATION.message);
+        return false;
+    } else {
+        return true;
     }
 }
 
@@ -187,7 +190,6 @@ function validateSearchParameter(productName, minPrice, maxPrice) {
  * 利用者がフォームに入力した検索条件をGETで送信する.
  * サーバ側から検索結果のJSONを受け取り,商品一覧画面の表示を動的に変更する.
  */
-
 function sendSearchParameter(productName, minPrice, maxPrice) {
     $.get('http://' + location.host + '/ojt_ecsite/SearchProductServlet',
         {
@@ -199,29 +201,34 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
         // 通信成功時
         const product = JSON.parse(data) || {};
         if (product.length == 0) {
+            //入力が正常で,該当商品がない場合
             $('.productInfoArea').empty();
             $('.message').empty();
             $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
         } else {
-            $('.productInfoArea').empty();
-            $('.message').empty();
-            $('.productInfoArea').append('<table class="productInfoTable"></table>');
-            const cols = 4; // 列数を設定
-            const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
-            for (var i = 0; i < rows; i++) {
-                $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
-                for (var j = 0; j < cols; j++) {
-                    $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
-                    $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
-                    $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
-                    $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
-                    $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
-                    $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
+            if (!product.hasOwnProperty('errorMessage')) {
+                //入力が正常で,該当商品がある場合 商品情報領域を一度クリアして,新しく検索結果を表示する.
+                $('.productInfoArea').empty();
+                $('.message').empty();
+                $('.productInfoArea').append('<table class="productInfoTable"></table>');
+                const cols = 4; // 列数を設定
+                const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
+                for (var i = 0; i < rows; i++) {
+                    $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
+                    for (var j = 0; j < cols; j++) {
+                        $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
+                        $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
+                        $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
+                        $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
+                        $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
+                        $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
+                    }
                 }
+            } else {
+                // 不正入力があったとき
+                $('.message').text(product.errorMessage);
             }
-            $('.message').text(product.errorMessage);
         }
-
     }).fail(function (error) {
         // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
         console.log(error);
