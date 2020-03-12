@@ -94,7 +94,7 @@ function sendSelectedIdArray(selectedIdArray) {
 }
 
 
-// 「検索」ボタン押下時の処理を分岐する.
+// 「検索」ボタン押下時,フォーム入力値の取得,入力チェック,検索機能の呼び出しをする.
 $(document).on(
     'click', '.search', function () {
         const productName = $('input[name="productName"]').val();
@@ -110,7 +110,6 @@ $(document).on(
 // いずれかの検索フォームに入力があるのみ,検索ボタンを押下可能にする.
 $(document).on(
     'keyup', 'input', function () {
-
         if ($('input[name="productName"]').val() != "" ||
             $('input[name="minPrice"]').val() != "" ||
             $('input[name="maxPrice"]').val() != "") {
@@ -179,13 +178,12 @@ function validateSearchParameter(productName, minPrice, maxPrice) {
     }
     if (maxPrice != "") {
         if (!maxPrice.match(/^([1-9]\d*|0)$/)) {
-
             $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
             return false;
         }
     }
     if (minPrice != "" && maxPrice != "") {
-        if (minPrice > maxPrice) {
+        if (parseInt(minPrice) > parseInt(maxPrice)) {
             $('.message').text(VALIDATION_ERROR.REVERSED_PRICE_RANGE.message);
             return false;
         }
@@ -222,7 +220,6 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
                 $('.productInfoArea').empty();
                 $('.message').empty();
                 $('.productInfoArea').append('<table class="productInfoTable"></table>');
-                $('.controller-below').append('<button class="goBack"> 全商品一覧に戻る </button>');
                 const cols = 4; // 列数を設定
                 const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
                 for (var i = 0; i < rows; i++) {
