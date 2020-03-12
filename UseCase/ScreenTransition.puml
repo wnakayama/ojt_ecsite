@@ -47,5 +47,7 @@ end note
 
 note left of 管理者メニュー
 UC04
+UC05
+UC06
 end note
 @enduml

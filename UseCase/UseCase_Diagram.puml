@@ -9,13 +9,17 @@ rectangle ECサイト {
     (商品を一覧表示する) as (showProduct)
     (商品を購入する) as (buyProduct)
     (商品を検索する) as (searchProduct)
-    (商品データを編集する) as (editProductData)
+    (商品データを登録する) as (createProductData)
+    (商品データを変更する) as (updateProductData)
+    (商品データを削除する) as (deleteProductData)
 
     left to right direction
     user --> showProduct
     user --> buyProduct
     user --> searchProduct
-    admin --> editProductData
+    admin --> createProductData
+    admin --> updateProductData
+    admin --> deleteProductData
 
 
     note right of showProduct
@@ -31,8 +35,16 @@ rectangle ECサイト {
     UC03
     end note
 
-    note right of editProductData
+    note right of createProductData
     UC04
+    end note
+
+    note right of updateProductData
+    UC05
+    end note
+    
+    note right of deleteProductData
+    UC06
     end note
 
 }
