@@ -98,13 +98,20 @@ function sendSelectedIdArray(selectedIdArray) {
 $(document).on(
     'click', '.search', function () {
         const productName = $('input[name="productName"]').val();
-        const minPrice = $('input[name="minPrice"]').val();
-        const maxPrice = $('input[name="maxPrice"]').val();
+        const minPrice = convertToHalfWidthNumber($('input[name="minPrice"]').val());
+        const maxPrice = convertToHalfWidthNumber($('input[name="maxPrice"]').val());
         if (validateSearchParameter(productName, minPrice, maxPrice)) {
             sendSearchParameter(productName, minPrice, maxPrice)
         }
     }
 );
+
+// 全角で入力された数字を半角数字に変換する
+function convertToHalfWidthNumber(inputPrice) {
+    return inputPrice.replace(/[０-９]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+}
 
 
 // いずれかの検索フォームに入力があるのみ,検索ボタンを押下可能にする.
