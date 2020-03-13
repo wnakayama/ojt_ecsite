@@ -466,6 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_商品を検索して表示する">5.3. 商品を検索して表示する</a></li>
+<li><a href="#_商品データを登録する">5.4. 商品データを登録する</a></li>
 </ul>
 </li>
 </ul>
@@ -1274,13 +1275,228 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
+<div class="sect2">
+<h3 id="_商品データを登録する"><a class="link" href="#_商品データを登録する">5.4. 商品データを登録する</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ユースケースID</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>UC04</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ユースケース名称</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>商品データを登録する</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">概要</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>管理者から商品名,カテゴリ,税抜き価格の入力を受け付け,新しい商品データをシステムに登録する.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">優先度</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>WANT</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">アクター</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>管理者</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">トリガー</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>登録ボタンを押下する</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">事前条件</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p><a href="#image_viewall">管理者メニュー</a>がブラウザに表示されている</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">基本フロー</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="mainflow_uc04" class="olist arabic">
+<ol class="arabic">
+<li>
+<p>管理者はフォームに文字列を入力する</p>
+</li>
+<li>
+<p>管理者はブラウザ上で登録ボタンを押下する</p>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="red">フォーム(価格)に整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc04">代替フロー1に移行</a></p>
+</li>
+<li>
+<p><span class="red">フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
+</span>　⇒ <a href="#altflow_uc04">代替フロー2に移行</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>登録が完了した商品情報を含む商品一覧を管理者メニューに表示する</p>
+<div class="paragraph">
+<p>(参考画像：検索実行後の画面イメージ)</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image</dt>
+</dl>
+</div>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">代替フロー</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="altflow_uc04" class="olist arabic">
+<ol class="arabic">
+<li>
+<p>検索フォーム(価格)に整数以外が入力されている場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>エラーメッセージ●●を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+</li>
+<li>
+<p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>検索フォーム(商品名,カテゴリ)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>エラーメッセージ●●を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+</li>
+<li>
+<p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>(参考画像：メッセージ表示後の画面イメージ)</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image</dt>
+<dd>
+<p>　</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">例外フロー</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>なし</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">事後条件</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="#image_viewall">商品一覧画面</a>が表示されている</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">補足</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>エラーメッセージ--</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>フォーム(価格)の入力が正しくありません
+(整数で価格を指定してください)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>エラーメッセージ--</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>シングルクォーテーション(')またはダブルクォーテーション(")が含まれる文字列では登録できません</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>商品名,カテゴリ,税抜き価格すべての入力が出来ている場合のみ登録ボタンが有効になる。</p>
+</div>
+<div class="paragraph">
+<p>※ フォームのバリデーション条件を以下に定義する。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>フォーム(商品名)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>シングルクォーテーション(')、ダブルクォーテーション(")を除く文字列の入力を受け付ける</p>
+</li>
+<li>
+<p>価格の検索フォームに入力がある場合のみ、空欄を認める</p>
+</li>
+<li>
+<p>入力可能文字数制限：250文字まで</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>フォーム(価格)　</p>
+<div class="ulist">
+<ul>
+<li>
+<p>入力は整数であること</p>
+</li>
+<li>
+<p>下限値欄と上限値欄の両方に入力があるとき、上限値欄の入力価格が下限値欄の入力価格以上であること</p>
+</li>
+<li>
+<p>入力可能文字数制限：9文字まで</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-02-25 15:39:15 +0900
+Last updated 2020-03-13 13:18:24 +0900
 </div>
 </div>
 </body>

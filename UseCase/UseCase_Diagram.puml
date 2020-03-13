@@ -30,7 +30,6 @@ rectangle ECサイト {
     UC02
     end note
 
-    
     note right of searchProduct
     UC03
     end note
