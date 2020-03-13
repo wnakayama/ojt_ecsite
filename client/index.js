@@ -13,20 +13,7 @@ function viewAllProduct() {
             if (product.length == 0) {
                 $('.productInfoArea').append('商品データがありません<br>');
             } else {
-                $('.productInfoArea').append('<table class="productInfoTable"></table>');
-                const cols = 4; // 列数を設定
-                const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
-                for (var i = 0; i < rows; i++) {
-                    $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
-                    for (var j = 0; j < cols; j++) {
-                        $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
-                        $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
-                        $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
-                        $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
-                        $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
-                        $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
-                    }
-                }
+                displayProductData(product);
             }
 
         }).fail(function (error) {
@@ -34,6 +21,31 @@ function viewAllProduct() {
             console.log(error);
         });
 }
+
+
+/**
+ * サーバから取得した商品データを一覧表示する.
+ */
+function displayProductData(product) {
+    $('.productInfoArea').append('<table class="productInfoTable"></table>');
+    const cols = 4; // 列数を設定
+    const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
+    for (var tmpRow = 0; tmpRow < rows; tmpRow++) {
+        $('.productInfoTable').append('<tr class ="productInfoRow' + tmpRow + '"></tr>');
+        for (var tmpcolumn = 0; tmpcolumn < cols; tmpcolumn++) {
+            var tmpProductIndex = (tmpRow * cols + tmpcolumn);
+            if ((tmpProductIndex) < product.length) {
+                $('.productInfoRow' + tmpRow + '').append('<td class="product' + (tmpProductIndex) + '"></td>');
+                $('.product' + (tmpProductIndex) + '').append('<img src ="' + product[(tmpProductIndex)].imagePath + '">');
+                $('.product' + (tmpProductIndex) + '').append('<h4 class="productName" data-text="' + product[(tmpProductIndex)].name + '">' + omitLongProductName(product[(tmpProductIndex)].name) + '</h4>');
+                $('.product' + (tmpProductIndex) + '').append(separateWithComma(product[(tmpProductIndex)].priceIncludeTax) + '円 ');
+                $('.product' + (tmpProductIndex) + '').append('(' + separateWithComma(product[(tmpProductIndex)].priceExcludeTax) + '円) <br>');
+                $('.product' + (tmpProductIndex) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(tmpProductIndex)].productID + '">選択' + '</label><br>');
+            }
+        }
+    }
+}
+
 
 // "一の位から3桁ずつ,カンマ区切り"で商品価格を表示する
 function separateWithComma(price) {
@@ -213,23 +225,10 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
                 $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
             } else {
                 if (!product.hasOwnProperty('errorMessage')) {
-                    //入力が正常で,該当商品がある場合 商品情報領域を一度クリアして,新しく検索結果を表示する.
+                    // 入力が正常で,該当商品がある場合 商品情報領域を一度クリアして,新しく検索結果を表示する.
                     $('.productInfoArea').empty();
                     $('.message').empty();
-                    $('.productInfoArea').append('<table class="productInfoTable"></table>');
-                    const cols = 4; // 列数を設定
-                    const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
-                    for (var i = 0; i < rows; i++) {
-                        $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
-                        for (var j = 0; j < cols; j++) {
-                            $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
-                            $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
-                            $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
-                            $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
-                            $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
-                            $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
-                        }
-                    }
+                    displayProductData(product);
                 } else {
                     // 不正入力があったとき
                     $('.message').text(product.errorMessage);
