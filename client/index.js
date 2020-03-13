@@ -142,9 +142,6 @@ const VALIDATION_ERROR = ({
     ALL_INPUT_EMPTY: {
         message: '●すべてのフォームに入力がありませんでした 条件を指定してから検索を実行してください'
     },
-    EXCEEDS_CHARACTERS: {
-        message: '●商品名は250文字,価格は9文字まで入力を受け付けます 入力を減らして再度お試しください'
-    },
     NOT_UNSIGNED_INTEGER: {
         message: '●検索フォーム(価格)の入力が正しくありません(整数で価格を指定してください)'
     },
@@ -161,22 +158,14 @@ const VALIDATION_ERROR = ({
  * クライアント側で実施する入力チェック
  */
 function validateSearchParameter(productName, minPrice, maxPrice) {
-    const NAME_MAX_LENGTH = 250;
-    const PRICE_MAX_DIGIT = 9;
-
     if (productName == "" && minPrice == "" && maxPrice == "") {
         $('.message').text(VALIDATION_ERROR.ALL_INPUT_EMPTY.message);
-        return false;
-    }
-    if (productName.length > NAME_MAX_LENGTH || minPrice.length > PRICE_MAX_DIGIT || maxPrice.length > PRICE_MAX_DIGIT) {
-        $('.message').text(VALIDATION_ERROR.EXCEEDS_CHARACTERS.message);
         return false;
     }
     if (productName.includes("\'") || productName.includes("\"")) {
         $('.message').text(VALIDATION_ERROR.CONTAINS_QUOTATION.message);
         return false;
     }
-
     if (minPrice != "") {
         if (!minPrice.match(/^([1-9]\d*|0)$/)) {
             $('.message').text(VALIDATION_ERROR.NOT_UNSIGNED_INTEGER.message);
