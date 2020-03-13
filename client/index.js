@@ -215,35 +215,39 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
         }
     ).done(function (data) {
         // 通信成功時
-        const product = JSON.parse(data) || {};
-        if (product.length == 0) {
-            //入力が正常で,該当商品がない場合
-            $('.productInfoArea').empty();
-            $('.message').empty();
-            $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
-        } else {
-            if (!product.hasOwnProperty('errorMessage')) {
-                //入力が正常で,該当商品がある場合 商品情報領域を一度クリアして,新しく検索結果を表示する.
+        try {
+            const product = JSON.parse(data);
+            if (product.length == 0) {
+                //入力が正常で,該当商品がない場合
                 $('.productInfoArea').empty();
                 $('.message').empty();
-                $('.productInfoArea').append('<table class="productInfoTable"></table>');
-                const cols = 4; // 列数を設定
-                const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
-                for (var i = 0; i < rows; i++) {
-                    $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
-                    for (var j = 0; j < cols; j++) {
-                        $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
-                        $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
-                        $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
-                        $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
-                        $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
-                        $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
-                    }
-                }
+                $('.productInfoArea').append('該当する商品は見つかりませんでした<br>');
             } else {
-                // 不正入力があったとき
-                $('.message').text(product.errorMessage);
+                if (!product.hasOwnProperty('errorMessage')) {
+                    //入力が正常で,該当商品がある場合 商品情報領域を一度クリアして,新しく検索結果を表示する.
+                    $('.productInfoArea').empty();
+                    $('.message').empty();
+                    $('.productInfoArea').append('<table class="productInfoTable"></table>');
+                    const cols = 4; // 列数を設定
+                    const rows = (product.length) / cols;　// 行数 = 取得した商品データの件数 ÷ 列数
+                    for (var i = 0; i < rows; i++) {
+                        $('.productInfoTable').append('<tr class ="productInfoRow' + i + '"></tr>');
+                        for (var j = 0; j < cols; j++) {
+                            $('.productInfoRow' + i + '').append('<td class="product' + (i * cols + j) + '"></td>');
+                            $('.product' + (i * cols + j) + '').append('<img src ="' + product[(i * cols + j)].imagePath + '">');
+                            $('.product' + (i * cols + j) + '').append('<h4 class="productName" data-text="' + product[(i * cols + j)].name + '">' + omitLongProductName(product[(i * cols + j)].name) + '</h4>');
+                            $('.product' + (i * cols + j) + '').append(separateWithComma(product[(i * cols + j)].priceIncludeTax) + '円 ');
+                            $('.product' + (i * cols + j) + '').append('(' + separateWithComma(product[(i * cols + j)].priceExcludeTax) + '円) <br>');
+                            $('.product' + (i * cols + j) + '').append('<label><input type="checkbox" class="checkbox" name="requestedProductID[]" value="' + product[(i * cols + j)].productID + '">選択' + '</label><br>');
+                        }
+                    }
+                } else {
+                    // 不正入力があったとき
+                    $('.message').text(product.errorMessage);
+                }
             }
+        } catch (SyntaxError) {
+            $('.message').text('商品データの取得に失敗しました お手数ですが開発者までご連絡ください(JSON.parseでエラー)');
         }
     }).fail(function (error) {
         // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
