@@ -466,7 +466,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_商品を検索して表示する">5.3. 商品を検索して表示する</a></li>
-<li><a href="#_商品データを登録する">5.4. 商品データを登録する</a></li>
+<li><a href="#_商品データを登録する">5.4. 商品データを登録する</a>
+<ul class="sectlevel3">
+<li><a href="#_画面仕様商品データ管理画面">5.4.1. 画面仕様：商品データ管理画面</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1300,7 +1304,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
 <ul>
 <li>
-<p>管理者から商品名,カテゴリ,税抜き価格の入力を受け付け,新しい商品データをシステムに登録する.</p>
+<p>管理者から商品名,カテゴリ,税抜き価格,画像データの入力を受け付け,新しい商品データをシステムに登録する.</p>
 </li>
 </ul>
 </div></div></td>
@@ -1338,10 +1342,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><div class="content"><div id="mainflow_uc04" class="olist arabic">
 <ol class="arabic">
 <li>
-<p>管理者はフォームに文字列を入力する</p>
+<p>商品名フォームに文字列を入力する</p>
 </li>
 <li>
-<p>管理者はブラウザ上で登録ボタンを押下する</p>
+<p>プルダウンメニューから商品カテゴリを選択する</p>
+</li>
+<li>
+<p>価格フォームに整数を入力する</p>
+</li>
+<li>
+<p>参照ボタンを押下し,商品画像のファイルを選択する</p>
+</li>
+<li>
+<p>ブラウザ上で登録ボタンを押下する</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1357,12 +1370,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>登録が完了した商品情報を含む商品一覧を管理者メニューに表示する</p>
 <div class="paragraph">
-<p>(参考画像：検索実行後の画面イメージ)</p>
+<p>(参考画像：登録完了後の画面イメージ)</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">image</dt>
-</dl>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/afterRegist.png" alt="afterRegist">
+</div>
 </div>
 </li>
 </ol>
@@ -1377,7 +1390,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ●●を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+<p>エラーメッセージ06を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
@@ -1386,11 +1399,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>検索フォーム(商品名,カテゴリ)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
+<p>検索フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>エラーメッセージ●●を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+<p>エラーメッセージ07を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
@@ -1403,13 +1416,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>(参考画像：メッセージ表示後の画面イメージ)</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">image</dt>
-<dd>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/regist_message.png" alt="regist_message">
+</div>
+</div>
+<div class="paragraph">
 <p>　</p>
-</dd>
-</dl>
 </div></div></td>
 </tr>
 <tr>
@@ -1427,7 +1440,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">補足</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>エラーメッセージ--</p>
+<p>エラーメッセージ06</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1436,7 +1449,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>エラーメッセージ--</p>
+<p>エラーメッセージ07</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1444,10 +1457,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>商品名,カテゴリ,税抜き価格すべての入力が出来ている場合のみ登録ボタンが有効になる。</p>
-</div>
-<div class="paragraph">
-<p>※ フォームのバリデーション条件を以下に定義する。</p>
+<p>商品名,カテゴリ,税抜き価格すべての入力が出来ている場合のみ登録ボタンが有効になる。
+※ 画像データを指定しなかった場合,サンプル画像(nowPrinting.png)を代わりに指定する
+※ フォームのバリデーション条件を以下に定義する。</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1489,6 +1501,125 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tbody>
 </table>
 <hr>
+<div class="sect3">
+<h4 id="_画面仕様商品データ管理画面"><a class="link" href="#_画面仕様商品データ管理画面">5.4.1. 画面仕様：商品データ管理画面</a></h4>
+<div class="paragraph">
+<p>商品一覧画面の仕様と、実現する機能は以下の通りである。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/registimage.png" alt="registimage">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0002%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">No.</th>
+<th class="tableblock halign-left valign-top">項目名</th>
+<th class="tableblock halign-left valign-top">種別</th>
+<th class="tableblock halign-left valign-top">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">商品名フォーム</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>文字列を入力して商品名を指定する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">カテゴリフォーム</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">プルダウンメニュー</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>商品カテゴリを指定する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">税抜き価格フォーム</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">入力欄</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>整数を入力して商品の税抜き価格を指定する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">商品画像データ登録フォーム / 参照ボタン</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ファイル名入力欄 / ボタン</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>商品の画像ファイルを指定する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">登録ボタン</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ボタン</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>押下すると「<a href="#_商品データを登録する">商品をデータを登録する</a>」機能を実行する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">商品情報表示領域</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>商品ID,商品名,税込み価格,税抜き価格,画像データを表示する</p>
+</div>
+<div class="paragraph">
+<p>仕様は以下の通りである</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>商品データが0件のとき、以下のメッセージを表示する</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>商品データがありません</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(参考画像：メッセージ表示後の画面イメージ)</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image</dt>
+<dd>
+<p>　</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">メッセージ領域</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">表示領域</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ECサイトから利用者へのメッセージを表示する</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">全商品一覧に戻るボタン</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ボタン</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>クリックすると<a href="#image_viewall">商品一覧画面</a>に遷移する</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -1496,7 +1627,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-13 13:18:24 +0900
+Last updated 2020-03-16 15:23:49 +0900
 </div>
 </div>
 </body>
