@@ -1386,7 +1386,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><div class="content"><div id="altflow_uc04" class="olist arabic">
 <ol class="arabic">
 <li>
-<p>検索フォーム(価格)に整数以外が入力されている場合</p>
+<p>商品名フォームにシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1399,7 +1399,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>検索フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合</p>
+<p>価格フォームに整数以外が入力されている場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1444,8 +1444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>フォーム(価格)の入力が正しくありません
-(整数で価格を指定してください)</pre>
+<pre>シングルクォーテーション(')またはダブルクォーテーション(")が含まれる文字列では登録できません</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1453,22 +1452,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>シングルクォーテーション(')またはダブルクォーテーション(")が含まれる文字列では登録できません</pre>
+<pre>フォーム(価格)の入力が正しくありません
+(整数で価格を指定してください)</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>商品名,カテゴリ,税抜き価格すべての入力が出来ている場合のみ登録ボタンが有効になる。</p>
-</div>
-<div class="paragraph">
-<p>※ 画像データを指定しなかった場合,サンプル画像(nowPrinting.png)を代わりに指定する</p>
-</div>
-<div class="paragraph">
-<p>※ フォームのバリデーション条件を以下に定義する。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>フォーム(商品名)</p>
+<p>商品名,カテゴリ,税抜き価格の3つが入力できている場合のみ登録ボタンが有効になる。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>※ 画像データは任意指定とする。指定しなかった場合はサンプル画像(nowPrinting.png)を代わりに登録する</p>
+</div>
+<div class="paragraph">
+<p>フォーム入力のバリデーション条件を以下に定義する。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>商品名</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1480,11 +1484,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>入力可能文字数制限：50文字まで</p>
 </li>
+<li>
+<p>必須入力項目のため、未入力の場合は入力エラーとする</p>
+</li>
 </ul>
 </div>
 </li>
 <li>
-<p>フォーム(価格)　</p>
+<p>カテゴリ</p>
+<div class="ulist">
+<ul>
+<li>
+<p>プルダウンメニューで選択するため、バリデーション条件は特に無し</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>税抜き価格　</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1495,6 +1512,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>入力可能文字数制限：9文字まで</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>画像データ</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ファイル拡張子が.jpeg .gif .pngのいずれかであること</p>
+</li>
+<li>
+<p>ファイルサイズが10MB以下であること</p>
 </li>
 </ul>
 </div>
@@ -1606,7 +1636,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-17 16:27:38 +0900
+Last updated 2020-03-19 10:52:20 +0900
 </div>
 </div>
 </body>
