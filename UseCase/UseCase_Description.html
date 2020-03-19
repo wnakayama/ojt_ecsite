@@ -1358,11 +1358,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red">フォーム(価格)に整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc04">代替フロー1に移行</a></p>
+<p><span class="red">商品名フォームにシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
+</span>　⇒ <a href="#altflow_uc04">代替フロー1に移行</a></p>
 </li>
 <li>
-<p><span class="red">フォーム(商品名)にシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
-</span>　⇒ <a href="#altflow_uc04">代替フロー2に移行</a></p>
+<p><span class="red">価格フォームに整数以外が入力されている場合</span>　⇒ <a href="#altflow_uc04">代替フロー2に移行</a></p>
+</li>
+<li>
+<p><span class="red">画像データ登録フォームに.jpeg .gif .png以外の拡張子を持ったファイルが入力されている場合
+</span>　⇒ <a href="#altflow_uc04">代替フロー3に移行</a></p>
+</li>
+<li>
+<p><span class="red">画像データ登録フォームに10MBを上回るファイルが入力されている場合</span>　⇒ <a href="#altflow_uc04">代替フロー4に移行</a></p>
 </li>
 </ul>
 </div>
@@ -1415,7 +1422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p>画像データ登録フォームに.jpeg .gif .拡張子を持ったファイルが入力されている場合</p>
+<p>画像データ登録フォームに.jpeg .gif .png以外の拡張子を持ったファイルが入力されている場合</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1645,7 +1652,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">登録ボタン</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ボタン</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>押下すると「<a href="#_商品データを登録する">商品をデータを登録する</a>」機能を実行する</p>
+<p>押下すると「<a href="#_商品データを登録する">商品データを登録する</a>」機能を実行する</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1683,7 +1690,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-19 13:23:22 +0900
+Last updated 2020-03-19 13:48:36 +0900
 </div>
 </div>
 </body>
