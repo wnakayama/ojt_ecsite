@@ -1368,6 +1368,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
+<p>システムは商品IDの生成と税込み価格の算出を実施する</p>
+</li>
+<li>
 <p>登録が完了した商品情報を含む商品一覧を<a href="#image_editData">商品データ管理画面</a>に表示する</p>
 <div class="paragraph">
 <p>(参考画像：登録完了後の画面イメージ)</p>
@@ -1404,6 +1407,32 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ol class="loweralpha" type="a">
 <li>
 <p>エラーメッセージ07を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+</li>
+<li>
+<p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>画像データ登録フォームに.jpeg .gif .拡張子を持ったファイルが入力されている場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>エラーメッセージ08を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
+</li>
+<li>
+<p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>画像データ登録フォームに10MBを上回るファイルが入力されている場合</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>エラーメッセージ09を<a href="#image_viewall">商品一覧画面</a>の「⑧メッセージ領域」に表示する</p>
 </li>
 <li>
 <p><a href="#mainflow_uc04">基本フロー</a>のステップ1に戻る</p>
@@ -1454,6 +1483,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre>フォーム(価格)の入力が正しくありません
 (整数で価格を指定してください)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>エラーメッセージ08</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>画像データのファイル拡張子が正しくありません
+(.jpeg .gif .png のみ登録を受け付けます)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>エラーメッセージ09</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>登録できる画像データの最大サイズを超えています
+(10MB以下の画像ファイルをご用意ください)</pre>
 </div>
 </div>
 <div class="ulist">
@@ -1636,7 +1683,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-19 10:52:20 +0900
+Last updated 2020-03-19 13:23:22 +0900
 </div>
 </div>
 </body>
