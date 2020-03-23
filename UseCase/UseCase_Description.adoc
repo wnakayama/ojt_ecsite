@@ -40,7 +40,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 '''
 利用者がブラウザ上で見る画面の遷移を以下の図に表した。
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab19219aca3e3e861c99f0b49b8b6ab/UseCase/EC%E3%82%B5%E3%82%A4%E3%83%88%20%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png[screentransition]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/EC%E3%82%B5%E3%82%A4%E3%83%88%20%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png[screentransition]
 
 == 機能一覧
 
@@ -58,6 +58,8 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 |UC03
 |商品を検索して表示する
 
+|UC04
+|商品データを登録する
 |===
 
 == 機能詳細
@@ -149,7 +151,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noProduct.PNG[noProduct]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_noProduct.PNG[noProduct]
 
 　
 
@@ -194,8 +196,17 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_alert.png[alert]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_alert.png[alert]
 
+|9
+|全商品一覧に戻るボタン
+|ボタン
+|クリックすると<<image_viewall,商品一覧画面>>に遷移する
+
+|10
+|管理者メニューボタン
+|ボタン
+|クリックすると<<image_editData,商品データ管理画面>>に遷移する
 
 |===
 
@@ -276,7 +287,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 
 購入明細画面のイメージと、実現する機能は以下の通りである。
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_buy.PNG[buy]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_buy.PNG[buy]
 
 [cols="3*,3a", options="header"]
 |===
@@ -343,7 +354,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 +
 (参考画像：検索実行後の画面イメージ)
 +
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG[search]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_search.PNG[search]
 
 
 
@@ -373,7 +384,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noSearchResult.PNG[alert]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_noSearchResult.PNG[alert]
 
 　
 
@@ -468,7 +479,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 ##　⇒ <<altflow_uc04,代替フロー3に移行>>
 ** [red]##画像データ登録フォームに10MBを上回るファイルが入力されている場合##　⇒ <<altflow_uc04,代替フロー4に移行>>
 . システムは商品IDの生成と税込み価格の算出を実施する
-. 登録が完了した商品情報を含む商品一覧を<<image_editData,商品データ管理画面>>に表示する
+. 登録が完了したことを示すメッセージをメッセージ領域に表示する
 
 +
 (参考画像：登録完了後の画面イメージ)
@@ -483,19 +494,19 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 [[altflow_uc04]]
 
 . 商品名フォームにシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
-.. エラーメッセージ06を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
+.. エラーメッセージ06を<<image_editData,商品データ管理画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc04,基本フロー>>のステップ1に戻る
 
 . 価格フォームに整数以外が入力されている場合
-.. エラーメッセージ07を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
+.. エラーメッセージ07を<<image_editData,商品データ管理画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc04,基本フロー>>のステップ1に戻る
 
 . 画像データ登録フォームに.jpeg .gif .png以外の拡張子を持ったファイルが入力されている場合
-.. エラーメッセージ08を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
+.. エラーメッセージ08を<<image_editData,商品データ管理画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc04,基本フロー>>のステップ1に戻る
 
 . 画像データ登録フォームに10MBを上回るファイルが入力されている場合
-.. エラーメッセージ09を<<image_viewall,商品一覧画面>>の「⑧メッセージ領域」に表示する
+.. エラーメッセージ09を<<image_editData,商品データ管理画面>>の「⑧メッセージ領域」に表示する
 .. <<mainflow_uc04,基本フロー>>のステップ1に戻る
 
 
@@ -509,7 +520,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |なし
 
 |事後条件
-|<<image_viewall,商品一覧画面>>が表示されている
+|<<image_editData,商品データ管理画面>>が表示されている
 
 |補足
 |
@@ -600,18 +611,13 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 |登録ボタン
 |ボタン
 |押下すると「<<_商品データを登録する,商品データを登録する>>」機能を実行する
-
-|6
-|商品情報表示領域
-|表示領域
-|商品ID,商品名,税込み価格,税抜き価格,画像データを表示する
 　
-|7
+|6
 |メッセージ領域
 |表示領域
-|ECサイトから利用者へのメッセージを表示する
+|ECサイトから管理者へのメッセージを表示する
 
-|8
+|7
 |全商品一覧に戻るボタン
 |ボタン
 |クリックすると<<image_viewall,商品一覧画面>>に遷移する
