@@ -16,8 +16,6 @@
 :figure-caption: 図
 :docname: = asciidoc-ECサイト機能仕様書
 :author: Nakayama
-:revnumber: 1.0
-:revdate: 2020/01/17
 
 = ECサイト 機能仕様書
 
@@ -40,7 +38,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 '''
 利用者がブラウザ上で見る画面の遷移を以下の図に表した。
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab19219aca3e3e861c99f0b49b8b6ab/UseCase/EC%E3%82%B5%E3%82%A4%E3%83%88%20%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png[screentransition]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/EC%E3%82%B5%E3%82%A4%E3%83%88%20%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png[screentransition]
 
 == 機能一覧
 
@@ -58,6 +56,8 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/747e38f2eab192
 |UC03
 |商品を検索して表示する
 
+|UC04
+|商品データを登録する
 |===
 
 == 機能詳細
@@ -149,7 +149,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCas
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noProduct.PNG[noProduct]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_noProduct.PNG[noProduct]
 
 　
 
@@ -194,8 +194,17 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_alert.png[alert]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_alert.png[alert]
 
+|9
+|全商品一覧に戻るボタン
+|ボタン
+|クリックすると<<image_viewall,商品一覧画面>>に遷移する
+
+|10
+|管理者メニューボタン
+|ボタン
+|クリックすると<<image_editData,商品データ管理画面>>に遷移する
 
 |===
 
@@ -276,7 +285,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 
 購入明細画面のイメージと、実現する機能は以下の通りである。
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_buy.PNG[buy]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_buy.PNG[buy]
 
 [cols="3*,3a", options="header"]
 |===
@@ -343,7 +352,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 +
 (参考画像：検索実行後の画面イメージ)
 +
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d2367766916d5ba3fb4b14f81b4452ce2/UseCase/screenImages/image_search.PNG[search]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/screenImages/image_search.PNG[search]
 
 
 
@@ -373,7 +382,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/bd56354d236776
 
 (参考画像：メッセージ表示後の画面イメージ)
 
-image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd17dd1abece28bc4af4809a5e263/UseCase/image_noSearchResult.PNG[alert]
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/image_noSearchResult.PNG[alert]
 
 　
 
@@ -415,7 +424,7 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 * 検索フォーム(商品名)
 ** シングルクォーテーション(')、ダブルクォーテーション(")を除く文字列の入力を受け付ける
 ** 価格の検索フォームに入力がある場合のみ、空欄を認める
-** 入力可能文字数制限：250文字まで
+** 入力可能文字数制限：50文字まで
 
 * 検索フォーム(価格)　
 ** 入力は整数であること
@@ -426,3 +435,188 @@ image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/c7cb22b1a98cd1
 
 |===
 ''''
+
+
+=== 商品データを登録する
+
+[cols="1h,3a"]
+|===
+|ユースケースID
+|UC04
+
+|ユースケース名称
+|商品データを登録する
+
+|概要
+|* 管理者から商品名,カテゴリ,税抜き価格,画像データの入力を受け付け,新しい商品データをシステムに登録する.
+
+|優先度
+|WANT
+
+|アクター
+|管理者
+
+|トリガー
+|登録ボタンを押下する
+
+|事前条件
+|* <<image_editData,商品データ管理画面>>がブラウザに表示されている
+
+|基本フロー
+|
+[[mainflow_uc04]]
+. 商品名フォームに文字列を入力する
+. プルダウンメニューから商品カテゴリを選択する
+. 価格フォームに1以上の整数を入力する
+. 参照ボタンを押下し,商品画像のファイル(拡張子は.jpeg .gif .pngのいずれかで,サイズは10MB以下)を選択する
+. ブラウザ上で登録ボタンを押下する
+** [red]##商品名フォームにシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
+##　⇒ <<altflow_uc04,代替フロー1に移行>>
+** [red]##価格フォームに整数以外が入力されている場合##　⇒ <<altflow_uc04,代替フロー2に移行>>
+** [red]##画像データ登録フォームに.jpeg .gif .png以外の拡張子を持ったファイルが入力されている場合
+##　⇒ <<altflow_uc04,代替フロー3に移行>>
+** [red]##画像データ登録フォームに10MBを上回るファイルが入力されている場合##　⇒ <<altflow_uc04,代替フロー4に移行>>
+. システムは商品IDの生成と税込み価格の算出を実施する
+. 登録が完了したことを示すメッセージをメッセージ領域に表示する
+
++
+(参考画像：登録完了後の画面イメージ)
++
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/afterRegist.png[afterRegist]
+
+
+
+
+|代替フロー
+|
+[[altflow_uc04]]
+
+. 商品名フォームにシングルクォーテーション(')またはダブルクォーテーション(")が含まれている場合
+.. エラーメッセージ06を<<image_editData,商品データ管理画面>>の「⑥メッセージ領域」に表示する
+.. <<mainflow_uc04,基本フロー>>のステップ1に戻る
+
+. 価格フォームに整数以外が入力されている場合
+.. エラーメッセージ07を<<image_editData,商品データ管理画面>>の「⑥メッセージ領域」に表示する
+.. <<mainflow_uc04,基本フロー>>のステップ1に戻る
+
+. 画像データ登録フォームに.jpeg .gif .png以外の拡張子を持ったファイルが入力されている場合
+.. エラーメッセージ08を<<image_editData,商品データ管理画面>>の「⑥メッセージ領域」に表示する
+.. <<mainflow_uc04,基本フロー>>のステップ1に戻る
+
+. 画像データ登録フォームに10MBを上回るファイルが入力されている場合
+.. エラーメッセージ09を<<image_editData,商品データ管理画面>>の「⑥メッセージ領域」に表示する
+.. <<mainflow_uc04,基本フロー>>のステップ1に戻る
+
+
+(参考画像：メッセージ表示後の画面イメージ)
+
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/regist_message.png[regist_message]
+
+　
+
+|例外フロー
+|なし
+
+|事後条件
+|<<image_editData,商品データ管理画面>>が表示されている
+
+|補足
+|
+
+エラーメッセージ06
+....
+シングルクォーテーション(')またはダブルクォーテーション(")が含まれる文字列では登録できません
+....
+
+エラーメッセージ07
+....
+フォーム(価格)の入力が正しくありません
+(整数で価格を指定してください)
+....
+
+エラーメッセージ08
+....
+画像データのファイル拡張子が正しくありません
+(.jpeg .gif .png のみ登録を受け付けます)
+....
+
+エラーメッセージ09
+....
+登録できる画像データの最大サイズを超えています
+(10MB以下の画像ファイルをご用意ください)
+....
+
+
+* 商品名,カテゴリ,税抜き価格の3つが入力できている場合のみ登録ボタンが有効になる。
+
+※ 画像データは任意指定とする。指定しなかった場合はサンプル画像(nowPrinting.png)を代わりに登録する
+
+フォーム入力のバリデーション条件を以下に定義する。
+
+* 商品名
+** シングルクォーテーション(')、ダブルクォーテーション(")を除く文字列の入力を受け付ける
+** 入力可能文字数制限：50文字まで
+
+* カテゴリ
+** プルダウンメニューで選択するため、バリデーション条件は特に無し
+
+* 税抜き価格　
+** 入力は1以上の整数であること
+** 入力可能文字数制限：9文字まで
+
+* 画像データ
+** ファイル拡張子が.jpeg .gif .pngのいずれかであること
+** ファイルサイズが10MB以下であること
+
+|===
+''''
+
+[[image_editData]]
+==== 画面仕様：商品データ管理画面
+
+商品一覧画面の仕様と、実現する機能は以下の通りである。
+
+image::https://raw.githubusercontent.com/W-Nakayama-24/ojt_ecsite/develop/UseCase/registimage.png[registimage]
+
+[cols="3*,3a", options="header"]
+|===
+|No.
+|項目名
+|種別
+|説明
+
+|1
+|商品名フォーム
+|入力欄
+|文字列を入力して商品名を指定する
+
+|2
+|カテゴリフォーム
+|プルダウンメニュー
+|商品カテゴリを指定する
+
+|3
+|税抜き価格フォーム
+|入力欄
+|整数を入力して商品の税抜き価格を指定する
+
+|4
+|商品画像データ登録フォーム / 参照ボタン
+|ファイル名入力欄 / ボタン
+|商品の画像ファイルを指定する
+
+|5
+|登録ボタン
+|ボタン
+|押下すると「<<_商品データを登録する,商品データを登録する>>」機能を実行する
+　
+|6
+|メッセージ領域
+|表示領域
+|ECサイトから管理者へのメッセージを表示する
+
+|7
+|全商品一覧に戻るボタン
+|ボタン
+|クリックすると<<image_viewall,商品一覧画面>>に遷移する
+|===
