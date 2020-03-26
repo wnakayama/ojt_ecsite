@@ -40,11 +40,11 @@ Register ..> Product
 class Product {
     -final int 商品ID
     -final String 商品名
-    -final String 商品カテゴリ
+    -final String カテゴリ
     -final int 税抜き価格
     -final int 税込み価格
     -final String 画像データのパス
-    -コンストラクタ(int 商品ID, String 商品名, String 商品カテゴリ, int 税抜き価格)
+    -コンストラクタ(商品ID, 商品名, カテゴリ, 税抜き価格, 税込み価格, 画像データのパス)
     +int get商品ID()
     +String get商品名()
     +String get商品カテゴリ()

@@ -37,13 +37,15 @@ activate InputChecker
 	note left of InputChecker 
 	enum CheckResult {
 		VALID(正常な入力)
-		INVALID_NECESSARY_INPUT_EMPTY(必須入力項目を入力していない)
+		INVALID_NECESSARY_INPUT_EMPTY(必須入力項目※を入力していない)
 		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
 		INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
 		INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
 		INVALID_NOT_IMAGE_FILE(対応する画像ファイルの拡張子でない)
         INVALID_EXCEEDS_FILE_SIZE(画像ファイルが10MBを上回っている)
 	}
+
+	※ 商品名,カテゴリ,税抜き価格
 	end note
 
 Register <-- InputChecker : CheckResult
@@ -66,10 +68,12 @@ deactivate TaxCalculator
 	カテゴリ : 選択されたカテゴリ
 	税抜き価格 : 入力された税抜き価格
 	税込み価格 : TaxCalculatorにて算出
-	画像データのパス : 入力された画像のファイル名 
+	画像データのパス : 
+	(入力がある場合) 入力された画像のファイル名
+	(入力が無い場合) サンプル画像のファイル名 "nowPrinting.png"
 	end note
 
-Register -> Product : new Product
+Register -> Product : new Product(ID,商品名,カテゴリ,税抜き価格,税込み価格,画像データのパス)
 activate Product
 Register <-- Product : Product
 deactivate Product
@@ -87,7 +91,7 @@ deactivate ProductDataWriter
 	画像ファイルをimagesフォルダに保存する
 	end note
 
-Register -> SystemMessage : new SystemMessage(ID)
+Register -> SystemMessage : new SystemMessage(メッセージID)
 activate SystemMessage
 Register <-- SystemMessage : SystemMessage
 deactivate SystemMessage
