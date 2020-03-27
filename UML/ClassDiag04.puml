@@ -1,0 +1,75 @@
+@startuml
+title ECサイト_クラス図_UC04商品データを登録する
+
+
+class RegisterProductServlet {
+    +{static} final long serialVersionUID
+    #void doPost(HttpServletRequest request, HttpServletResponse response)
+}
+
+RegisterProductServlet ..> Register
+class Register {
+    ~static List<Product> 全商品データ
+    ~set全商品データ(List<Product> 全商品データ)
+    +String 商品データを登録する(Map<String,String[]> チェック前の入力内容)
+}
+
+ValidationResult -- InputValidator
+enum ValidationResult {
+    VALID(正常な入力)
+    INVALID_NECESSARY_INPUT_EMPTY(必須入力項目を入力していない)
+    INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
+    INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
+    INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
+    INVALID_NOT_IMAGE_FILE(対応する画像ファイルの拡張子でない)
+    INVALID_EXCEEDS_FILE_SIZE(画像ファイルが10MBを上回っている)
+}
+
+Register ..> InputValidator
+class InputValidator {
+    +ValidationResult 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
+}
+
+Register ..> TaxCalculator
+class TaxCalculator {
+    -{static}final double 軽減税率
+    -{static}final double 標準税率
+
+    +int 税込み価格を算出する(String 商品カテゴリ,int 税抜き価格)
+}
+
+Register ..> Product 
+class Product {
+    -final int 商品ID
+    -final String 商品名
+    -final String カテゴリ
+    -final int 税抜き価格
+    -final int 税込み価格
+    -final String 画像データのパス
+    -コンストラクタ(商品ID, 商品名, カテゴリ, 税抜き価格, 税込み価格, 画像データのパス)
+    +int get商品ID()
+    +String get商品名()
+    +String get商品カテゴリ()
+    +int get税抜き価格()
+    +int get税込み価格()
+    +String get画像データのパス()
+}
+
+Register ..> ProductDataWriter
+class ProductDataWriter {
+    + void 商品情報をCSVファイルに書き込む(Product 新規追加する商品データ)
+}
+
+Register ..> ErrorMessage
+class ErrorMessage {
+    -final String エラーメッセージ
+    +コンストラクタ(int エラーID)
+}
+
+Register ..> SystemMessage
+class SystemMessage {
+    -final String システムメッセージ
+    +コンストラクタ(int メッセージID)
+}
+
+@enduml

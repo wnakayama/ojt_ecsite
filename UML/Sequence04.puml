@@ -1,0 +1,184 @@
+@startuml
+title ECサイト_UC04商品データを登録する
+
+actor 利用者
+
+利用者 -> Browser : 「登録」ボタン押下
+activate Browser
+
+Browser ->> RegisterProductServlet : jQuery.postメソッドでリクエストを送信
+deactivate Browser
+activate RegisterProductServlet
+
+	note left of RegisterProductServlet
+	jQuery.postメソッド
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/RegisterProductServlet'
+	第二引数(data)：ユーザーの入力(商品名, カテゴリ, 税抜き価格, 画像データ)
+	end note
+
+RegisterProductServlet -> Register : 登録前の全商品データをセットする
+activate Register
+	note right of Register
+	UC01[商品を一覧表示する]で用意した
+	全商品のデータをHttpSession.getAttributeで取得し,
+	Registerクラスのstaticフィールドにセットする
+	end note
+
+RegisterProductServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
+Register -> InputValidator : 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
+activate InputValidator
+
+	note over InputValidator
+	<実施するチェック>
+	①商品名,カテゴリ,税抜き価格がいずれも空欄でない
+	②商品名にクォーテーションを含まない
+	③文字数をオーバーしていない
+		商品名:50文字以下
+		税抜き価格:9文字以下
+	④税抜き価格が1以上の整数である
+	⑤ファイルの拡張子が.jpeg .gif .pngのいずれかである
+    ⑥ファイルサイズが10MB以下である
+	end note
+
+	note left of InputValidator 
+	enum ValidationResult {
+		VALID(正常な入力)
+		INVALID_NECESSARY_INPUT_EMPTY(必須入力項目※を入力していない)
+		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
+		INVALID_EXCEEDS_CHARACTERS(文字数オーバー)
+		INVALID_NOT_UNSIGNED_INTEGER(1以上の整数でない)
+		INVALID_NOT_IMAGE_FILE(対応する画像ファイルの拡張子でない)
+        INVALID_EXCEEDS_FILE_SIZE(画像ファイルが10MBを上回っている)
+	}
+
+	※ 商品名,カテゴリ,税抜き価格
+	end note
+
+Register <-- InputValidator : ValidationResult
+deactivate InputValidator
+
+
+alt VALID
+
+Register -> TaxCalculator : 税込み価格を算出する(カテゴリ, 税抜き価格)
+activate TaxCalculator
+Register <-- TaxCalculator : 税込み価格
+deactivate TaxCalculator
+
+	note over Register
+	正常と判断された入力内容を、
+	javaオブジェクトにする
+
+	商品ID : (既存の商品で一番大きいID※) + 1
+	商品名 : 入力された商品名
+	カテゴリ : 選択されたカテゴリ
+	税抜き価格 : 入力された税抜き価格
+	税込み価格 : TaxCalculatorにて算出
+	画像データのパス : 
+	(入力がある場合) 商品ID/入力された画像のファイル名
+	(入力が無い場合) サンプル画像のファイル名 "nowPrinting.png"
+
+	※Registerクラスのstaticフィールドにある
+	　List<Product> 全商品データ より最大値を取得
+	end note
+
+Register -> Product : new Product(ID,商品名,カテゴリ,税抜き価格,税込み価格,画像データのパス)
+activate Product
+Register <-- Product : Product
+deactivate Product
+
+Register -> ProductDataWriter : 商品情報をCSVファイルに書き込む(Product 新規追加する商品データ)
+activate ProductDataWriter
+	note over ProductDataWriter
+	①文字コードをUTF-8に指定
+	②新しい商品データの行※をCSVファイルの最終行に追加する
+	※(商品ID,商品名,カテゴリ,税抜き価格,税込み価格,画像データのパス)
+	end note
+deactivate ProductDataWriter
+
+Register -> images : 画像ファイルをimagesフォルダに保存する
+activate images
+deactivate images
+
+Register -> SystemMessage : new SystemMessage(メッセージID)
+activate SystemMessage
+Register <-- SystemMessage : SystemMessage
+deactivate SystemMessage
+
+	note over Register
+	登録完了を示すSystemMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
+
+	{
+	"SystemMessage" : "商品データの登録が完了しました"
+	}
+	end note
+
+else INVALID
+
+Register -> ErrorMessage : new ErrorMessage(エラーID)
+activate ErrorMessage
+
+	note over ErrorMessage
+	渡されたエラーIDに応じて、
+	コンストラクタで生成したエラーメッセージを返却する
+	end note
+
+Register <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over Register
+	利用者の入力によるエラーを示すErrorMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
+
+	{
+	"ErrorMessage" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
+	}
+	end note
+
+else default
+
+Register -> ErrorMessage : new ErrorMessage(エラーID)
+activate ErrorMessage
+Register <-- ErrorMessage : ErrorMessage
+deactivate ErrorMessage
+
+	note over Register
+	想定外のエラーを示すErrorMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
+
+	{
+	"ErrorMessage" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"
+	}
+	end note
+
+end
+
+RegisterProductServlet <- Register : String 登録処理の結果(JSON)
+deactivate Register
+Browser <<-- RegisterProductServlet : レスポンス(JSON)
+deactivate RegisterProductServlet
+activate Browser
+
+	note left of Register
+	jQuery.postメソッド
+	第三引数(callback)：通信成功時に実行するコールバック関数
+		.done(function (data) {
+			// 登録完了を示すメッセージまたはエラーメッセージを商品データ管理画面に出力
+		}).fail(function (error) {
+			// 通信エラーの場合はこちらが実行され、エラーの詳細をコンソールに出力
+			console.log(error);
+		});
+	}
+	end note
+
+
+利用者 <-- Browser
+	note right of 利用者
+	登録完了を示すメッセージまたはエラーメッセージが
+	Webブラウザ(商品データ管理画面)に表示される
+	end note
+
+deactivate Browser
+
+@enduml
