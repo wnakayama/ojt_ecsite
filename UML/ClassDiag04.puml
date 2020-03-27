@@ -14,8 +14,8 @@ class Register {
     +String 商品データを登録する(Map<String,String[]> チェック前の入力内容)
 }
 
-CheckResult -- InputChecker
-enum CheckResult {
+ValidationResult -- InputValidator
+enum ValidationResult {
     VALID(正常な入力)
     INVALID_NECESSARY_INPUT_EMPTY(必須入力項目を入力していない)
     INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
@@ -25,9 +25,9 @@ enum CheckResult {
     INVALID_EXCEEDS_FILE_SIZE(画像ファイルが10MBを上回っている)
 }
 
-Register ..> InputChecker
-class InputChecker {
-    +CheckResult 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
+Register ..> InputValidator
+class InputValidator {
+    +ValidationResult 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
 }
 
 Register ..> TaxCalculator

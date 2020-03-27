@@ -25,10 +25,10 @@ activate Register
 	end note
 
 RegisterProductServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
-Register -> InputChecker : 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
-activate InputChecker
+Register -> InputValidator : 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
+activate InputValidator
 
-	note over InputChecker
+	note over InputValidator
 	<実施するチェック>
 	①商品名,カテゴリ,税抜き価格がいずれも空欄でない
 	②商品名にクォーテーションを含まない
@@ -40,8 +40,8 @@ activate InputChecker
     ⑥ファイルサイズが10MB以下である
 	end note
 
-	note left of InputChecker 
-	enum CheckResult {
+	note left of InputValidator 
+	enum ValidationResult {
 		VALID(正常な入力)
 		INVALID_NECESSARY_INPUT_EMPTY(必須入力項目※を入力していない)
 		INVALID_CONTAINS_QUOTATION(クォーテーションが含まれている)
@@ -54,8 +54,8 @@ activate InputChecker
 	※ 商品名,カテゴリ,税抜き価格
 	end note
 
-Register <-- InputChecker : CheckResult
-deactivate InputChecker
+Register <-- InputValidator : ValidationResult
+deactivate InputValidator
 
 
 alt VALID
@@ -75,7 +75,7 @@ deactivate TaxCalculator
 	税抜き価格 : 入力された税抜き価格
 	税込み価格 : TaxCalculatorにて算出
 	画像データのパス : 
-	(入力がある場合) 入力された画像のファイル名
+	(入力がある場合) 商品ID/入力された画像のファイル名
 	(入力が無い場合) サンプル画像のファイル名 "nowPrinting.png"
 
 	※Registerクラスのstaticフィールドにある
