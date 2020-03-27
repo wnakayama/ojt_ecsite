@@ -16,9 +16,15 @@ activate RegisterProductServlet
 	第二引数(data)：ユーザーの入力(商品名, カテゴリ, 税抜き価格, 画像データ)
 	end note
 
-RegisterProductServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
+RegisterProductServlet -> Register : 登録前の全商品データをセットする
 activate Register
+	note right of Register
+	UC01[商品を一覧表示する]で用意した
+	全商品のデータをHttpSession.getAttributeで取得し,
+	Registerクラスのstaticフィールドにセットする
+	end note
 
+RegisterProductServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
 Register -> InputChecker : 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
 activate InputChecker
 
@@ -63,7 +69,7 @@ deactivate TaxCalculator
 	正常と判断された入力内容を、
 	javaオブジェクトにする
 
-	商品ID : (既存の商品で一番大きいID) + 1
+	商品ID : (既存の商品で一番大きいID※) + 1
 	商品名 : 入力された商品名
 	カテゴリ : 選択されたカテゴリ
 	税抜き価格 : 入力された税抜き価格
@@ -71,6 +77,9 @@ deactivate TaxCalculator
 	画像データのパス : 
 	(入力がある場合) 入力された画像のファイル名
 	(入力が無い場合) サンプル画像のファイル名 "nowPrinting.png"
+
+	※Registerクラスのstaticフィールドにある
+	　List<Product> 全商品データ より最大値を取得
 	end note
 
 Register -> Product : new Product(ID,商品名,カテゴリ,税抜き価格,税込み価格,画像データのパス)
@@ -87,9 +96,9 @@ activate ProductDataWriter
 	end note
 deactivate ProductDataWriter
 
-	note over Register
-	画像ファイルをimagesフォルダに保存する
-	end note
+Register -> images : 画像ファイルをimagesフォルダに保存する
+activate images
+deactivate images
 
 Register -> SystemMessage : new SystemMessage(メッセージID)
 activate SystemMessage
@@ -97,7 +106,8 @@ Register <-- SystemMessage : SystemMessage
 deactivate SystemMessage
 
 	note over Register
-	SystemMessage → objectMapper.writeValueAsString → JSON
+	登録完了を示すSystemMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
 
 	{
 	"SystemMessage" : "商品データの登録が完了しました"
@@ -118,7 +128,8 @@ Register <-- ErrorMessage : ErrorMessage
 deactivate ErrorMessage
 
 	note over Register
-	ErrorMessage → objectMapper.writeValueAsString → JSON
+	利用者の入力によるエラーを示すErrorMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
 
 	{
 	"ErrorMessage" : "(入力チェックを通らなかった原因を伝えるメッセージ)"
@@ -133,7 +144,8 @@ Register <-- ErrorMessage : ErrorMessage
 deactivate ErrorMessage
 
 	note over Register
-	ErrorMessage → objectMapper.writeValueAsString → JSON
+	想定外のエラーを示すErrorMessageオブジェクトを
+	objectMapper.writeValueAsString によってJSON文字列に変換する
 
 	{
 	"ErrorMessage" : "(予期せぬエラーが発生しました 開発者へご連絡ください)"

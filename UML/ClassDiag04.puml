@@ -9,6 +9,8 @@ class RegisterProductServlet {
 
 RegisterProductServlet ..> Register
 class Register {
+    ~static List<Product> 全商品データ
+    ~set全商品データ(List<Product> 全商品データ)
     +String 商品データを登録する(Map<String,String[]> チェック前の入力内容)
 }
 
