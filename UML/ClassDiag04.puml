@@ -2,12 +2,12 @@
 title ECサイト_クラス図_UC04商品データを登録する
 
 
-class RegistServlet {
+class RegisterProductServlet {
     +{static} final long serialVersionUID
     #void doPost(HttpServletRequest request, HttpServletResponse response)
 }
 
-RegistServlet ..> Register
+RegisterProductServlet ..> Register
 class Register {
     +String 商品データを登録する(Map<String,String[]> チェック前の入力内容)
 }

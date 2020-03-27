@@ -6,17 +6,17 @@ actor 利用者
 利用者 -> Browser : 「登録」ボタン押下
 activate Browser
 
-Browser ->> RegistServlet : jQuery.postメソッドでリクエストを送信
+Browser ->> RegisterProductServlet : jQuery.postメソッドでリクエストを送信
 deactivate Browser
-activate RegistServlet
+activate RegisterProductServlet
 
-	note left of RegistServlet
+	note left of RegisterProductServlet
 	jQuery.postメソッド
-	第一引数(url)：'http://' + location.host + '/ojt_ecsite/RegistServlet'
+	第一引数(url)：'http://' + location.host + '/ojt_ecsite/RegisterProductServlet'
 	第二引数(data)：ユーザーの入力(商品名, カテゴリ, 税抜き価格, 画像データ)
 	end note
 
-RegistServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
+RegisterProductServlet -> Register : 商品データを登録する(Map<String,String[]> チェック前の入力内容)
 activate Register
 
 Register -> InputChecker : 入力内容をチェックする(Map<String,String[]> チェック前の入力内容)
@@ -56,7 +56,7 @@ alt VALID
 
 Register -> TaxCalculator : 税込み価格を算出する(カテゴリ, 税抜き価格)
 activate TaxCalculator
-Register <- TaxCalculator : 税込み価格
+Register <-- TaxCalculator : 税込み価格
 deactivate TaxCalculator
 
 	note over Register
@@ -142,10 +142,10 @@ deactivate ErrorMessage
 
 end
 
-RegistServlet <- Register : String 登録処理の結果(JSON)
+RegisterProductServlet <- Register : String 登録処理の結果(JSON)
 deactivate Register
-Browser <<-- RegistServlet : レスポンス(JSON)
-deactivate RegistServlet
+Browser <<-- RegisterProductServlet : レスポンス(JSON)
+deactivate RegisterProductServlet
 activate Browser
 
 	note left of Register
