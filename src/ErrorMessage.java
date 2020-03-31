@@ -30,6 +30,17 @@ public class ErrorMessage {
             case CONTAINS_QUOTATION:
                 this.errorMessage = "シングルクォーテーション(\')またはダブルクォーテーション(\")が含まれる文字列では検索できません";
                 break;
+
+            case NECESSARY_INPUT_EMPTY:
+                this.errorMessage = "必須入力項目に入力がありません(商品名,カテゴリ,税抜き価格はすべて入力する必要があります)";
+                break;
+            case NOT_IMAGE_FILE:
+                this.errorMessage = "ファイルアップロードは.jpeg .gif .pngのみ受け付けます";
+                break;
+            case EXCEEDS_FILE_SIZE:
+                this.errorMessage = "アップロードできる画像ファイルサイズの上限を超えています(10MB以下の画像をご用意ください)";
+                break;
+
             case UNEXPECTED_STATE:
                 this.errorMessage = "予期せぬエラーが発生しました お手数ですが開発者までご連絡ください";
                 break;
