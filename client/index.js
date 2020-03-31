@@ -9,13 +9,13 @@ function viewAllProduct() {
     $.get('http://' + location.host + '/ojt_ecsite/ViewAllProductServlet')
         .done(function (data) {
             // 通信成功時
-            const product = data || {};
-            if (product.length == 0) {
+            const allProduct = data || {};
+            if (allProduct.length == 0) {
                 $('.productInfoArea').append('商品データがありません<br>');
             } else {
-                displayProductData(product);
+                displayProductData(allProduct);
             }
-
+            sessionStorage.setItem('allProduct', allProduct);
         }).fail(function (error) {
             // 通信エラーの場合はこちらが実行され、errorに返ってきた詳細が入る
             console.log(error);
@@ -246,9 +246,17 @@ function sendSearchParameter(productName, minPrice, maxPrice) {
     });
 }
 
-// 全商品一覧へ戻るボタンを押下すると,商品一覧画面に戻る
+// 全商品一覧へ戻るボタンを押下すると,全商品を表示する初期状態に戻る
 $(document).on(
     'click', '.goBack', function () {
         window.location.href = 'index.html';
+    }
+);
+
+
+// 管理者メニューボタンを押下すると,商品データ管理画面に遷移する
+$(document).on(
+    'click', '.editData', function () {
+        window.location.href = 'editData.html';
     }
 );
